@@ -1,4 +1,4 @@
-import { ForeignKey, Column, Table, PrimaryKey, Model, AutoIncrement, BelongsTo } from 'sequelize-typescript';
+import { ForeignKey, Column, Table, PrimaryKey, Model, AutoIncrement, BelongsTo, Unique } from 'sequelize-typescript';
 import { Member } from './member';
 import { DataTypes } from 'sequelize';
 
@@ -6,15 +6,19 @@ import { DataTypes } from 'sequelize';
 export class Paths extends Model<Paths> {
 
     @PrimaryKey
-    @ForeignKey(()=>Member)
     @AutoIncrement
     @Column
     public pathSeq !: number;
+
+    @ForeignKey(()=>Member)
+    @Unique
+    @Column
+    public userSeq !: number;
 
     @BelongsTo(()=>Member)
     public member !: Member;
 
     @Column(DataTypes.JSON)
-    public paths !: any;
+    public list !: any;
 
 }

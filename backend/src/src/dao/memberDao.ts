@@ -1,4 +1,6 @@
-import {Member} from '../model/member';
+import {Member} from '@models/member';
+import { CustomError } from '@models/customError';
+import { Paths } from '@models/paths';
 
 class MemberDao {
     
@@ -6,29 +8,31 @@ class MemberDao {
 
     }
 
-    /**
-     * getMemberBySeq
-    */
-
     public async saveMember(age : number){
         const newMember = Member.build({
-            age
+            age,
         });
         await newMember.save();
     }
 
     public async getAllMembers(){
-        return await Member.findAll();
-        
+            return await Member.findAll();
     }
 
-    public async getMemberBySeq(seq : number){
+    public async getMemberBySeq (seq : number) : Promise<Member>{
+        const member = await Member.findByPk(seq);
+        if(member==null) throw new CustomError("MemberDao.getMemberBySeq","조회하려는 회원정보가 존재하지 않습니다.");
+        return member.toJSON() as Member;
+    }
 
-        return await Member.findByPk(seq)
+    public async getPaths (seq : number) : Promise<Paths>{
+        const member = await Member.findOne({where : {userSeq : seq} , include : [Paths]});
+        if(member==null) throw new CustomError("MemberDao.getPaths","조회하려는 회원정보가 존재하지 않습니다.");
+        if(member.paths==null) throw new CustomError("MemberDao.getPaths","조회하려는 회원 path가 존재하지 않습니다.");
+        return member.paths as Paths;
     }
 
 }
 
-const memberDao = new MemberDao();
  
-export default memberDao;
+export default MemberDao;

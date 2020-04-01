@@ -14,10 +14,10 @@
     "moduleResolution": "node",
     "paths": {
       "@daos/*": [
-        "src/daos/*"
+        "src/dao/*"
       ],
-      "@entities/*": [
-        "src/entities/*"
+      "@models/*": [
+        "src/model/*"
       ],
       "@shared/*": [
         "src/shared/*"

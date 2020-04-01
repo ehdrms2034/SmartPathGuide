@@ -1,9 +1,9 @@
 export class ApiResponse {
     private response : string;
     private message : string;
-    private data : string;
+    private data ?: any;
 
-    constructor(response : string, message : string, data : string){
+    constructor(response : string, message : string, data : any){
         this.response = response;
         this.message = message;
         this.data = data;
@@ -17,7 +17,7 @@ export class ApiResponse {
         return this.message;
     }
 
-    get getData() : string {
+    get getData() : any {
         return this.data;
     }
 

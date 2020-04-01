@@ -1,4 +1,4 @@
-import {Table, Column, Model, PrimaryKey, AutoIncrement, NotNull, HasMany, ForeignKey} from 'sequelize-typescript';
+import {Table, Column, Model, PrimaryKey, AutoIncrement, NotNull, HasMany, ForeignKey, HasOne} from 'sequelize-typescript';
 import { Paths} from './paths';
 
 @Table
@@ -12,7 +12,7 @@ export class Member extends Model<Member>{
     @Column
     age !: number;
 
-    @HasMany(()=>Paths)
-    paths !: Paths[];
+    @HasOne(()=>Paths)
+    paths !: Paths;
 
 }
