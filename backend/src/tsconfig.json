@@ -27,7 +27,7 @@
       ]
     },
     "types": [
-      "node"
+      "node","mocha","chai"
     ],
     "typeRoots": [
       "node_modules/@types"
@@ -39,5 +39,6 @@
   ],
   "exclude": [
     "src/public/"
-  ]
+  ],
+  
 }

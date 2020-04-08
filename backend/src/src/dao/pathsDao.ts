@@ -13,12 +13,12 @@ export class PathsDao {
         return await memberDao.getPaths(memberPk);
     }
 
-    public async createPaths(member : Member, destination : string){
+    public async createPaths(member : Member){
         const newPath = Paths.build({
             userSeq : member.userSeq,
             paths:[{
                 seq : 1,
-                destination : destination
+                destination : []
             }]
         });
         return await newPath.save();

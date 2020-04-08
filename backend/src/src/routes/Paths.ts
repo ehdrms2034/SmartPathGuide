@@ -14,7 +14,7 @@ router.post("/createPath", async (req: Request, res: Response) => {
 
   try {
     const member: Member = await memberDao.getMemberBySeq(memberSeq);
-    const newPaths = await pathsDao.createPaths(member, destination);
+    const newPaths = await pathsDao.createPaths(member);
     res.json(newPaths);
     return;
   } catch (error) {
@@ -28,16 +28,16 @@ router.post("/createPath", async (req: Request, res: Response) => {
 
 router.post("/addPath", async (req: Request, res: Response) => {
   const { memberSeq, destination } = req.body;
-  try{
+  try {
     await pathsDao.addPaths(memberSeq, destination);
-    res.json(new ApiResponse("success","성공적으로 경로가 추가되었습니다.",""));
-}catch(error){
-    if(error instanceof CustomError){
-        res.json(new ApiResponse("error",error.getMessage,null));
-        return;
+    res.json(
+      new ApiResponse("success", "성공적으로 경로가 추가되었습니다.", "")
+    );
+  } catch (error) {
+    if (error instanceof CustomError) {
+      res.json(new ApiResponse("error", error.getMessage, null));
+      return;
     }
-
-
   }
 });
 
