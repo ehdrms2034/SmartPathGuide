@@ -1,6 +1,7 @@
 import {Sequelize} from 'sequelize-typescript';
-import { Member } from './member';
-import { Paths } from './paths';
+import { Member } from '@models/member';
+import { Paths } from '@models/paths';
+import { UserInfo } from '@models/UserInfo';
 
 export const sequelize = new Sequelize({
     database : process.env.MYSQL_DATABASE,
@@ -10,6 +11,6 @@ export const sequelize = new Sequelize({
     host : process.env.MYSQL_HOST
 });
 
-sequelize.addModels([Member,Paths]);
+sequelize.addModels([Member,Paths,UserInfo]);
 
 sequelize.sync();
