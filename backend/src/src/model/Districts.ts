@@ -1,0 +1,3 @@
+export enum Disctricts {
+    ANCIENT, MEDIEVAL, MODERN, DONATION, PAINTING, WORLD, CRAFT
+};

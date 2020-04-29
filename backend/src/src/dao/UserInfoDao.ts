@@ -3,7 +3,7 @@ import { ApiResponse } from '@models/response';
 import { CustomError } from '@models/customError';
 import { userInfo } from 'os';
 
-export class UserInfoDao{
+export default class UserInfoDao{
 
     constructor(){}
 

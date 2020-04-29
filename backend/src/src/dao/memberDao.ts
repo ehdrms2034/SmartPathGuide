@@ -12,7 +12,7 @@ class MemberDao {
         const newMember = Member.build({
             age,
         });
-        await newMember.save();
+        return await newMember.save();
     }
 
     public async getAllMembers(){

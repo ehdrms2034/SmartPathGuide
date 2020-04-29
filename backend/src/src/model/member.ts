@@ -14,5 +14,4 @@ export class Member extends Model<Member>{
 
     @HasOne(()=>Paths)
     paths !: Paths;
-
-}
+};
