@@ -24,6 +24,9 @@
       ],
       "@server": [
         "src/Server"
+      ],
+      "@services/*":[
+        "src/services/*"
       ]
     },
     "types": [
