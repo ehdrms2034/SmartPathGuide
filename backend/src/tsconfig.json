@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -27,6 +27,9 @@
       ],
       "@services/*":[
         "src/services/*"
+      ],
+      "@modules/*":[
+        "src/module/*"
       ]
     },
     "types": [

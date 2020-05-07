@@ -43,7 +43,7 @@ export class PathsDao {
     const paths = await this.getPaths(memberPK);
     let list: Array<PathItem> = paths.list;
     try {
-      list.every((it) => {
+      list.forEach((it) => {
         if (it.destination === destination)
           throw new CustomError("error", "this destination is already in here");
       });

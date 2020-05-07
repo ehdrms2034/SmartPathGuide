@@ -10,13 +10,13 @@ import 'express-async-errors';
 import BaseRouter from './routes';
 import logger from '@shared/Logger';
 
+import redisClient from '@modules/redis'
+
 import {sequelize} from './model';
 
 
 // Init express
 const app = express();
-
-
 
 /************************************************************************************
  *                              Set basic express settings
