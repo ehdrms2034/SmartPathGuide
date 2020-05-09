@@ -30,6 +30,9 @@
       ],
       "@modules/*":[
         "src/module/*"
+      ],
+      "@config/*":[
+        "src/config/*"
       ]
     },
     "types": [

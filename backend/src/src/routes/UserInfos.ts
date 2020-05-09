@@ -3,6 +3,7 @@ import UserInfoDao from '@daos/UserInfoDao';
 import { ApiResponse } from '@models/response';
 import { UserInfo } from '@models/UserInfo';
 import UserLocationService from '@services/UserLocationService';
+import { INTEGER } from 'sequelize/types';
 
 const router = Router();
 
@@ -44,21 +45,21 @@ router.post('/setUserInfo',async (req : Request, res : Response)=>{
 });
 
 router.post('/setUserLocation',async (req: Request , res : Response) => {
-    const {userId, locationX, locationY} = req.body;
+    const {memberSeq, locationX, locationY} = req.body;
     const userLocationService = new UserLocationService();
     try{
-        userLocationService.setUserLocation(userId,locationX,locationY);
+        userLocationService.setUserLocation(memberSeq,locationX,locationY);
         res.json(new ApiResponse("success","사용자 경로를 성공적으로 수정했습니다.",null));
     }catch(e){
         res.json(new ApiResponse( "error",e.getMessage,null));
     }
 });
 
-router.post('/getUserLocation', async (req:Request, res : Response)=>{
-    const {userId} = req.body;
+router.get('/getUserLocation/:memberSeq', async (req:Request, res : Response)=>{
+    const {memberSeq} = req.params;
     const userLocationService = new UserLocationService();
     try{
-        const location = await userLocationService.getUserLocation(userId);
+        const location = await userLocationService.getUserLocation(parseInt(memberSeq));
         res.json(new ApiResponse("success","사용자 경로를 성공적으로 불러왔습니다.",location));
     }catch(e){
         res.json(new ApiResponse("error",e.getMessage,null));

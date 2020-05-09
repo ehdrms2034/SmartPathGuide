@@ -1,0 +1,301 @@
+openapi: '3.0.0'
+info:
+  description: ''
+  version: 0.0.1
+  title: 2019후기 졸업과제 시맨틱 궤적 빅데이터 분석
+host: 'localhost:3000'
+tags:
+  - name: User
+  - name: UserInfo
+  - name: Path
+paths:
+
+  /api/user/findAllMembers:
+    get:
+      tags:
+        - User
+      summary: 모든 유저들의 데이터를 조회한다.
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      responses:
+        '200':
+          description : 데이터 조회에 성공했을 때,
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userSeq:
+                    type: integer
+                    example: 2
+                  age:
+                    type: integer
+                    example : 27
+                  createAt:
+                    type : string
+                    format: date-time
+                  updateAt:
+                    type : string
+                    format : date-time
+
+
+  /api/user/createMember:
+    post:
+      tags:
+        - User
+      summary: 유저를 추가한다.
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                age:
+                  type: integer
+                  example : 27
+      responses:
+        '200(성공)':
+          description : 회원추가에 성공할 때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : success
+                message : 회원추가에 성공했습니다.
+                data: null
+        
+        '200(실패)':
+          description : 회원추가에 실패했을 때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : error
+                message : 회원추가에 실패했습니다.
+                data: errorStack
+
+
+  /api/userinfo/createUserInfo:
+    post:
+      tags:
+        - UserInfo
+      summary: 유저의 관심사항을 추가한다.
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                memberSeq:
+                  type: integer
+                  example : 3
+      responses:
+        '200(성공)':
+          description : 유저정보 생성에 성공할때.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : success
+                message : userInfo 데이터 생성에 성공했습니다.
+                data: null
+        
+        '200(실패)':
+          description : 유저정보 생성에 실패했을 때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : error
+                message : userInfo데이터 생성에 실패했습니다..
+                data: errorStack
+
+  /api/userinfo/setUserInfo:
+    post:
+      tags:
+        - UserInfo
+      summary: 유저의 관심사항을 수정한다.
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                memberSeq:
+                  type: integer
+                  example : 3
+                acient:
+                  type: integer
+                  example : 30
+                medieval:
+                  type: integer
+                  example : 20
+                modern:
+                  type: integer
+                  example : 40
+                donation:
+                  type: integer
+                  example : 30
+                painting:
+                  type : integer
+                  example: 99
+                word:
+                  type: integer
+                  example: 49
+                craft:
+                  type : integer
+                  example : 60
+      responses:
+        '200(성공)':
+          description : 성공할때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : success
+                message : 유저 Info를 성공적으로 수정했습니다..
+                data: null
+        
+        '200(실패)':
+          description : 실패했을 때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : error
+                message : 유저Info데이터 수정에 실패했습니다..
+                data: errorStack
+  
+  /api/userinfo/setUserLocation:
+    post:
+      tags:
+        - UserInfo
+      summary: 유저의 실시간 위치를 수정한다
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                memberSeq:
+                  type: integer
+                  example : 3
+                locationX:
+                  type : float
+                  example : 2.1
+                locationY:
+                  type : float
+                  example : 3.2
+                
+      responses:
+        '200(성공)':
+          description : 성공할때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : success
+                message : 사용자 경로를 성공적으로 수정했습니다.
+                data: null
+        
+        '200(실패)':
+          description : 실패했을 때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : error
+                message : 사용자 경로 수정을 실패했습니다.
+                data: errorStack
+
+  /api/userinfo/getUserLocation/{memberSeq}:
+    get:
+      tags:
+        - UserInfo
+      summary: 유저의 실시간 위치를 받아온다
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: memberSeq   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200(성공)':
+          description : 성공할때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : success
+                message : 사용자 경로를 성공적으로 불러왔습니다.
+                data: {locationX : 2.7, locationY:3.2}
+        '200(실패)':
+          description : 실패했을 때
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              example:
+                response : error
+                message : 사용자 경로 수정을 실패했습니다.
+                data: errorStack
+
+  
+components:
+  schemas:
+    Response:
+      type: object
+      properties:
+        response:
+          type : string
+        message:
+          type : string
+        data:
+          type : object

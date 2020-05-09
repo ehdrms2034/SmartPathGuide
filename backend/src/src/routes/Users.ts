@@ -24,7 +24,9 @@ router.post("/createMember", async (req: Request, res: Response) => {
       null
     );
     return res.json(response);
-  } catch (error) {}
+  } catch (error) {
+    res.json(new ApiResponse("error","회원추가에 실패했습니다.",error))
+  }
 });
 
 export default router;
