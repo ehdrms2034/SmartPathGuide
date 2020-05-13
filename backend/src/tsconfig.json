@@ -12,6 +12,7 @@
     "strict": true,
     "target": "es6",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "paths": {
       "@daos/*": [
         "src/dao/*"
