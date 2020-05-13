@@ -18,7 +18,25 @@ export class Paths extends Model<Paths> {
     @BelongsTo(()=>Member)
     public member !: Member;
 
-    @Column(DataTypes.JSON)
-    public list !: any;
+    @Column
+    public ancient !: number;
 
+    @Column
+    public medieval !: number;
+
+    @Column
+    public modern !: number;
+
+    @Column
+    public donation !: number;
+
+    @Column
+    public painting !: number;
+
+    @Column
+    public world !: number;
+
+    @Column
+    public craft !: number;
+    
 }

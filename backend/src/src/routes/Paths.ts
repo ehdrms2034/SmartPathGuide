@@ -102,19 +102,19 @@ router.post("/createPath", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/addPath", async (req: Request, res: Response) => {
-  const { memberSeq, destination } = req.body;
-  try {
-    await pathsDao.addPaths(memberSeq, destination);
-    res.json(
-      new ApiResponse("success", "성공적으로 경로가 추가되었습니다.", "")
-    );
-  } catch (error) {
-    if (error instanceof CustomError) {
-      res.json(new ApiResponse("error", error.getMessage, null));
-      return;
-    }
-  }
-});
+// router.post("/addPath", async (req: Request, res: Response) => {
+//   const { memberSeq, destination } = req.body;
+//   try {
+//     await pathsDao.setPaths(memberSeq, destination);
+//     res.json(
+//       new ApiResponse("success", "성공적으로 경로가 추가되었습니다.", "")
+//     );
+//   } catch (error) {
+//     if (error instanceof CustomError) {
+//       res.json(new ApiResponse("error", error.getMessage, null));
+//       return;
+//     }
+//   }
+// });
 
 export default router;

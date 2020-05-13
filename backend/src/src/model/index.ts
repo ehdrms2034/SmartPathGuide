@@ -8,7 +8,8 @@ export const sequelize = new Sequelize({
     dialect : 'mysql',
     username : "ehdrms2034",
     password : "kk940501",
-    host : process.env.MYSQL_HOST
+    host : process.env.MYSQL_HOST,
+    // logging : false
 });
 
 sequelize.addModels([Member,Paths,UserInfo]);
