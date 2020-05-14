@@ -2,14 +2,14 @@ import { expect } from "chai";
 import { sequelize } from "@models/index";
 import UserInfoDao from "@daos/UserInfoDao";
 import MemberDao from "@daos/memberDao";
-import PathsDao,{RequestPath} from "@daos/pathsDao";
+import PathsDao, { RequestPath } from "@daos/pathsDao";
 import { UserInfo } from "@models/UserInfo";
 import PathGuideService from "@services/PathGuideService";
 import { Disctricts } from "@models/Districts";
 import { ENUM } from "sequelize/types";
-import redisClient, { redisSetData, redisGetData } from '@modules/redis';
-import { Paths } from '@models/paths';
-import * as tf from '@tensorflow/tfjs-node'
+import redisClient, { redisSetData, redisGetData } from "@modules/redis";
+import { Paths } from "@models/paths";
+import * as tf from "@tensorflow/tfjs-node";
 
 // describe("DB세팅", () => {
 //   beforeAll(() => {
@@ -23,7 +23,7 @@ import * as tf from '@tensorflow/tfjs-node'
 //     const pathList = await pathGuideService.findPathsByItemBase(15,infoList);
 //     redisSetData("hello",'helloss');
 //     redisGetData("hello")
-//     .then(data => 
+//     .then(data =>
 //       console.log(data)
 //       )
 //   });
@@ -56,7 +56,7 @@ import * as tf from '@tensorflow/tfjs-node'
 //       await userInfoDao.setUserInfo(member.userSeq, newUserInfo);
 
 //       const pathsDao = new PathsDao();
-      
+
 //       const isAncient = Math.round(Math.random()*100 / newUserInfo.ancient) <= 1 ? 1 : 0;
 //       const isMedieval = Math.round(Math.random()*100 / newUserInfo.medieval) <= 1 ? 1 : 0;
 //       const isModern = Math.round(Math.random()*100 / newUserInfo.modern) <= 1 ? 1 : 0;
@@ -74,7 +74,7 @@ import * as tf from '@tensorflow/tfjs-node'
 //         world : isWorld,
 //         craft : isCraft
 //       };
-      
+
 //       await pathsDao.createPaths(member);
 //       await pathsDao.setPaths(member.userSeq, reqPaths);
 
@@ -82,21 +82,51 @@ import * as tf from '@tensorflow/tfjs-node'
 //   });
 // });
 
-describe("Tensorflow",()=>{
-  beforeAll(()=>{
+// describe("Tensorflow",()=>{
+//   beforeAll(()=>{
+//     sequelize;
+//     tf;
+//   });
+//   it("tesorTuto",async ()=>{
+//     const pathGuideService = new PathGuideService();
+//     await pathGuideService.makeAncientModel();
+//     await pathGuideService.makeMedievalModel();
+//     await pathGuideService.makeModernModel();
+//     await pathGuideService.makePaintingModel();
+//     await pathGuideService.makeDonationModel();
+//     await pathGuideService.makeWorldModel();
+//     await pathGuideService.makeCraftModel();
+
+//     //tf.tensor([1,2]).print();
+//   },2000000);
+// })
+
+describe("Tensorflow", () => {
+  beforeAll(() => {
     sequelize;
     tf;
   });
-  it("tesorTuto",async ()=>{
+  it("tesorTuto", async () => {
     const pathGuideService = new PathGuideService();
-    await pathGuideService.makeAncientModel();
-    await pathGuideService.makeMedievalModel();
-    await pathGuideService.makeModernModel();
-    await pathGuideService.makePaintingModel();
-    await pathGuideService.makeDonationModel();
-    await pathGuideService.makeWorldModel();
-    await pathGuideService.makeCraftModel();
+    const testData = tf.tensor([[30, 30, 60, 80, 80, 40, 70]]);
+    const isAncient = await pathGuideService.recommandAntient(testData);
+    const isMedieval = await pathGuideService.recommandMedieval(testData);
+    const isModern = await pathGuideService.recommandModern(testData);
+    const isDonation = await pathGuideService.recommandDonation(testData);
+    const isPainting = await pathGuideService.recommandPainting(testData);
+    const isWorld = await pathGuideService.recommandWorld(testData);
+    const isCraft = await pathGuideService.recommandCraft(testData);
 
+    console.log(
+      isAncient,
+      isMedieval,
+      isMedieval,
+      isModern,
+      isDonation,
+      isPainting,
+      isWorld,
+      isCraft
+    );
     //tf.tensor([1,2]).print();
-  },2000000);
-})
+  }, 2000000);
+});

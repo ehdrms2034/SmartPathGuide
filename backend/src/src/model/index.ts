@@ -9,7 +9,7 @@ export const sequelize = new Sequelize({
     username : "ehdrms2034",
     password : "kk940501",
     host : process.env.MYSQL_HOST,
-    // logging : false
+    logging : false
 });
 
 sequelize.addModels([Member,Paths,UserInfo]);
