@@ -89,7 +89,14 @@ describe("Tensorflow",()=>{
   });
   it("tesorTuto",async ()=>{
     const pathGuideService = new PathGuideService();
-    await pathGuideService.recommandAncient();
+    await pathGuideService.makeAncientModel();
+    await pathGuideService.makeMedievalModel();
+    await pathGuideService.makeModernModel();
+    await pathGuideService.makePaintingModel();
+    await pathGuideService.makeDonationModel();
+    await pathGuideService.makeWorldModel();
+    await pathGuideService.makeCraftModel();
+
     //tf.tensor([1,2]).print();
   },2000000);
 })
