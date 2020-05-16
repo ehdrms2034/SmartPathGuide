@@ -10,6 +10,7 @@ import { ENUM } from "sequelize/types";
 import redisClient, { redisSetData, redisGetData } from "@modules/redis";
 import { Paths } from "@models/paths";
 import * as tf from "@tensorflow/tfjs-node";
+import UserLocationService from '@services/UserLocationService';
 
 // describe("DB세팅", () => {
 //   beforeAll(() => {
@@ -101,32 +102,49 @@ import * as tf from "@tensorflow/tfjs-node";
 //   },2000000);
 // })
 
-describe("Tensorflow", () => {
+// describe("Tensorflow", () => {
+//   beforeAll(() => {
+//     sequelize;
+//     tf;
+//   });
+//   it("tesorTuto", async () => {
+//     const pathGuideService = new PathGuideService();
+//     const testData = tf.tensor([[30, 30, 60, 80, 80, 40, 70]]);
+//     const isAncient = await pathGuideService.recommandAntient(testData);
+//     const isMedieval = await pathGuideService.recommandMedieval(testData);
+//     const isModern = await pathGuideService.recommandModern(testData);
+//     const isDonation = await pathGuideService.recommandDonation(testData);
+//     const isPainting = await pathGuideService.recommandPainting(testData);
+//     const isWorld = await pathGuideService.recommandWorld(testData);
+//     const isCraft = await pathGuideService.recommandCraft(testData);
+
+//     console.log(
+//       isAncient,
+//       isMedieval,
+//       isMedieval,
+//       isModern,
+//       isDonation,
+//       isPainting,
+//       isWorld,
+//       isCraft
+//     );
+//     //tf.tensor([1,2]).print();
+//   }, 2000000);
+// });
+
+
+
+describe("Redis", () => {
   beforeAll(() => {
     sequelize;
     tf;
   });
-  it("tesorTuto", async () => {
-    const pathGuideService = new PathGuideService();
-    const testData = tf.tensor([[30, 30, 60, 80, 80, 40, 70]]);
-    const isAncient = await pathGuideService.recommandAntient(testData);
-    const isMedieval = await pathGuideService.recommandMedieval(testData);
-    const isModern = await pathGuideService.recommandModern(testData);
-    const isDonation = await pathGuideService.recommandDonation(testData);
-    const isPainting = await pathGuideService.recommandPainting(testData);
-    const isWorld = await pathGuideService.recommandWorld(testData);
-    const isCraft = await pathGuideService.recommandCraft(testData);
-
-    console.log(
-      isAncient,
-      isMedieval,
-      isMedieval,
-      isModern,
-      isDonation,
-      isPainting,
-      isWorld,
-      isCraft
-    );
-    //tf.tensor([1,2]).print();
+  it("redis", async () => {
+    const userLocationService = new UserLocationService();
+    // await userLocationService.setUserLocation(23,2.1,3.6);
+    // await userLocationService.setUserLocation(21,102,3.6);
+    // await userLocationService.setUserLocation(22,32,20);
+    const data = await userLocationService.getUserLocation(23);
+    console.log(data);
   }, 2000000);
 });
