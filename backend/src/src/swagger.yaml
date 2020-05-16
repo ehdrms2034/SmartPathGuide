@@ -275,7 +275,7 @@ paths:
               example:
                 response : success
                 message : 사용자 경로를 성공적으로 불러왔습니다.
-                data: {locationX : 2.7, locationY:3.2}
+                data: [ {"mydata" : {"memberSeq" : 21 ,"locationX" : 2.7, locationY:3.2}}, {"usersData" : [{"memberSeq" : 22 ,"locationX" : 2.7, locationY:3.2}...]}]
         '200(실패)':
           description : 실패했을 때
           content:
