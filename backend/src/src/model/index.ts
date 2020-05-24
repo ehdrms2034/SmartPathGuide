@@ -7,8 +7,8 @@ import { Place } from "@models/Place";
 export const sequelize = new Sequelize({
   database: process.env.MYSQL_DATABASE,
   dialect: "mysql",
-  username: "ehdrms2034",
-  password: "kk940501",
+  username: "smartpath",
+  password: "smartpath",
   host: process.env.MYSQL_HOST,
   logging: false,
 });
