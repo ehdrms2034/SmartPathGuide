@@ -1,5 +1,5 @@
 import {Member} from '@models/member';
-import { CustomError } from '@models/customError';
+import { CustomError } from '@models/CustomError';
 import { Paths } from '@models/paths';
 
 class MemberDao {
