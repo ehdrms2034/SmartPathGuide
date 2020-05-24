@@ -1,5 +1,5 @@
 import { redisSetData, redisGetData } from "@modules/redis";
-import { CustomError } from "@models/customError";
+import { CustomError } from "@models/CustomError";
 
 export interface UserLocation {
   memberSeq: number;

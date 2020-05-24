@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { PathsDao, RequestPath } from "@daos/pathsDao";
 import { Member } from "src/model/member";
 import { ApiResponse } from "@models/response";
-import { CustomError } from "@models/customError";
+import { CustomError } from "@models/CustomError";
 import MemberDao from "@daos/memberDao";
 
 const router = Router();

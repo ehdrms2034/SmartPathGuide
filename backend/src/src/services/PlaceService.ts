@@ -1,6 +1,6 @@
 import PlaceDao from '@daos/PlaceDao';
 import { Place } from '@models/Place';
-import { CustomError } from '@models/customError';
+import { CustomError } from '@models/CustomError';
 
 
 class PlaceService {

@@ -1,5 +1,5 @@
 import e, { Router, query } from "express";
-import { CustomError } from "@models/customError";
+import { CustomError } from "@models/CustomError";
 import PathGuideService from "@services/PathGuideService";
 import { ApiResponse } from "@models/response";
 const router = Router();

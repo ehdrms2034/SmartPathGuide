@@ -1,6 +1,6 @@
 import UserLocationService from "./UserLocationService";
 import PlaceService from "./PlaceService";
-import { CustomError } from "@models/customError";
+import { CustomError } from "@models/CustomError";
 import PathRecommendService from "./PathRecommendService";
 import UserInfoDao from "@daos/UserInfoDao";
 import * as tf from "@tensorflow/tfjs-node";
