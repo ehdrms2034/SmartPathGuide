@@ -17,7 +17,7 @@ router.get("/members", async (req: Request, res: Response) => {
   return res.json(data);
 });
 
-router.post("/member", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   const {
     age,
     ancient,
