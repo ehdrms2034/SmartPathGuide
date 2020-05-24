@@ -2,7 +2,7 @@ import { Paths } from "../model/paths";
 import { Member } from "src/model/member";
 import { Model } from "sequelize/types";
 import MemberDao from "./memberDao";
-import { CustomError } from "@models/customError";
+import { CustomError } from "@models/CustomError";
 import { UserInfo } from '@models/UserInfo';
 
 interface PathItem {
