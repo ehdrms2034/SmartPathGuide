@@ -1,4 +1,4 @@
-import e, { Router, query } from "express";
+import { Router} from "express";
 import { CustomError } from "@models/CustomError";
 import PathGuideService from "@services/PathGuideService";
 import { ApiResponse } from "@models/response";
