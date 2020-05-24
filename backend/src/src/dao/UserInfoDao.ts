@@ -1,6 +1,6 @@
 import {UserInfo} from '@models/UserInfo';
 import { ApiResponse } from '@models/response';
-import { CustomError } from '@models/customError';
+import { CustomError } from '@models/CustomError';
 import { userInfo } from 'os';
 
 export default class UserInfoDao{
