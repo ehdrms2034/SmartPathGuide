@@ -238,6 +238,13 @@
   dependencies:
     "@types/express" "*"
 
+"@types/node-dijkstra@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@types/node-dijkstra/-/node-dijkstra-2.5.0.tgz#9d3d3a815e180a54241b9cacbda10614618eb472"
+  integrity sha512-iWcNDM0PorXEv2PZbNps/64VXaMF3EcVuCyL+Y4ptnSL6rvKo2lq8VGfuW/iH6/UBne7jpQynnpdJXa9H4Dkag==
+  dependencies:
+    "@types/node" "*"
+
 "@types/node-fetch@^2.1.2":
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.7.tgz#20a2afffa882ab04d44ca786449a276f9f6bbf3c"
@@ -1809,6 +1816,11 @@ jasmine@^3.5.0:
     glob "^7.1.4"
     jasmine-core "~3.5.0"
 
+js-graph-algorithms@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/js-graph-algorithms/-/js-graph-algorithms-1.0.18.tgz#f96ec87bf194f5c0a31365fa0e1d07b7b962d891"
+  integrity sha1-+W7Ie/GU9cCjE2X6Dh0Ht7li2JE=
+
 js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -2136,6 +2148,11 @@ nocache@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/nocache/-/nocache-2.1.0.tgz#120c9ffec43b5729b1d5de88cd71aa75a0ba491f"
   integrity sha512-0L9FvHG3nfnnmaEQPjT9xhfN4ISk0A8/2j4M37Np4mcDesJjHgEUfgPhdCyZuFI954tjokaIj/A3NdpFNdEh4Q==
+
+node-dijkstra@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/node-dijkstra/-/node-dijkstra-2.5.0.tgz#0feb76c5a05f35b56e786de6df4d3364af28d4e8"
+  integrity sha1-D+t2xaBfNbVueG3m300zZK8o1Og=
 
 node-environment-flags@1.0.6:
   version "1.0.6"

@@ -4,13 +4,16 @@ import UserInfoDao from "@daos/UserInfoDao";
 import MemberDao from "@daos/memberDao";
 import PathsDao, { RequestPath } from "@daos/pathsDao";
 import { UserInfo } from "@models/UserInfo";
-import PathGuideService from "@services/PathGuideService";
+import PathRecommendService from "@services/PathRecommendService";
 import { Disctricts } from "@models/Districts";
 import { ENUM } from "sequelize/types";
 import redisClient, { redisSetData, redisGetData } from "@modules/redis";
 import { Paths } from "@models/paths";
 import * as tf from "@tensorflow/tfjs-node";
-import UserLocationService from '@services/UserLocationService';
+import UserLocationService from "@services/UserLocationService";
+import PlaceDao from "@daos/PlaceDao";
+import PathGuideService from "@services/PathGuideService";
+import { CustomError } from "@models/customError";
 
 // describe("DB세팅", () => {
 //   beforeAll(() => {
@@ -19,9 +22,9 @@ import UserLocationService from '@services/UserLocationService';
 //   });
 //   it("test", async () => {
 
-//     const pathGuideService = new PathGuideService();
-//     const infoList = await pathGuideService.getAllUserInfo();
-//     const pathList = await pathGuideService.findPathsByItemBase(15,infoList);
+//     const PathRecommendService = new PathRecommendService();
+//     const infoList = await PathRecommendService.getAllUserInfo();
+//     const pathList = await PathRecommendService.findPathsByItemBase(15,infoList);
 //     redisSetData("hello",'helloss');
 //     redisGetData("hello")
 //     .then(data =>
@@ -89,14 +92,14 @@ import UserLocationService from '@services/UserLocationService';
 //     tf;
 //   });
 //   it("tesorTuto",async ()=>{
-//     const pathGuideService = new PathGuideService();
-//     await pathGuideService.makeAncientModel();
-//     await pathGuideService.makeMedievalModel();
-//     await pathGuideService.makeModernModel();
-//     await pathGuideService.makePaintingModel();
-//     await pathGuideService.makeDonationModel();
-//     await pathGuideService.makeWorldModel();
-//     await pathGuideService.makeCraftModel();
+//     const PathRecommendService = new PathRecommendService();
+//     await PathRecommendService.makeAncientModel();
+//     await PathRecommendService.makeMedievalModel();
+//     await PathRecommendService.makeModernModel();
+//     await PathRecommendService.makePaintingModel();
+//     await PathRecommendService.makeDonationModel();
+//     await PathRecommendService.makeWorldModel();
+//     await PathRecommendService.makeCraftModel();
 
 //     //tf.tensor([1,2]).print();
 //   },2000000);
@@ -108,15 +111,15 @@ import UserLocationService from '@services/UserLocationService';
 //     tf;
 //   });
 //   it("tesorTuto", async () => {
-//     const pathGuideService = new PathGuideService();
+//     const PathRecommendService = new PathRecommendService();
 //     const testData = tf.tensor([[30, 30, 60, 80, 80, 40, 70]]);
-//     const isAncient = await pathGuideService.recommandAntient(testData);
-//     const isMedieval = await pathGuideService.recommandMedieval(testData);
-//     const isModern = await pathGuideService.recommandModern(testData);
-//     const isDonation = await pathGuideService.recommandDonation(testData);
-//     const isPainting = await pathGuideService.recommandPainting(testData);
-//     const isWorld = await pathGuideService.recommandWorld(testData);
-//     const isCraft = await pathGuideService.recommandCraft(testData);
+//     const isAncient = await PathRecommendService.recommandAntient(testData);
+//     const isMedieval = await PathRecommendService.recommandMedieval(testData);
+//     const isModern = await PathRecommendService.recommandModern(testData);
+//     const isDonation = await PathRecommendService.recommandDonation(testData);
+//     const isPainting = await PathRecommendService.recommandPainting(testData);
+//     const isWorld = await PathRecommendService.recommandWorld(testData);
+//     const isCraft = await PathRecommendService.recommandCraft(testData);
 
 //     console.log(
 //       isAncient,
@@ -132,8 +135,6 @@ import UserLocationService from '@services/UserLocationService';
 //   }, 2000000);
 // });
 
-
-
 describe("Redis", () => {
   beforeAll(() => {
     sequelize;
@@ -141,10 +142,49 @@ describe("Redis", () => {
   });
   it("redis", async () => {
     const userLocationService = new UserLocationService();
-    // await userLocationService.setUserLocation(23,2.1,3.6);
-    // await userLocationService.setUserLocation(21,102,3.6);
-    // await userLocationService.setUserLocation(22,32,20);
+    await userLocationService.setUserLocation(23,2.1,3.6);
+    await userLocationService.setUserLocation(21,102,3.6);
+    await userLocationService.setUserLocation(22,32,20);
     const data = await userLocationService.getUserLocation(23);
     console.log(data);
   }, 2000000);
 });
+
+// describe("placeSave", () => {
+//   beforeAll(() => {
+//     sequelize;
+//     tf;
+//   });
+//   it("placeSave", async () => {
+//     const placeDao = new PlaceDao();
+//     await placeDao.savePlace("ancient",100,50,30);
+//     await placeDao.savePlace("medieval",600,50,50);
+//     await placeDao.savePlace("modern",1000,50,50);
+//     await placeDao.savePlace("donation",450,300,60);
+//     await placeDao.savePlace("painting",800,300,40);
+//     await placeDao.savePlace("world",300,600,40);
+//     await placeDao.savePlace("craft",900,600,50);
+
+//   }, 2000000);
+// });
+
+// describe("recommend", async () => {
+//   beforeAll(() => {
+//     sequelize;
+//     tf;
+//   });
+
+//   it("test", async () => {
+//     const pathGuideService = new PathGuideService();
+//     const userLocationService = new UserLocationService();
+//     try {
+//       await userLocationService.setUserLocation(23, 600, 200);
+//       const list = await pathGuideService.guidePathsByUserSeq(23);
+//       console.log(list);
+//     } catch (error) {
+//       if (error instanceof CustomError) console.log(error.getMessage);
+//       else console.log(error);
+//     }
+//   },2000000);
+
+// });

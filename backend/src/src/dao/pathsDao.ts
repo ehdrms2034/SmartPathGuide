@@ -32,7 +32,7 @@ export class PathsDao {
     return await Paths.findAll();
   }
 
-  public async createPaths(member: Member) {
+  public async createPaths(member: Member, RequestPath : RequestPath) {
     const newPath = Paths.build({
       userSeq: member.userSeq,
     });

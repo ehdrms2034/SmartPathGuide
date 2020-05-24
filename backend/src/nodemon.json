@@ -1,6 +1,6 @@
 {
   "watch": ["src"],
-  "ext": "ts",
+  "ext": "*",
   "ignore": ["src/public"],
   "exec": "ts-node -r tsconfig-paths/register ./src --env=development"
 }
