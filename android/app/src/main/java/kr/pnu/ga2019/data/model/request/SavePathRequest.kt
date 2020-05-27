@@ -4,6 +4,7 @@
 package kr.pnu.ga2019.data.model.request
 
 import com.google.gson.annotations.SerializedName
+import kr.pnu.ga2019.data.model.Request
 
 data class SavePathRequest(
 
@@ -27,4 +28,4 @@ data class SavePathRequest(
 
     @SerializedName("isCraft")
     val isCraft: Int
-)
+) : Request

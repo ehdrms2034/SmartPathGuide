@@ -10,7 +10,7 @@ data class RecommendResponse(
 
     @SerializedName("data")
     val data: List<Path>
-): Response() {
+): BaseResponse() {
 
     data class Path(
 

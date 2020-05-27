@@ -4,6 +4,7 @@
 package kr.pnu.ga2019.data.model.request
 
 import com.google.gson.annotations.SerializedName
+import kr.pnu.ga2019.data.model.Request
 
 data class AddUserRequest(
 
@@ -31,4 +32,4 @@ data class AddUserRequest(
     @SerializedName("craft")
     val craft: Int
 
-)
+) : Request

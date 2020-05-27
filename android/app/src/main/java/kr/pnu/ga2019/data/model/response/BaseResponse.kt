@@ -4,10 +4,13 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
+import kr.pnu.ga2019.data.model.Response
 
-data class BaseResponse(
+abstract class BaseResponse(
 
-    @SerializedName("data")
-    val data: String? = ""
+    @SerializedName("response")
+    val response: String = "",
 
-): Response()
+    @SerializedName("message")
+    val message: String = ""
+): Response

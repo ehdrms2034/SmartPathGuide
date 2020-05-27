@@ -6,7 +6,7 @@ package kr.pnu.ga2019.data.repository
 import android.util.Log
 import io.reactivex.Completable
 import kr.pnu.ga2019.data.RetrofitManager
-import kr.pnu.ga2019.data.model.PathApi
+import kr.pnu.ga2019.data.model.api.PathApi
 import kr.pnu.ga2019.domain.repository.PathRepository
 
 class PathRepositoryImpl : PathRepository {

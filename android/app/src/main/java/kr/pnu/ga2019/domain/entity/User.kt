@@ -3,8 +3,10 @@
  */
 package kr.pnu.ga2019.domain.entity
 
+import kr.pnu.ga2019.domain.Entity
+
 data class User(
     val id: Int,
     val locationX: Double,
     val locationY: Double
-)
+) : Entity

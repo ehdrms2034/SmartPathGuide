@@ -7,7 +7,7 @@ import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.data.RetrofitManager
-import kr.pnu.ga2019.data.model.UserApi
+import kr.pnu.ga2019.data.model.api.UserApi
 import kr.pnu.ga2019.data.model.response.toEntity
 import kr.pnu.ga2019.domain.entity.User
 import kr.pnu.ga2019.domain.repository.UserRepository
