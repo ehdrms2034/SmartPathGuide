@@ -21,7 +21,7 @@ router.get("/:memberPK", async (req, res) => {
     if (error instanceof CustomError)
       message = `${error.getType} : ${error.getMessage}`;
     else message = error.message;
-    res.json(new ApiResponse("error", "경로를 추천할 수 없었습니다.", message));
+    res.json(new ApiResponse("error", message, null));
   }
 });
 

@@ -22,25 +22,28 @@ paths:
         - application/json
 
       responses:
-        "200":
+        "200성공":
           description: 데이터 조회에 성공했을 때,
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  userSeq:
-                    type: integer
-                    example: 2
-                  age:
-                    type: integer
-                    example: 27
-                  createAt:
-                    type: string
-                    format: date-time
-                  updateAt:
-                    type: string
-                    format: date-time
+                $ref: "#/components/schemas/Response"
+              example:
+                response: success
+                message: userList 출력에 성공했습니다.
+                data: 
+                  - { userSeq : 2, age: 23}
+                  - { userSeq : 3, age: 38}
+        "200실패":
+          description: 데이터 조회에 실패했을 때,
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                response: success
+                message: errorStack
+                data: null1              
 
   /api/member/:
     post:
@@ -105,8 +108,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 회원추가에 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/userinfo/:
     post:
@@ -149,8 +152,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: userInfo데이터 생성에 실패했습니다..
-                data: errorStack
+                message: errorStack
+                data: null
     put:
       tags:
         - UserInfo
@@ -212,8 +215,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 유저Info데이터 수정에 실패했습니다..
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/userinfo/userlocation:
     post:
@@ -261,8 +264,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 사용자 위치를 수정하는데 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/userinfo/userlocation/{memberPK}:
     get:
@@ -306,8 +309,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 사용자 위치를 불러오는데 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/path/:
     post:
@@ -370,8 +373,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 유저의 방문경로를 저장하는데 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/recommend/{memberPk}:
     get:
@@ -414,8 +417,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 경로를 추천할 수 없었습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
 components:
   schemas:

@@ -13,8 +13,12 @@ const userInfoDao = new UserInfoDao();
 router.get("/", async (req: Request, res: Response) => {});
 
 router.get("/members", async (req: Request, res: Response) => {
-  const data = await memberDao.getAllMembers();
-  return res.json(data);
+  try{
+    const data = await memberDao.getAllMembers();
+    return res.json(new ApiResponse("success","리스트 출력에 성공했습니다.",data));
+  }catch(e){
+    res.json(new ApiResponse("error", error, null));
+  }
 });
 
 router.post("/", async (req: Request, res: Response) => {
@@ -46,7 +50,7 @@ router.post("/", async (req: Request, res: Response) => {
     });
     return res.json(response);
   } catch (error) {
-    res.json(new ApiResponse("error", "회원추가에 실패했습니다.", error));
+    res.json(new ApiResponse("error", error, null));
   }
 });
 
