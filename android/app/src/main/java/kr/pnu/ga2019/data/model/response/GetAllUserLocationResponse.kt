@@ -10,7 +10,7 @@ data class GetAllUserLocationResponse(
     @SerializedName("data")
     val data: UserLocation
 
-): Response() {
+): BaseResponse() {
 
     data class UserLocation(
         @SerializedName("myLocation")

@@ -4,6 +4,7 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
+import kr.pnu.ga2019.data.model.Response
 import kr.pnu.ga2019.domain.entity.User
 
 data class UserInfo(
@@ -16,7 +17,7 @@ data class UserInfo(
 
     @SerializedName("locationY")
     val locationY: Double
-)
+): Response
 
 fun UserInfo.toEntity(): User =
     User(
