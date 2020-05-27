@@ -4,6 +4,7 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
+import kr.pnu.ga2019.domain.entity.User
 
 data class GetAllUserLocationResponse(
 
@@ -21,3 +22,17 @@ data class GetAllUserLocationResponse(
     )
 
 }
+
+fun GetAllUserLocationResponse.toList(): List<User> =
+    ArrayList<UserInfo>().apply {
+        with(data) {
+            add(myLocation)
+            addAll(userData)
+        }
+    }.map { userInfo ->
+        User(
+            id = userInfo.memberSeq,
+            locationX = userInfo.locationX,
+            locationY = userInfo.locationY
+        )
+    }
