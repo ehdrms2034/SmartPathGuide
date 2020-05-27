@@ -105,8 +105,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 회원추가에 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/userinfo/:
     post:
@@ -149,8 +149,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: userInfo데이터 생성에 실패했습니다..
-                data: errorStack
+                message: errorStack
+                data: null
     put:
       tags:
         - UserInfo
@@ -212,8 +212,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 유저Info데이터 수정에 실패했습니다..
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/userinfo/userlocation:
     post:
@@ -261,8 +261,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 사용자 위치를 수정하는데 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/userinfo/userlocation/{memberPK}:
     get:
@@ -306,8 +306,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 사용자 위치를 불러오는데 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/path/:
     post:
@@ -370,8 +370,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 유저의 방문경로를 저장하는데 실패했습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
   /api/recommend/{memberPk}:
     get:
@@ -414,8 +414,8 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: error
-                message: 경로를 추천할 수 없었습니다.
-                data: errorStack
+                message: errorStack
+                data: null
 
 components:
   schemas:

@@ -46,7 +46,7 @@ router.post("/", async (req: Request, res: Response) => {
     });
     return res.json(response);
   } catch (error) {
-    res.json(new ApiResponse("error", "회원추가에 실패했습니다.", error));
+    res.json(new ApiResponse("error", error, null));
   }
 });
 

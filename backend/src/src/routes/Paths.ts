@@ -30,10 +30,10 @@ router.post("/", async (req: Request, res: Response) => {
     return;
   } catch (error) {
     if (error instanceof CustomError) {
-      res.json(new ApiResponse("error","유저의 방문경로를 저장하는데 실패했습니다.", error.getMessage));
+      res.json(new ApiResponse("error",error.getMessage,null));
       return;
     }
-    res.json(new ApiResponse("error","유저의 방문경로를 저장하는데 실패했습니다", error));
+    res.json(new ApiResponse("error",error,null));
   }
 });
 export default router;
