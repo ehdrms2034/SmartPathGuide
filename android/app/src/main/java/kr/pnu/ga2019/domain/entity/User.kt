@@ -1,0 +1,10 @@
+/*
+ * Created by Lee Oh Hyoung on 2020/05/28 .. 
+ */
+package kr.pnu.ga2019.domain.entity
+
+data class User(
+    val id: Int,
+    val locationX: Double,
+    val locationY: Double
+)
