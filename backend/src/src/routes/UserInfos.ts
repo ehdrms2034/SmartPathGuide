@@ -74,8 +74,8 @@ router.get("/userlocation/:memberPK", async (req: Request, res: Response) => {
     res.json(
       new ApiResponse(
         "error",
-        "사용자 위치를 불러오는데 실패했습니다.",
-        e.getMessage
+        e.getMessage,
+        null
       )
     );
   }
@@ -93,8 +93,8 @@ router.post("/userlocation", async (req: Request, res: Response) => {
     res.json(
       new ApiResponse(
         "error",
-        "사용자 위치를 수정하는데 실패했습니다.",
-        e.getMessage
+        e.getMessage,
+        null
       )
     );
   }
