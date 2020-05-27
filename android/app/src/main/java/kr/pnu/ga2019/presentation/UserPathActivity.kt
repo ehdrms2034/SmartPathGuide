@@ -37,5 +37,3 @@ class UserPathActivity : AppCompatActivity() {
         }
     }
 }
-
-//http://52.87.231.150:3000/api-docs/
