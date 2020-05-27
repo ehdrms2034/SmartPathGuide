@@ -4,7 +4,6 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
-import kr.pnu.ga2019.data.model.Response
 
 data class BaseResponse(
 

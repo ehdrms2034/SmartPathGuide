@@ -15,9 +15,13 @@ import java.util.concurrent.TimeUnit
 object RetrofitManager {
 
     private const val BASE_URL = "http://52.87.231.150:3000"
-    private const val CONNECT_TIMEOUT = 10L
-    private const val WRITE_TIMEOUT = 10L
-    private const val READ_TIMEOUT = 10L
+    private const val CONNECT_TIMEOUT = 30L
+    private const val WRITE_TIMEOUT = 30L
+    private const val READ_TIMEOUT = 30L
+
+    inline fun <reified T> create(service: Class<T>): T {
+        return getRetrofit().create(service)
+    }
 
     fun getRetrofit() : Retrofit =
         Retrofit.Builder()

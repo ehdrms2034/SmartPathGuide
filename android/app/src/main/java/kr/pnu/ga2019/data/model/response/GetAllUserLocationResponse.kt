@@ -4,13 +4,11 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
-import kr.pnu.ga2019.data.model.Response
-import kr.pnu.ga2019.data.model.UserInfo
 
 data class GetAllUserLocationResponse(
 
     @SerializedName("data")
-    val data: List<UserLocation>
+    val data: UserLocation
 
 ): Response() {
 

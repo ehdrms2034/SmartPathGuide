@@ -4,7 +4,7 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
-import kr.pnu.ga2019.data.model.Response
+import kr.pnu.ga2019.domain.entity.Point
 
 data class RecommendResponse(
 
@@ -27,3 +27,24 @@ data class RecommendResponse(
         val locationY: Double
     )
 }
+
+
+fun RecommendResponse.Path.toEntity(): Point =
+    Point(
+        seq = seq,
+        name = name,
+        locationX = locationX,
+        locationY = locationY
+    )
+
+fun RecommendResponse.toEntity(): List<Point> =
+    data.map { path ->
+        with(path) {
+            Point(
+                seq = seq,
+                name = name,
+                locationX = locationX,
+                locationY = locationY
+            )
+        }
+    }

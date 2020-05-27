@@ -4,6 +4,7 @@
 package kr.pnu.ga2019.data.model.response
 
 import com.google.gson.annotations.SerializedName
+import kr.pnu.ga2019.domain.entity.User
 
 data class UserResponse(
 
@@ -19,3 +20,10 @@ data class UserResponse(
     @SerializedName("updateAt")
     val updateAt: String = ""
 )
+
+fun UserResponse.toEntity(): User =
+    User(
+        id = userSeq,
+        locationX = 0.0,
+        locationY = 0.0
+    )
