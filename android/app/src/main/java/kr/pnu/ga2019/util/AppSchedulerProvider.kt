@@ -15,5 +15,5 @@ class AppSchedulerProvider : BaseSchedulerProvider {
 
     override fun trampoline(): Scheduler = Schedulers.trampoline()
 
-    override fun main(): Scheduler = AndroidSchedulers.mainThread()
+    override fun mainThread(): Scheduler = AndroidSchedulers.mainThread()
 }

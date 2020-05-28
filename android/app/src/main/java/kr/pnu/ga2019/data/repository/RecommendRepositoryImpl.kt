@@ -5,8 +5,8 @@ package kr.pnu.ga2019.data.repository
 
 import io.reactivex.Single
 import kr.pnu.ga2019.data.RetrofitManager
-import kr.pnu.ga2019.data.model.api.RecommendApi
-import kr.pnu.ga2019.data.model.response.toEntity
+import kr.pnu.ga2019.data.network.api.RecommendApi
+import kr.pnu.ga2019.data.network.response.toEntity
 import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.domain.repository.RecommendRepository
 
