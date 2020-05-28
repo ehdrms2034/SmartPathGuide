@@ -30,4 +30,9 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             adapter = UserPathAdapter()
         }
     }
+
+    override fun start() {
+        viewModel.start()
+    }
+
 }

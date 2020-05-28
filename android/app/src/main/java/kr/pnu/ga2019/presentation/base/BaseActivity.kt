@@ -22,11 +22,15 @@ abstract class BaseActivity<T : ViewDataBinding, V: BaseViewModel>(
 
     open fun setRecyclerView() { /* explicitly empty */ }
 
+    abstract fun start()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setBinding()
         bindViewModel()
+        observeError()
         setRecyclerView()
+        start()
     }
 
     private fun setBinding() {

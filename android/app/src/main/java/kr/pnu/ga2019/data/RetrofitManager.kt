@@ -4,7 +4,11 @@ import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -40,25 +44,27 @@ object RetrofitManager {
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .addNetworkInterceptor(getNetworkInterceptor())
             .addInterceptor(getLoggerInterceptor())
             .build()
 
-    private fun getNetworkInterceptor(): Interceptor =
-        HttpLoggingInterceptor().apply {
-            level = if(BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
+    private fun getLoggerInterceptor(): Interceptor = object: Interceptor {
+
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val response: Response = chain.proceed(chain.request().newBuilder().build())
+            val body: String = response.body?.string() ?: ""
+            try {
+                JSONObject(body)
+                Logger.t(TAG).json(body)
+            } catch (e: JSONException) {
+                Logger.t(TAG).d(body)
+            } finally {
+                return response.newBuilder()
+                    .body(ResponseBody.create(
+                        response.body?.contentType(),
+                        body)
+                    )
+                    .build()
             }
         }
-
-    private fun getLoggerInterceptor(): Interceptor =
-        HttpLoggingInterceptor(
-            object: HttpLoggingInterceptor.Logger {
-                override fun log(message: String) {
-                    Logger.t(TAG).i(message)
-                }
-            }
-        )
+    }
 }
