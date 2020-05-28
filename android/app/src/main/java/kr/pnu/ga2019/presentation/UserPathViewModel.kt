@@ -3,10 +3,9 @@
  */
 package kr.pnu.ga2019.presentation
 
-import android.util.Log
 import com.orhanobut.logger.Logger
 import io.reactivex.CompletableObserver
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import kr.pnu.ga2019.data.repository.PathRepositoryImpl
 import kr.pnu.ga2019.data.repository.RecommendRepositoryImpl
@@ -40,7 +39,7 @@ class UserPathViewModel(
     }
 
     fun start() =
-        Observable.timer(10, TimeUnit.SECONDS)
+        Single.timer(10, TimeUnit.SECONDS)
             .repeat()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
@@ -48,7 +47,7 @@ class UserPathViewModel(
             .addDisposable()
 
     private fun insertUser(
-        age: Int = Random.nextInt(12, 80),
+        age: Int = Random.nextInt(12, 81),
         ancient: Int = Random.nextInt(0, 101),
         medieval: Int = Random.nextInt(0, 101),
         modern: Int = Random.nextInt(0, 101),
@@ -80,5 +79,4 @@ class UserPathViewModel(
                 Logger.log(Logger.ERROR, TAG, e.message.toString(), e)
             }
         })
-
 }
