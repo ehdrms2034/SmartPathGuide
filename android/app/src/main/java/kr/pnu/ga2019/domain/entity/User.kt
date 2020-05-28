@@ -9,4 +9,8 @@ data class User(
     val id: Int,
     val locationX: Double,
     val locationY: Double
-) : Entity
+) : Entity {
+
+    val currentUserLocation: String =
+        "UserID - $id\tLocation: ($locationX, $locationY)"
+}

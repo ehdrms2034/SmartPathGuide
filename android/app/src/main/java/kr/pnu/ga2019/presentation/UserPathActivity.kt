@@ -17,6 +17,10 @@ class UserPathActivity : AppCompatActivity() {
         ViewModelProvider(this).get(UserPathViewModel::class.java)
     }
 
+    private val userPathAdapter: UserPathAdapter by lazy {
+        UserPathAdapter()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setBinding()
@@ -31,9 +35,13 @@ class UserPathActivity : AppCompatActivity() {
 
     private fun setRecyclerView() {
         with(binding.userPathRecyclerview) {
-            layoutManager = LinearLayoutManager(this@UserPathActivity)
+            layoutManager =
+                LinearLayoutManager(this@UserPathActivity).apply {
+                    reverseLayout = true
+                    stackFromEnd = true
+                }
             itemAnimator = DefaultItemAnimator()
-
+            adapter = userPathAdapter
         }
     }
 }
