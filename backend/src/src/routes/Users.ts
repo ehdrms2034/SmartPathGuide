@@ -17,7 +17,7 @@ router.get("/members", async (req: Request, res: Response) => {
     const data = await memberDao.getAllMembers();
     return res.json(new ApiResponse("success","리스트 출력에 성공했습니다.",data));
   }catch(e){
-    res.json(new ApiResponse("error", error, null));
+    res.json(new ApiResponse("error", e, null));
   }
 });
 

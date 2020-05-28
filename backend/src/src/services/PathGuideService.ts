@@ -29,7 +29,7 @@ class PathGuideService {
       pathRecommendService,
     } = this;
     const userLocation = await userLocationService.getUserLocation(memberPK);
-    const myLocation = userLocation[0].mydata;
+    const myLocation = userLocation.mydata;
     const userInfo = await userInfoDao.getUserInfo(memberPK);
     if (myLocation === null || myLocation === undefined)
       throw new CustomError(

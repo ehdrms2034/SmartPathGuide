@@ -297,8 +297,8 @@ paths:
                 response: success
                 message: 사용자 경로를 성공적으로 불러왔습니다.
                 data: 
-                  - myLocation : {memberSeq : 23, locationX : 2.1, locationY : 200}
-                  - usersData :
+                  myLocation : {memberSeq : 23, locationX : 2.1, locationY : 200}
+                  usersData :
                     - {memberSeq : 24, locationX : 32, locationY : 43}
                     - {memberSeq : 42, locationX : 39, locationY : 392}
         "200(실패)":
