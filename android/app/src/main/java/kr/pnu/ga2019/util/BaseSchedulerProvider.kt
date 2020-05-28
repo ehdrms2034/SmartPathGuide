@@ -13,5 +13,5 @@ interface BaseSchedulerProvider {
 
     fun trampoline(): Scheduler
 
-    fun main(): Scheduler
+    fun mainThread(): Scheduler
 }
