@@ -9,7 +9,7 @@ import kr.pnu.ga2019.domain.entity.Point
 data class RecommendResponse(
 
     @SerializedName("data")
-    val data: List<Path>
+    val data: List<Path>?
 ): BaseResponse() {
 
     data class Path(
@@ -38,7 +38,7 @@ fun RecommendResponse.Path.toEntity(): Point =
     )
 
 fun RecommendResponse.toEntity(): List<Point> =
-    data.map { path ->
+    data?.map { path ->
         with(path) {
             Point(
                 seq = seq,
@@ -47,4 +47,4 @@ fun RecommendResponse.toEntity(): List<Point> =
                 locationY = locationY
             )
         }
-    }
+    } ?: emptyList()

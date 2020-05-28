@@ -9,7 +9,7 @@ import kr.pnu.ga2019.domain.entity.User
 data class GetAllUserLocationResponse(
 
     @SerializedName("data")
-    val data: UserLocation
+    val data: UserLocation?
 
 ): BaseResponse() {
 
@@ -25,7 +25,7 @@ data class GetAllUserLocationResponse(
 
 fun GetAllUserLocationResponse.toList(): List<User> =
     ArrayList<UserInfo>().apply {
-        with(data) {
+        data?.run {
             add(myLocation)
             addAll(userData)
         }

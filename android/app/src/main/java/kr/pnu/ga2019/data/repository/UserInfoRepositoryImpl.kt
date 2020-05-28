@@ -8,6 +8,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.data.RetrofitManager
 import kr.pnu.ga2019.data.model.api.UserInfoApi
+import kr.pnu.ga2019.data.model.request.UpdateUserLocationRequest
 import kr.pnu.ga2019.data.model.response.UserInfo
 import kr.pnu.ga2019.data.model.response.toEntity
 import kr.pnu.ga2019.data.model.response.toList
@@ -26,7 +27,13 @@ class UserInfoRepositoryImpl : UserInfoRepository {
         locationY: Double
     ): Completable =
         RetrofitManager.create(UserInfoApi::class.java)
-            .postCurrentLocation(memberPk, locationX, locationY)
+            .postCurrentLocation(
+                UpdateUserLocationRequest(
+                    memberSeq =  memberPk,
+                    locationX = locationX,
+                    locationY = locationY
+                )
+            )
             .flatMapCompletable { response ->
                 Log.d(TAG, response.message)
                 Completable.complete()
