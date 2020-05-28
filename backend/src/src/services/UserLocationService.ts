@@ -35,10 +35,10 @@ class UserLocationService {
       throw new CustomError("error", "내 위치를 조회할 수 없습니다.");
     const { currentUsers } = UserLocationService;
     const myLocation: UserLocation = JSON.parse(data);
-    const result = [];
+    const result = { mydata : {locationX : 0,locationY : 0}, usersData : {} };
     const usersData = [];
 
-    result.push({ mydata: myLocation });
+    result.mydata = myLocation;
 
     for (const userLocation of currentUsers) {
       const data = (await redisGetData(
@@ -52,7 +52,7 @@ class UserLocationService {
       const userData: UserLocation = JSON.parse(data);
       if (userData.memberSeq !== id) usersData.push(userData);
     }
-    result.push({ usersData: usersData });
+    result.usersData = usersData;
     return result;
   }
 }
