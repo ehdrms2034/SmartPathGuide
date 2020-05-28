@@ -7,6 +7,7 @@ import android.util.Log
 import io.reactivex.Completable
 import kr.pnu.ga2019.data.RetrofitManager
 import kr.pnu.ga2019.data.model.api.PathApi
+import kr.pnu.ga2019.data.model.request.SavePathRequest
 import kr.pnu.ga2019.domain.repository.PathRepository
 
 class PathRepositoryImpl : PathRepository {
@@ -25,7 +26,17 @@ class PathRepositoryImpl : PathRepository {
         isCraft: Int
     ): Completable =
         RetrofitManager.create(PathApi::class.java)
-            .savePath(isAncient, isMedieval, isModern, isDonation, isPainting, isWorld, isCraft)
+            .savePath(
+                SavePathRequest(
+                    isAncient= isAncient,
+                    isMedieval = isMedieval,
+                    isModern = isModern,
+                    isDonation = isDonation,
+                    isPainting = isPainting,
+                    isWorld = isWorld,
+                    isCraft = isCraft
+                )
+            )
             .flatMapCompletable { response ->
                 Log.d(TAG, response.message)
                 Completable.complete()
