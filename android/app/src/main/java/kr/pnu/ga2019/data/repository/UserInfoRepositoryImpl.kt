@@ -7,11 +7,9 @@ import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.data.RetrofitManager
-import kr.pnu.ga2019.data.model.api.UserInfoApi
-import kr.pnu.ga2019.data.model.request.UpdateUserLocationRequest
-import kr.pnu.ga2019.data.model.response.UserInfo
-import kr.pnu.ga2019.data.model.response.toEntity
-import kr.pnu.ga2019.data.model.response.toList
+import kr.pnu.ga2019.data.network.api.UserInfoApi
+import kr.pnu.ga2019.data.network.request.UpdateUserLocationRequest
+import kr.pnu.ga2019.data.network.response.toList
 import kr.pnu.ga2019.domain.entity.User
 import kr.pnu.ga2019.domain.repository.UserInfoRepository
 
