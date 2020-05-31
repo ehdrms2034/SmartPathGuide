@@ -5,7 +5,6 @@ package kr.pnu.ga2019.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
 import io.reactivex.CompletableObserver
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -50,13 +49,13 @@ class UserPathViewModel(
 
     fun start() {
         stop()
+        showToast("Start")
         Single.timer(1, TimeUnit.SECONDS)
             .repeat()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe { insertUser() }
             .addDisposable()
-            .also { showToast("Start") }
     }
 
     fun stop(){

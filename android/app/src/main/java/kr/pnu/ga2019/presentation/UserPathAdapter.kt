@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ItemUserBinding
@@ -45,15 +44,6 @@ class UserPathAdapter (
             binding.path = path
         }
     }
-
-    private class PointDiffUtil : DiffUtil.ItemCallback<Path>() {
-        override fun areItemsTheSame(oldItem: Path, newItem: Path): Boolean =
-            oldItem.memberPk == newItem.memberPk
-
-        override fun areContentsTheSame(oldItem: Path, newItem: Path): Boolean =
-            oldItem == newItem
-    }
-
 }
 
 @BindingAdapter("setUserPath")
