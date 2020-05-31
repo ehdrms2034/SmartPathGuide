@@ -11,7 +11,13 @@ data class Path(
     val path: List<Point>
 ): Entity {
 
-    fun toUserPath(): String {
-        return "UserId - $memberPk\n${path.toPathString()}"
-    }
+    val pathString: String =
+        "UserId - $memberPk\n${path.toPathString()}"
+
+    fun getMyLocation(): Point =
+        path.first { it.name == "myLocation" }
+
+    fun getPointLocations(): List<Point> =
+        path.filter { it.name != "myLocation" }
+            .sortedBy { it.seq }
 }

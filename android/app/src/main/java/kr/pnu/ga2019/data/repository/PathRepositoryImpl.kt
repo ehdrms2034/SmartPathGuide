@@ -3,7 +3,6 @@
  */
 package kr.pnu.ga2019.data.repository
 
-import android.util.Log
 import io.reactivex.Completable
 import kr.pnu.ga2019.data.RetrofitManager
 import kr.pnu.ga2019.data.network.api.PathApi
@@ -37,9 +36,4 @@ class PathRepositoryImpl : PathRepository {
                     isCraft = isCraft
                 )
             )
-            .flatMapCompletable { response ->
-                Log.d(TAG, response.message)
-                Completable.complete()
-            }
-
 }

@@ -48,13 +48,21 @@ class UserPathViewModel(
     val userPath: LiveData<Path>
         get() = _userPath
 
-    fun start() =
-        Single.timer(10, TimeUnit.SECONDS)
+    fun start() {
+        stop()
+        Single.timer(1, TimeUnit.SECONDS)
             .repeat()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe { insertUser() }
             .addDisposable()
+            .also { showToast("Start") }
+    }
+
+    fun stop(){
+        clear()
+        showToast("Stop")
+    }
 
     private fun insertUser(
         age: Int = Random.nextInt(12, 81),
@@ -78,7 +86,6 @@ class UserPathViewModel(
         .observeOn(scheduler.mainThread())
         .subscribe(object: SingleObserver<User> {
             override fun onSuccess(user: User) {
-                Logger.d("return User : $user")
                 updateCurrentLocation(user.id)
             }
 
@@ -104,8 +111,6 @@ class UserPathViewModel(
         .subscribe(object: CompletableObserver {
             override fun onComplete() {
                 recommendPath(memberPk = memberPk)
-
-                Logger.d("updateCurrentLocation : UserId: $memberPk, $locationX, $locationY")
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -117,7 +122,7 @@ class UserPathViewModel(
             }
         })
 
-    private fun recommendPath(memberPk: Int) {
+    private fun recommendPath(memberPk: Int) =
         recommendRepository.getRecommend(memberPk = memberPk)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
@@ -134,5 +139,4 @@ class UserPathViewModel(
                     logError(throwable)
                 }
             })
-    }
 }

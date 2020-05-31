@@ -21,7 +21,7 @@ object RetrofitManager {
 
     private const val TAG: String = "RetrofitManager"
 
-    private const val BASE_URL = "http://52.87.231.150:3000"
+    private const val BASE_URL = "http://3.34.130.242:3000"
     private const val CONNECT_TIMEOUT = 30L
     private const val WRITE_TIMEOUT = 30L
     private const val READ_TIMEOUT = 30L
