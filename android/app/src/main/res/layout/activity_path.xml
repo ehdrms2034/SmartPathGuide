@@ -37,19 +37,43 @@
             app:layout_constraintTop_toBottomOf="@id/image_view_map"/>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="80dp"
-            android:layout_height="36dp"
-            android:onClick="@{() -> viewModel.dispose()}"
+            android:id="@+id/start_button"
+            android:layout_width="96dp"
+            android:layout_height="40dp"
+            android:onClick="@{() -> viewModel.start()}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/holo_orange_light">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="STOP"
-                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="@string/text_view_start_dispose"
+                android:textSize="20dp"
+                android:textColor="@color/colorBlack"
+                tools:ignore="SpUsage" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="96dp"
+            android:layout_height="40dp"
+            android:onClick="@{() -> viewModel.stop()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/start_button"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@android:color/holo_red_light">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:text="@string/text_view_stop_dispose"
+                android:textSize="20dp"
                 android:textColor="@color/colorBlack"
                 tools:ignore="SpUsage" />
 

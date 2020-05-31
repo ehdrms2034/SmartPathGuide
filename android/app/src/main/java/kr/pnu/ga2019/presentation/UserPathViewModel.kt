@@ -49,12 +49,14 @@ class UserPathViewModel(
         get() = _userPath
 
     fun start() =
-        Single.timer(10, TimeUnit.SECONDS)
+        Single.timer(3, TimeUnit.SECONDS)
             .repeat()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe { insertUser() }
             .addDisposable()
+
+    fun stop() = clear()
 
     private fun insertUser(
         age: Int = Random.nextInt(12, 81),

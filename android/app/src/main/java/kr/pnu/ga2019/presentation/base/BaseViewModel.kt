@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import kr.pnu.ga2019.presentation.UserPathViewModel
 import kr.pnu.ga2019.util.SingleLiveEvent
 
 abstract class BaseViewModel : ViewModel() {
@@ -27,9 +26,13 @@ abstract class BaseViewModel : ViewModel() {
         super.onCleared()
     }
 
-    fun dispose() {
-        if(!compositeDisposable.isDisposed) compositeDisposable.dispose()
-        else Logger.e("compositeDisposable is already disposed")
+    fun clear() {
+        if(!compositeDisposable.isDisposed)
+            compositeDisposable.clear()
+        else {
+            Logger.e("compositeDisposable is already disposed")
+            showToast("compositeDisposable is already disposed")
+        }
     }
 
     fun Disposable.addDisposable() =
