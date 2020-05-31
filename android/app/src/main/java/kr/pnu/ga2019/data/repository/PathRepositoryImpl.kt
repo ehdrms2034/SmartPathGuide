@@ -11,10 +11,6 @@ import kr.pnu.ga2019.domain.repository.PathRepository
 
 class PathRepositoryImpl : PathRepository {
 
-    companion object {
-        private const val TAG: String = "PathRepositoryImpl"
-    }
-
     override fun save(
         isAncient: Int,
         isMedieval: Int,

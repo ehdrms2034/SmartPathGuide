@@ -39,10 +39,6 @@ class UserPathViewModel(
         AppSchedulerProvider()
 ) : BaseViewModel() {
 
-    companion object {
-        private const val TAG: String = "UserPathViewModel"
-    }
-
     private val _userPath = MutableLiveData<Path>()
     val userPath: LiveData<Path>
         get() = _userPath

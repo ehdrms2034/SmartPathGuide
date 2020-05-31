@@ -14,10 +14,6 @@ import kr.pnu.ga2019.domain.repository.UserInfoRepository
 
 class UserInfoRepositoryImpl : UserInfoRepository {
 
-    companion object {
-        private const val TAG: String = "UserInfoRepositoryImpl"
-    }
-
     override fun updateCurrentLocation(
         memberPk: Int,
         locationX: Int,

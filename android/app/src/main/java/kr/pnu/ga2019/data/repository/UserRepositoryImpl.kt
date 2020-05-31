@@ -13,10 +13,6 @@ import kr.pnu.ga2019.domain.repository.UserRepository
 
 class UserRepositoryImpl : UserRepository {
 
-    companion object {
-        private const val TAG: String = "UserRepositoryImpl"
-    }
-
     override fun getAll(): Single<List<User>> =
         RetrofitManager.create(UserApi::class.java)
             .getAllUser()
