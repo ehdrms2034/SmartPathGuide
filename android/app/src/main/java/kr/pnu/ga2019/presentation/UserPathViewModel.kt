@@ -49,7 +49,7 @@ class UserPathViewModel(
         get() = _userPath
 
     fun start() =
-        Single.timer(3, TimeUnit.SECONDS)
+        Single.timer(5, TimeUnit.SECONDS)
             .repeat()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
@@ -80,7 +80,6 @@ class UserPathViewModel(
         .observeOn(scheduler.mainThread())
         .subscribe(object: SingleObserver<User> {
             override fun onSuccess(user: User) {
-                Logger.d("return User : $user")
                 updateCurrentLocation(user.id)
             }
 
@@ -106,8 +105,6 @@ class UserPathViewModel(
         .subscribe(object: CompletableObserver {
             override fun onComplete() {
                 recommendPath(memberPk = memberPk)
-
-                Logger.d("updateCurrentLocation : UserId: $memberPk, $locationX, $locationY")
             }
 
             override fun onSubscribe(d: Disposable) {
