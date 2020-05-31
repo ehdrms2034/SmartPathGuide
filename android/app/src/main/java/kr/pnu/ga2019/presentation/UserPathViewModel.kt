@@ -119,7 +119,7 @@ class UserPathViewModel(
             }
         })
 
-    private fun recommendPath(memberPk: Int) {
+    private fun recommendPath(memberPk: Int) =
         recommendRepository.getRecommend(memberPk = memberPk)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
@@ -136,5 +136,4 @@ class UserPathViewModel(
                     logError(throwable)
                 }
             })
-    }
 }

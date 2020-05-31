@@ -20,9 +20,7 @@ class UserRepositoryImpl : UserRepository {
     override fun getAll(): Single<List<User>> =
         RetrofitManager.create(UserApi::class.java)
             .getAllUser()
-            .map { response ->
-                response.map { it.toEntity() }
-            }
+            .map { response -> response.map { it.toEntity() } }
 
     override fun insert(
         age: Int,
