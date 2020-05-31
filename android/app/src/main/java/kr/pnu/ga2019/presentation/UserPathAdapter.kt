@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ItemUserBinding
 import kr.pnu.ga2019.domain.entity.Path
 
-class UserPathAdapter : RecyclerView.Adapter<UserPathAdapter.UserPathViewHolder>() {
+class UserPathAdapter (
+    private val onScrollWhenItemInserted: () -> Unit = {}
+) : RecyclerView.Adapter<UserPathAdapter.UserPathViewHolder>() {
 
     private val userPathList: ArrayList<Path> = arrayListOf()
 
@@ -33,8 +33,8 @@ class UserPathAdapter : RecyclerView.Adapter<UserPathAdapter.UserPathViewHolder>
 
     fun update(path: Path) {
         userPathList += path
-        userPathList.sortBy { it.memberPk }
-        notifyDataSetChanged()
+        notifyItemRangeChanged(itemCount, userPathList.size)
+        onScrollWhenItemInserted.invoke()
     }
 
     inner class UserPathViewHolder(

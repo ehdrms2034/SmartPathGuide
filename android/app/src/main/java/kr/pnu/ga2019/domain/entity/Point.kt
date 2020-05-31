@@ -13,7 +13,7 @@ data class Point(
 ) : Entity {
 
     val myLocation: String =
-        "$name - (${locationX.toInt()}, ${locationY.toInt()})\n"
+        "현재위치 - (${locationX.toInt()}, ${locationY.toInt()})\n"
 
     val point: String =
         "$seq. $name - (${locationX.toInt()}, ${locationY.toInt()})\n"
@@ -28,5 +28,6 @@ fun List<Point>.toPathString(): String =
                     .forEach { append(it.myLocation) }
             }
             .filter { it.name != "myLocation" }
+            .also { append("[경로]\n") }
             .forEach { append(it.point) }
     }.toString()
