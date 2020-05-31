@@ -15,6 +15,7 @@ import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
+import kr.pnu.ga2019.domain.entity.Path as UserPath
 
 class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     resourceId = R.layout.activity_path
@@ -32,39 +33,11 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     }
 
     override fun observeLiveData() {
-        viewModel.userPath.observe(this, Observer {
-            val view: LayoutUserPointBinding = createUserPoint(it.memberPk)
-            binding.mapRootLayout.addView(view.root)
-
-            val path = Path().apply {
-                moveTo(it.getMyLocation().locationX.toFloat(), it.getMyLocation().locationY.toFloat())
-                it.getPointLocations().forEach { point ->
-                    lineTo(point.locationX.toFloat(), point.locationY.toFloat())
-                }
-                close()
+        viewModel.userPath.observe(this, Observer { userPath ->
+            createUserPoint(userPath).let { view ->
+                binding.mapRootLayout.addView(view.root)
+                setUserPointAnimation(view.root, userPath)
             }
-
-            val animator = ObjectAnimator.ofFloat(view.root, View.X, View.Y, path)
-            animator.duration = ANIMATION_DURATION
-            animator.start()
-            animator.addListener(object: Animator.AnimatorListener {
-                override fun onAnimationRepeat(animation: Animator?) {
-                    /* explicitly empty */
-                }
-
-                override fun onAnimationEnd(animation: Animator?) {
-                    val target: View? = animator.target as? View
-                    binding.mapRootLayout.removeView(target)
-                }
-
-                override fun onAnimationCancel(animation: Animator?) {
-                    /* explicitly empty */
-                }
-
-                override fun onAnimationStart(animation: Animator?) {
-                    /* explicitly empty */
-                }
-            })
         })
     }
 
@@ -88,13 +61,46 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         viewModel.start()
     }
 
-    private fun createUserPoint(memberPk: Int): LayoutUserPointBinding =
+    private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =
         DataBindingUtil.inflate<LayoutUserPointBinding>(
             LayoutInflater.from(this),
             R.layout.layout_user_point,
             null,
             false
         ).apply {
-            userId = memberPk.toString()
+            userId = userPath.memberPk.toString()
+        }
+
+    private fun setUserPointAnimation(view: View, userPath: UserPath) {
+        val animator = ObjectAnimator.ofFloat(view, View.X, View.Y, getUserPointPath(userPath))
+        animator.duration = ANIMATION_DURATION
+        animator.start()
+        animator.addListener(object: Animator.AnimatorListener {
+            override fun onAnimationRepeat(animation: Animator?) {
+                /* explicitly empty */
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                val target: View? = animator.target as? View
+                binding.mapRootLayout.removeView(target)
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+                /* explicitly empty */
+            }
+
+            override fun onAnimationStart(animation: Animator?) {
+                /* explicitly empty */
+            }
+        })
+    }
+
+    private fun getUserPointPath(userPath: UserPath): Path =
+        Path().apply {
+            moveTo(userPath.getMyLocation().locationX.toFloat(), userPath.getMyLocation().locationY.toFloat())
+            userPath.getPointLocations().forEach { point ->
+                lineTo(point.locationX.toFloat(), point.locationY.toFloat())
+            }
+            close()
         }
 }
