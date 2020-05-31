@@ -3,7 +3,6 @@
  */
 package kr.pnu.ga2019.domain.repository
 
-import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.domain.Repository
 import kr.pnu.ga2019.domain.entity.User
@@ -21,6 +20,6 @@ interface UserRepository : Repository {
         painting: Int,
         world: Int,
         craft: Int
-    ): Completable
+    ): Single<User>
 
 }

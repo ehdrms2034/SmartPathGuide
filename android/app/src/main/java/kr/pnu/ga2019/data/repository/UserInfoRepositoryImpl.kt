@@ -19,13 +19,13 @@ class UserInfoRepositoryImpl : UserInfoRepository {
         private const val TAG: String = "UserInfoRepositoryImpl"
     }
 
-    override fun postCurrentLocation(
+    override fun updateCurrentLocation(
         memberPk: Int,
         locationX: Double,
         locationY: Double
     ): Completable =
         RetrofitManager.create(UserInfoApi::class.java)
-            .postCurrentLocation(
+            .updateCurrentLocation(
                 UpdateUserLocationRequest(
                     memberSeq =  memberPk,
                     locationX = locationX,

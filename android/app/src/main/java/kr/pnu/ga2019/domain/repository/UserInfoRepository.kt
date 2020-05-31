@@ -10,7 +10,7 @@ import kr.pnu.ga2019.domain.entity.User
 
 interface UserInfoRepository : Repository {
 
-    fun postCurrentLocation(
+    fun updateCurrentLocation(
         memberPk: Int,
         locationX: Double,
         locationY: Double

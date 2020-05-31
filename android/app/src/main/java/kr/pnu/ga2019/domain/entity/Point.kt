@@ -10,4 +10,15 @@ data class Point(
     val name: String,
     val locationX: Double,
     val locationY: Double
-) : Entity
+) : Entity {
+
+    val point: String =
+        "$name - ($locationX, $locationY)\n"
+}
+
+fun List<Point>.toPathString(): String =
+    StringBuilder().apply {
+        this@toPathString.forEach {
+            append(it.point)
+        }
+    }.toString()

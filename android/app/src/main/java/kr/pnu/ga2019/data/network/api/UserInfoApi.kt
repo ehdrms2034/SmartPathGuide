@@ -16,7 +16,7 @@ import retrofit2.http.Path
 interface UserInfoApi : Api {
 
     @POST("/api/userinfo/userlocation")
-    fun postCurrentLocation(
+    fun updateCurrentLocation(
         @Body updateUserLocationRequest: UpdateUserLocationRequest
     ): Single<CompletableResponse>
 
