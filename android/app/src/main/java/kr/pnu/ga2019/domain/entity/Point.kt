@@ -10,4 +10,23 @@ data class Point(
     val name: String,
     val locationX: Double,
     val locationY: Double
-) : Entity
+) : Entity {
+
+    val myLocation: String =
+        "$name - (${locationX.toInt()}, ${locationY.toInt()})\n"
+
+    val point: String =
+        "$seq. $name - (${locationX.toInt()}, ${locationY.toInt()})\n"
+}
+
+fun List<Point>.toPathString(): String =
+    StringBuilder().apply {
+        this@toPathString
+            .also { points ->
+                points
+                    .filter { point -> point.name == "myLocation" }
+                    .forEach { append(it.myLocation) }
+            }
+            .filter { it.name != "myLocation" }
+            .forEach { append(it.point) }
+    }.toString()

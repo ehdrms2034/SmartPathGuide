@@ -12,8 +12,8 @@ data class UpdateUserLocationRequest(
     val memberSeq: Int,
 
     @SerializedName("locationX")
-    val locationX: Double,
+    val locationX: Int,
 
     @SerializedName("locationY")
-    val locationY: Double
+    val locationY: Int
 ) : Request

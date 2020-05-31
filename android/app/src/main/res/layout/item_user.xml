@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="user"
-            type="kr.pnu.ga2019.domain.entity.User" />
+            name="path"
+            type="kr.pnu.ga2019.domain.entity.Path" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,8 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{user.currentUserLocation}"
+            android:text="@{path.toUserPath()}"
+            android:gravity="start"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

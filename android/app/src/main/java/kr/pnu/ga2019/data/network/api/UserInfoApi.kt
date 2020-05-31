@@ -3,6 +3,7 @@
  */
 package kr.pnu.ga2019.data.network.api
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.data.network.Api
 import kr.pnu.ga2019.data.network.request.UpdateUserLocationRequest
@@ -16,9 +17,9 @@ import retrofit2.http.Path
 interface UserInfoApi : Api {
 
     @POST("/api/userinfo/userlocation")
-    fun postCurrentLocation(
+    fun updateCurrentLocation(
         @Body updateUserLocationRequest: UpdateUserLocationRequest
-    ): Single<CompletableResponse>
+    ): Completable
 
     @GET("/api/user/userlocation/{memberPk}")
     fun getAllUserLocation(

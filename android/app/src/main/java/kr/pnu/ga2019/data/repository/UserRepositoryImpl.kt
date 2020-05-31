@@ -3,8 +3,6 @@
  */
 package kr.pnu.ga2019.data.repository
 
-import android.util.Log
-import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.data.RetrofitManager
 import kr.pnu.ga2019.data.network.api.UserApi
@@ -35,7 +33,7 @@ class UserRepositoryImpl : UserRepository {
         painting: Int,
         world: Int,
         craft: Int
-    ): Completable =
+    ): Single<User> =
         RetrofitManager.create(UserApi::class.java)
             .addUser(
                 AddUserRequest(
@@ -49,8 +47,5 @@ class UserRepositoryImpl : UserRepository {
                     craft = craft
                 )
             )
-            .flatMapCompletable { response ->
-                Log.d(TAG, response.message)
-                Completable.complete()
-            }
+            .map { response -> response.toEntity() }
 }

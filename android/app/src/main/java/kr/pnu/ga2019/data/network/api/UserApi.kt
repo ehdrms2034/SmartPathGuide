@@ -6,7 +6,7 @@ package kr.pnu.ga2019.data.network.api
 import io.reactivex.Single
 import kr.pnu.ga2019.data.network.Api
 import kr.pnu.ga2019.data.network.request.AddUserRequest
-import kr.pnu.ga2019.data.network.response.CompletableResponse
+import kr.pnu.ga2019.data.network.response.UserInsertResponse
 import kr.pnu.ga2019.data.network.response.UserResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,6 +20,6 @@ interface UserApi : Api {
     @POST("/api/member/")
     fun addUser(
         @Body addUserRequest: AddUserRequest
-    ): Single<CompletableResponse>
+    ): Single<UserInsertResponse>
 
 }

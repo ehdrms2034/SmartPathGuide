@@ -16,10 +16,6 @@ class RecommendRepositoryImpl : RecommendRepository {
         memberPk: Int
     ): Single<List<Point>> =
         RetrofitManager.create(RecommendApi::class.java)
-            .getRecommend(
-                memberPk = memberPk
-            )
-            .map { response ->
-                response.toEntity()
-            }
+            .getRecommend(memberPk = memberPk)
+            .map { response -> response.toEntity() }
 }

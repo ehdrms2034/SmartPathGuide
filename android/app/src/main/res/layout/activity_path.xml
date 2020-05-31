@@ -28,12 +28,32 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_path_recyclerview"
+            setUserPath="@{viewModel.userPath}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_view_map"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="36dp"
+            android:onClick="@{() -> viewModel.dispose()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardElevation="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="STOP"
+                android:textSize="18dp"
+                android:textColor="@color/colorBlack"
+                tools:ignore="SpUsage" />
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
