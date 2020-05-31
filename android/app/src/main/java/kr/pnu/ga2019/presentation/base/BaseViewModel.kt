@@ -35,6 +35,8 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
+    fun isDisposed(): Boolean = compositeDisposable.isDisposed
+
     fun Disposable.addDisposable() =
         compositeDisposable.add(this)
 

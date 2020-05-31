@@ -5,15 +5,12 @@ import android.animation.ObjectAnimator
 import android.graphics.Path
 import android.view.LayoutInflater
 import android.view.View
-import android.view.animation.PathInterpolator
-import android.view.animation.TranslateAnimation
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
@@ -22,6 +19,9 @@ import kr.pnu.ga2019.presentation.base.BaseActivity
 class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     resourceId = R.layout.activity_path
 ) {
+    companion object {
+        private const val ANIMATION_DURATION: Long = 20000L
+    }
 
     override val viewModel: UserPathViewModel by lazy {
         ViewModelProvider(this).get(UserPathViewModel::class.java)
@@ -34,7 +34,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     override fun observeLiveData() {
         viewModel.userPath.observe(this, Observer {
             val view: LayoutUserPointBinding = createUserPoint(it.memberPk)
-            binding.activityPathRootLayout.addView(view.root)
+            binding.mapRootLayout.addView(view.root)
 
             val path = Path().apply {
                 moveTo(it.getMyLocation().locationX.toFloat(), it.getMyLocation().locationY.toFloat())
@@ -45,7 +45,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             }
 
             val animator = ObjectAnimator.ofFloat(view.root, View.X, View.Y, path)
-            animator.duration = 10000L
+            animator.duration = ANIMATION_DURATION
             animator.start()
             animator.addListener(object: Animator.AnimatorListener {
                 override fun onAnimationRepeat(animation: Animator?) {
@@ -53,8 +53,8 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    val target = animator.target as? View
-                    target?.visibility = View.GONE
+                    val target: View? = animator.target as? View
+                    binding.mapRootLayout.removeView(target)
                 }
 
                 override fun onAnimationCancel(animation: Animator?) {

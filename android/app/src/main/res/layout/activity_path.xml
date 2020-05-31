@@ -16,16 +16,27 @@
         android:background="@color/colorWhite"
         tools:context=".presentation.UserPathActivity">
 
-        <ImageView
-            android:id="@+id/image_view_map"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/map_root_layout"
             android:layout_width="0dp"
             android:layout_height="300dp"
-            android:src="@drawable/map_image_1"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/image_view_map_description"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/image_view_map"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/map_image_1"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/image_view_map_description"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/user_path_recyclerview"
@@ -35,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_view_map"/>
+            app:layout_constraintTop_toBottomOf="@id/map_root_layout"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/start_button"

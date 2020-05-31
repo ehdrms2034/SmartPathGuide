@@ -48,17 +48,16 @@ class UserPathViewModel(
     val userPath: LiveData<Path>
         get() = _userPath
 
-    fun start() =
-        stop().also {
-            Single.timer(1, TimeUnit.SECONDS)
-                .repeat()
-                .subscribeOn(scheduler.io())
-                .observeOn(scheduler.mainThread())
-                .subscribe { insertUser() }
-                .addDisposable()
-                .also { showToast("Start") }
-        }
-
+    fun start() {
+        stop()
+        Single.timer(1, TimeUnit.SECONDS)
+            .repeat()
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.mainThread())
+            .subscribe { insertUser() }
+            .addDisposable()
+            .also { showToast("Start") }
+    }
 
     fun stop(){
         clear()
