@@ -15,8 +15,8 @@ data class UserInsertResponse(
 
     data class UserPk(
 
-        @SerializedName("memberPk")
-        val memberPk: Int = 0
+        @SerializedName("memberPK")
+        val memberPk: Int
     )
 }
 

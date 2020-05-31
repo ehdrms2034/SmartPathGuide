@@ -34,5 +34,4 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     override fun start() {
         viewModel.start()
     }
-
 }

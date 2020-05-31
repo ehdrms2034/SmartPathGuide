@@ -27,6 +27,11 @@ abstract class BaseViewModel : ViewModel() {
         super.onCleared()
     }
 
+    fun dispose() {
+        if(!compositeDisposable.isDisposed) compositeDisposable.dispose()
+        else Logger.e("compositeDisposable is already disposed")
+    }
+
     fun Disposable.addDisposable() =
         compositeDisposable.add(this)
 

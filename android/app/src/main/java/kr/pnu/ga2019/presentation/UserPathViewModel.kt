@@ -14,6 +14,7 @@ import kr.pnu.ga2019.data.repository.PathRepositoryImpl
 import kr.pnu.ga2019.data.repository.RecommendRepositoryImpl
 import kr.pnu.ga2019.data.repository.UserInfoRepositoryImpl
 import kr.pnu.ga2019.data.repository.UserRepositoryImpl
+import kr.pnu.ga2019.domain.entity.Path
 import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.domain.entity.User
 import kr.pnu.ga2019.domain.repository.PathRepository
@@ -43,8 +44,8 @@ class UserPathViewModel(
         private const val TAG: String = "UserPathViewModel"
     }
 
-    private val _userPath = MutableLiveData<List<Point>>()
-    val userPath: LiveData<List<Point>>
+    private val _userPath = MutableLiveData<Path>()
+    val userPath: LiveData<Path>
         get() = _userPath
 
     fun start() =
@@ -77,6 +78,7 @@ class UserPathViewModel(
         .observeOn(scheduler.mainThread())
         .subscribe(object: SingleObserver<User> {
             override fun onSuccess(user: User) {
+                Logger.d("return User : $user")
                 updateCurrentLocation(user.id)
             }
 
@@ -87,13 +89,12 @@ class UserPathViewModel(
             override fun onError(throwable: Throwable) {
                 logError(throwable)
             }
-
         })
 
     private fun updateCurrentLocation(
         memberPk: Int,
-        locationX: Double = Random.nextInt(0, 1000).toDouble(),
-        locationY: Double = Random.nextInt(0, 1000).toDouble()
+        locationX: Int = Random.nextInt(0, 1000),
+        locationY: Int = Random.nextInt(0, 1000)
     ) = userInfoRepository.updateCurrentLocation(
         memberPk = memberPk,
         locationX = locationX,
@@ -103,6 +104,8 @@ class UserPathViewModel(
         .subscribe(object: CompletableObserver {
             override fun onComplete() {
                 recommendPath(memberPk = memberPk)
+
+                Logger.d("updateCurrentLocation : UserId: $memberPk, $locationX, $locationY")
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -119,8 +122,8 @@ class UserPathViewModel(
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe(object: SingleObserver<List<Point>> {
-                override fun onSuccess(path: List<Point>) {
-                    _userPath.value = path
+                override fun onSuccess(points: List<Point>) {
+                    _userPath.value = Path(memberPk, points)
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -130,7 +133,6 @@ class UserPathViewModel(
                 override fun onError(throwable: Throwable) {
                     logError(throwable)
                 }
-
             })
     }
 }

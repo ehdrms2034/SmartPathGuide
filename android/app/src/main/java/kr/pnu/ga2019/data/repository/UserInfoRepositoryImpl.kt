@@ -3,7 +3,6 @@
  */
 package kr.pnu.ga2019.data.repository
 
-import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Single
 import kr.pnu.ga2019.data.RetrofitManager
@@ -21,8 +20,8 @@ class UserInfoRepositoryImpl : UserInfoRepository {
 
     override fun updateCurrentLocation(
         memberPk: Int,
-        locationX: Double,
-        locationY: Double
+        locationX: Int,
+        locationY: Int
     ): Completable =
         RetrofitManager.create(UserInfoApi::class.java)
             .updateCurrentLocation(
@@ -32,10 +31,6 @@ class UserInfoRepositoryImpl : UserInfoRepository {
                     locationY = locationY
                 )
             )
-            .flatMapCompletable { response ->
-                Log.d(TAG, response.message)
-                Completable.complete()
-            }
 
     override fun getAllUserLocation(memberPk: Int): Single<List<User>> =
         RetrofitManager.create(UserInfoApi::class.java)

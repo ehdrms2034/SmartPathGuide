@@ -12,9 +12,6 @@ data class Path(
 ): Entity {
 
     fun toUserPath(): String {
-        path.forEach {
-            it.point
-        }
-        return "UserId - $memberPk, "
+        return "UserId - $memberPk\n${path.toPathString()}"
     }
 }

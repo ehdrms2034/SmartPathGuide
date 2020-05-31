@@ -10,11 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ItemUserBinding
 import kr.pnu.ga2019.domain.entity.Path
 
-class UserPathAdapter : ListAdapter<Path, UserPathAdapter.UserPathViewHolder>(PointDiffUtil()) {
+class UserPathAdapter : RecyclerView.Adapter<UserPathAdapter.UserPathViewHolder>() {
+
+    private val userPathList: ArrayList<Path> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPathViewHolder =
         UserPathViewHolder(
@@ -24,8 +27,15 @@ class UserPathAdapter : ListAdapter<Path, UserPathAdapter.UserPathViewHolder>(Po
         )
 
     override fun onBindViewHolder(holder: UserPathViewHolder, position: Int): Unit =
-        holder.bindTo(currentList[position])
+        holder.bindTo(userPathList[position])
 
+    override fun getItemCount(): Int = userPathList.count()
+
+    fun update(path: Path) {
+        userPathList += path
+        userPathList.sortBy { it.memberPk }
+        notifyDataSetChanged()
+    }
 
     inner class UserPathViewHolder(
         private val binding: ItemUserBinding
@@ -46,9 +56,9 @@ class UserPathAdapter : ListAdapter<Path, UserPathAdapter.UserPathViewHolder>(Po
 
 }
 
-@BindingAdapter("setUser")
-fun RecyclerView.setUser(list: List<Path>?) =
-    list?.let {
+@BindingAdapter("setUserPath")
+fun RecyclerView.setUserPath(path: Path?) =
+    path?.let {
         val adapter: UserPathAdapter? = adapter as? UserPathAdapter
-        adapter?.submitList(it)
+        adapter?.update(path)
     }

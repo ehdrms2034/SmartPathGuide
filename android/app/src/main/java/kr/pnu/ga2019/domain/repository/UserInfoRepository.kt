@@ -12,8 +12,8 @@ interface UserInfoRepository : Repository {
 
     fun updateCurrentLocation(
         memberPk: Int,
-        locationX: Double,
-        locationY: Double
+        locationX: Int,
+        locationY: Int
     ): Completable
 
     fun getAllUserLocation(memberPk: Int): Single<List<User>>
