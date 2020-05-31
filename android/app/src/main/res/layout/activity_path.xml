@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_path_root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
@@ -41,8 +42,8 @@
             android:layout_width="96dp"
             android:layout_height="40dp"
             android:onClick="@{() -> viewModel.start()}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@android:color/holo_orange_light">
 
@@ -62,8 +63,8 @@
             android:layout_width="96dp"
             android:layout_height="40dp"
             android:onClick="@{() -> viewModel.stop()}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/start_button"
+            app:layout_constraintEnd_toStartOf="@id/start_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:cardElevation="0dp"
             app:cardBackgroundColor="@android:color/holo_red_light">
 
