@@ -1,4 +1,4 @@
-package kr.pnu.ga2019.presentation.all
+package kr.pnu.ga2019.presentation.user
 
 import android.animation.Animator
 import android.animation.ObjectAnimator

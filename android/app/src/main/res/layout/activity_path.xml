@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="kr.pnu.ga2019.presentation.all.UserPathViewModel" />
+            type="kr.pnu.ga2019.presentation.user.UserPathViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
-        tools:context=".presentation.all.UserPathActivity">
+        tools:context=".presentation.user.UserPathActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/map_root_layout"
