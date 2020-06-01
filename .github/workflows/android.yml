@@ -23,9 +23,9 @@ jobs:
        with:
          java-version: 1.8
           
-     - name: Build android project
+     - name: Build Android Project
        run: cd android ; ./gradlew build
        
-     - name: Unit tests
+     - name: Run Unit Test
        run: cd android ; ./gradlew test --stacktrace
        
