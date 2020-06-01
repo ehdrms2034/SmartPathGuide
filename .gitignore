@@ -18,9 +18,6 @@ bin/
 gen/
 out/
 release/
-
-# Gradle files
-.gradle/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -258,9 +255,6 @@ bin/
 gen/
 out/
 release/
-
-# Gradle files
-.gradle/
 build/
 
 # Local configuration file (sdk path, etc)
@@ -351,9 +345,6 @@ output.json
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# Gradle files
-.gradle
-
 # Signing files
 .signing/
 
@@ -422,7 +413,6 @@ fabric.properties
 
 # Android Studio
 **.iml
-.gradle
 /local.properties
 .idea
 
