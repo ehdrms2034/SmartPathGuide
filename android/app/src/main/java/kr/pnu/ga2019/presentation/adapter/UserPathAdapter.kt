@@ -36,6 +36,11 @@ class UserPathAdapter (
         onScrollWhenItemInserted.invoke()
     }
 
+    fun clear(){
+        userPathList.clear()
+        notifyDataSetChanged()
+    }
+
     inner class UserPathViewHolder(
         private val binding: ItemUserBinding
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -52,3 +57,12 @@ fun RecyclerView.setUserPath(path: Path?) =
         val adapter: UserPathAdapter? = adapter as? UserPathAdapter
         adapter?.update(path)
     }
+
+@BindingAdapter("setPersonEnter")
+fun RecyclerView.setPersonEnter(path: Path?) =
+    path?.let {
+        val adapter: UserPathAdapter? = adapter as? UserPathAdapter
+        adapter?.clear()
+        adapter?.update(path)
+    }
+
