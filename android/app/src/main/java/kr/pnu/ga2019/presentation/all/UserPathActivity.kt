@@ -1,4 +1,4 @@
-package kr.pnu.ga2019.presentation
+package kr.pnu.ga2019.presentation.all
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
+import kr.pnu.ga2019.presentation.adapter.UserPathAdapter
 import kr.pnu.ga2019.presentation.base.BaseActivity
+import kr.pnu.ga2019.util.PointAnimator
 import kr.pnu.ga2019.domain.entity.Path as UserPath
 
 class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
@@ -72,27 +74,17 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         }
 
     private fun setUserPointAnimation(view: View, userPath: UserPath) {
-        val animator = ObjectAnimator.ofFloat(view, View.X, View.Y, getUserPointPath(userPath))
-        animator.duration = ANIMATION_DURATION
-        animator.start()
-        animator.addListener(object: Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {
-                /* explicitly empty */
-            }
+        ObjectAnimator.ofFloat(view, View.X, View.Y, getUserPointPath(userPath)).apply {
+            duration =
+                ANIMATION_DURATION
+            addListener(object: PointAnimator() {
+                override fun onAnimationEnd(animation: Animator) {
+                    val target: View? = target as? View
+                    binding.mapRootLayout.removeView(target)
+                }
+            })
+        }.start()
 
-            override fun onAnimationEnd(animation: Animator?) {
-                val target: View? = animator.target as? View
-                binding.mapRootLayout.removeView(target)
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-                /* explicitly empty */
-            }
-
-            override fun onAnimationStart(animation: Animator?) {
-                /* explicitly empty */
-            }
-        })
     }
 
     private fun getUserPointPath(userPath: UserPath): Path =

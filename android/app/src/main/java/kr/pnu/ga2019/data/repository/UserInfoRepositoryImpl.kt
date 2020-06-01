@@ -12,29 +12,26 @@ import kr.pnu.ga2019.data.network.response.toList
 import kr.pnu.ga2019.domain.entity.User
 import kr.pnu.ga2019.domain.repository.UserInfoRepository
 
-class UserInfoRepositoryImpl : UserInfoRepository {
-
-    companion object {
-        private const val TAG: String = "UserInfoRepositoryImpl"
-    }
+class UserInfoRepositoryImpl(
+    private val userInfoApi: UserInfoApi =
+        RetrofitManager.create(UserInfoApi::class.java)
+) : UserInfoRepository {
 
     override fun updateCurrentLocation(
         memberPk: Int,
         locationX: Int,
         locationY: Int
     ): Completable =
-        RetrofitManager.create(UserInfoApi::class.java)
-            .updateCurrentLocation(
-                UpdateUserLocationRequest(
-                    memberSeq =  memberPk,
-                    locationX = locationX,
-                    locationY = locationY
-                )
+        userInfoApi.updateCurrentLocation(
+            UpdateUserLocationRequest(
+                memberSeq =  memberPk,
+                locationX = locationX,
+                locationY = locationY
             )
+        )
 
     override fun getAllUserLocation(memberPk: Int): Single<List<User>> =
-        RetrofitManager.create(UserInfoApi::class.java)
-            .getAllUserLocation(memberPk)
+        userInfoApi.getAllUserLocation(memberPk)
             .map { response -> response.toList() }
 
 }

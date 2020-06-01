@@ -9,11 +9,10 @@ import kr.pnu.ga2019.data.network.api.PathApi
 import kr.pnu.ga2019.data.network.request.SavePathRequest
 import kr.pnu.ga2019.domain.repository.PathRepository
 
-class PathRepositoryImpl : PathRepository {
-
-    companion object {
-        private const val TAG: String = "PathRepositoryImpl"
-    }
+class PathRepositoryImpl(
+    private val pathApi: PathApi =
+        RetrofitManager.create(PathApi::class.java)
+) : PathRepository {
 
     override fun save(
         isAncient: Int,
@@ -24,16 +23,15 @@ class PathRepositoryImpl : PathRepository {
         isWorld: Int,
         isCraft: Int
     ): Completable =
-        RetrofitManager.create(PathApi::class.java)
-            .savePath(
-                SavePathRequest(
-                    isAncient= isAncient,
-                    isMedieval = isMedieval,
-                    isModern = isModern,
-                    isDonation = isDonation,
-                    isPainting = isPainting,
-                    isWorld = isWorld,
-                    isCraft = isCraft
-                )
+        pathApi.savePath(
+            SavePathRequest(
+                isAncient= isAncient,
+                isMedieval = isMedieval,
+                isModern = isModern,
+                isDonation = isDonation,
+                isPainting = isPainting,
+                isWorld = isWorld,
+                isCraft = isCraft
             )
+        )
 }

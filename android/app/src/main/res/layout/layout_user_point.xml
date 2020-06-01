@@ -17,7 +17,7 @@
             android:id="@+id/user_point"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/drawable_user_point"
+            android:src="@drawable/drawable_user_point_red"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

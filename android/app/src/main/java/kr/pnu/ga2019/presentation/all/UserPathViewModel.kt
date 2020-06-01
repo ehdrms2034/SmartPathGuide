@@ -1,7 +1,7 @@
 /*
  * Created by Lee Oh Hyoung on 2020/05/26 .. 
  */
-package kr.pnu.ga2019.presentation
+package kr.pnu.ga2019.presentation.all
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -38,10 +38,6 @@ class UserPathViewModel(
     private val scheduler: BaseSchedulerProvider =
         AppSchedulerProvider()
 ) : BaseViewModel() {
-
-    companion object {
-        private const val TAG: String = "UserPathViewModel"
-    }
 
     private val _userPath = MutableLiveData<Path>()
     val userPath: LiveData<Path>

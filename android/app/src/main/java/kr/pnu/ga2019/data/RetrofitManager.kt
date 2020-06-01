@@ -1,12 +1,10 @@
 package kr.pnu.ga2019.data
 
 import com.orhanobut.logger.Logger
-import kr.pnu.ga2019.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.ResponseBody
-import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Retrofit
@@ -21,10 +19,10 @@ object RetrofitManager {
 
     private const val TAG: String = "RetrofitManager"
 
-    private const val BASE_URL = "http://3.34.130.242:3000"
-    private const val CONNECT_TIMEOUT = 30L
-    private const val WRITE_TIMEOUT = 30L
-    private const val READ_TIMEOUT = 30L
+    private const val BASE_URL: String = "http://3.34.130.242:3000"
+    private const val CONNECT_TIMEOUT: Long = 30L
+    private const val WRITE_TIMEOUT: Long = 30L
+    private const val READ_TIMEOUT: Long = 30L
 
     fun <T> create(service: Class<T>): T =
         getRetrofit().create(service)
