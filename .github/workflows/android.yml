@@ -9,6 +9,13 @@ on:
       - '*'
 
 jobs:
+  ci:
+    name: Build + Test 
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        api-level: [24, 29]
+    
   test:
     name: Run Unit Tests
     runs-on: ubunto-latest
