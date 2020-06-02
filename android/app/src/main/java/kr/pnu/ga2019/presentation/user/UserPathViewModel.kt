@@ -1,7 +1,7 @@
 /*
  * Created by Lee Oh Hyoung on 2020/05/26 .. 
  */
-package kr.pnu.ga2019.presentation.all
+package kr.pnu.ga2019.presentation.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
