@@ -6,7 +6,6 @@ package kr.pnu.ga2019.presentation.personal
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.CompletableObserver
-import io.reactivex.FlowableSubscriber
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
@@ -24,8 +23,6 @@ import kr.pnu.ga2019.domain.repository.UserRepository
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.util.AppSchedulerProvider
 import kr.pnu.ga2019.util.BaseSchedulerProvider
-import kr.pnu.ga2019.util.SingleLiveEvent
-import org.reactivestreams.Subscription
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -50,19 +47,13 @@ class PersonalPathViewModel(
     val person: LiveData<Path>
         get() = _person
 
-    private val _restart = SingleLiveEvent<Any>()
-    val restart: LiveData<Any>
-        get() = _restart
-
     fun start() {
         clear()
-        showToast("Start")
         Single.timer(800, TimeUnit.MILLISECONDS)
-            .repeat(40)
+            .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .doOnComplete {
-                showToast("Visitor is set, Let's enter person.")
                 enter(isPerson = true)
             }
             .subscribe({
@@ -71,18 +62,6 @@ class PersonalPathViewModel(
                 logError(throwable)
             })
             .addDisposable()
-    }
-
-    fun stop() {
-        clear()
-        showToast("STOP")
-    }
-
-    fun restart() {
-        clear()
-        showToast("RESTART")
-        start()
-        _restart.call()
     }
 
     private fun enter(
@@ -123,8 +102,8 @@ class PersonalPathViewModel(
 
     private fun updateCurrentLocation(
         memberPk: Int,
-        locationX: Int = Random.nextInt(0, 1000),
-        locationY: Int = Random.nextInt(0, 1000),
+        locationX: Int = Random.nextInt(0, 1200),
+        locationY: Int = Random.nextInt(0, 700),
         isPerson: Boolean = false
     ) = userInfoRepository.updateCurrentLocation(
         memberPk = memberPk,
