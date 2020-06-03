@@ -21,7 +21,8 @@ release/
 build/
 
 # gradlew/
-!android/gradle/wrapper/
+!android/gradle/wrapper/gradle-wrapper.jar
+!android/gradle/wrapper/gradle-wrapper.properties
 
 
 # Local configuration file (sdk path, etc)
