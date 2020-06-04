@@ -132,7 +132,7 @@ paths:
                 $ref: "#/components/schemas/Response"
               example:
                 response: success
-                message: 박물관 정보를 성공적으로 불러왔습니다.
+                message: 성공적으로 박물관 정보를 요청했습니다.
                 data: 
                   - { name : ancient, maxPeople: 30, locationX : 100, locationY : 50 ,createdAt : "날짜", updatedAt : "날짜"}
                   - { name : medieval, maxPeople: 40, locationX : 100, locationY : 110 ,createdAt : "날짜", updatedAt : "날짜"}

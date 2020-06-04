@@ -23,11 +23,9 @@ class PlaceDao {
     return await Place.findOne({ where: { name } });
   }
 
-  async getPlaces(){
-      return await Place.findAll();
+  async getPlaces() {
+    return await Place.findAll({ attributes: { exclude: ["key"] } });
   }
-
-
 }
 
 export default PlaceDao;
