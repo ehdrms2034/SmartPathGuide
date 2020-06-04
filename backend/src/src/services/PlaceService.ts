@@ -21,6 +21,10 @@ class PlaceService {
         return placeDao.getPlaceByName(name);
     }
 
+    async getPlaces(){
+        return await this.placeDao.getPlaces()
+    }
+
     async getPlaceByArray(names : Array<string>) : Promise<Array<Place>>{
         const places : Array<Place> = [];
         for(const name of names){

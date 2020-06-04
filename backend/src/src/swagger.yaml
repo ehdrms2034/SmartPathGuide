@@ -9,6 +9,7 @@ tags:
   - name: UserInfo
   - name: Path
   - name: Recommend
+  - name: Place
 paths:
   /api/member/members:
     get:
@@ -43,7 +44,7 @@ paths:
               example:
                 response: success
                 message: errorStack
-                data: null1              
+                data: null              
 
   /api/member/:
     post:
@@ -110,6 +111,41 @@ paths:
                 response: error
                 message: errorStack
                 data: null
+
+  /api/place/places:
+    get:
+      tags:
+        - Place
+      summary: 모든 박물관 전시관의 정보를 불러온다
+      description: ""
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      responses:
+        "200성공":
+          description: 데이터 조회에 성공했을 때,
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                response: success
+                message: 박물관 정보를 성공적으로 불러왔습니다.
+                data: 
+                  - { name : ancient, maxPeople: 30, locationX : 100, locationY : 50 ,createdAt : "날짜", updatedAt : "날짜"}
+                  - { name : medieval, maxPeople: 40, locationX : 100, locationY : 110 ,createdAt : "날짜", updatedAt : "날짜"}
+        "200실패":
+          description: 데이터 조회에 실패했을 때,
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                response: success
+                message: errorStack
+                data: null 
 
   /api/userinfo/:
     post:
