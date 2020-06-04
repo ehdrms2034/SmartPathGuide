@@ -5,11 +5,11 @@ import { UserInfo } from "@models/UserInfo";
 import { Place } from "@models/Place";
 
 export const sequelize = new Sequelize({
-  database: process.env.MYSQL_DATABASE,
+  database: "smartpath",
   dialect: "mysql",
   username: "smartpath",
   password: "smartpath",
-  host: process.env.MYSQL_HOST,
+  host: "localhost",
   logging: false,
 });
 
