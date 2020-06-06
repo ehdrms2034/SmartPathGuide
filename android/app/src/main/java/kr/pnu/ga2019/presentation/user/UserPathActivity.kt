@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
-import kr.pnu.ga2019.presentation.adapter.UserPathAdapter
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.util.PointAnimator
 import org.jetbrains.anko.intentFor
