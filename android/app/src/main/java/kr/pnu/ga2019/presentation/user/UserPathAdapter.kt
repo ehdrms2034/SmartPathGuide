@@ -12,6 +12,7 @@ import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ItemUserBinding
 import kr.pnu.ga2019.domain.entity.Path
 
+@Deprecated("no longer used because recyclerview is deleted")
 class UserPathAdapter (
     private val onScrollWhenItemInserted: () -> Unit = {}
 ) : RecyclerView.Adapter<UserPathAdapter.UserPathViewHolder>() {
@@ -41,6 +42,7 @@ class UserPathAdapter (
         notifyDataSetChanged()
     }
 
+    @Deprecated("no longer used because recyclerview is deleted")
     inner class UserPathViewHolder(
         private val binding: ItemUserBinding
     ) : RecyclerView.ViewHolder(binding.root) {
