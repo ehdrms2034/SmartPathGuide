@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
-import kr.pnu.ga2019.presentation.personal.PersonalPathActivity
+import kr.pnu.ga2019.presentation.user.UserPathActivity
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
@@ -23,7 +23,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
 
     override fun observeLiveData() {
         viewModel.start.observe(this, Observer {
-            PersonalPathActivity.start(this)
+            UserPathActivity.start(context = this)
         })
     }
 

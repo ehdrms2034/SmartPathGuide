@@ -9,17 +9,11 @@ import io.reactivex.CompletableObserver
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import kr.pnu.ga2019.data.repository.PathRepositoryImpl
-import kr.pnu.ga2019.data.repository.RecommendRepositoryImpl
-import kr.pnu.ga2019.data.repository.UserInfoRepositoryImpl
-import kr.pnu.ga2019.data.repository.UserRepositoryImpl
+import kr.pnu.ga2019.data.repository.*
 import kr.pnu.ga2019.domain.entity.Path
 import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.domain.entity.User
-import kr.pnu.ga2019.domain.repository.PathRepository
-import kr.pnu.ga2019.domain.repository.RecommendRepository
-import kr.pnu.ga2019.domain.repository.UserInfoRepository
-import kr.pnu.ga2019.domain.repository.UserRepository
+import kr.pnu.ga2019.domain.repository.*
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.util.AppSchedulerProvider
 import kr.pnu.ga2019.util.BaseSchedulerProvider
@@ -35,6 +29,8 @@ class UserPathViewModel(
         PathRepositoryImpl(),
     private val recommendRepository: RecommendRepository =
         RecommendRepositoryImpl(),
+    private val placeRepository: PlaceRepository =
+        PlaceRepositoryImpl(),
     private val scheduler: BaseSchedulerProvider =
         AppSchedulerProvider()
 ) : BaseViewModel() {
@@ -42,6 +38,13 @@ class UserPathViewModel(
     private val _userPath = MutableLiveData<Path>()
     val userPath: LiveData<Path>
         get() = _userPath
+
+    fun getAllPlace() =
+        placeRepository.getAllPlace()
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.mainThread())
+            .subscribe()
+            .addDisposable()
 
     fun start() {
         stop()

@@ -2,6 +2,7 @@ package kr.pnu.ga2019.presentation.user
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.Path
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.presentation.adapter.UserPathAdapter
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.util.PointAnimator
+import org.jetbrains.anko.intentFor
 import kr.pnu.ga2019.domain.entity.Path as UserPath
 
 class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
@@ -24,6 +26,12 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 ) {
     companion object {
         private const val ANIMATION_DURATION: Long = 20000L
+
+        fun start(context: Context) {
+            context.startActivity(
+                context.intentFor<UserPathActivity>()
+            )
+        }
     }
 
     override val viewModel: UserPathViewModel by lazy {
@@ -60,7 +68,8 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     }
 
     override fun start() {
-        viewModel.start()
+        viewModel.getAllPlace()
+        //viewModel.start()
     }
 
     private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =
