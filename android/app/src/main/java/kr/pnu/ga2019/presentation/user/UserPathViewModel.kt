@@ -48,6 +48,7 @@ class UserPathViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({ list ->
                 places.value = list
+                start()
             }, { throwable ->
                 logError(throwable)
             })
@@ -56,8 +57,8 @@ class UserPathViewModel(
     fun start() {
         clear()
         showToast("Start")
-        Single.timer(1, TimeUnit.SECONDS)
-            .repeat()
+        Single.timer(200L, TimeUnit.MILLISECONDS)
+            .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe { insertUser() }
@@ -105,8 +106,8 @@ class UserPathViewModel(
 
     private fun updateCurrentLocation(
         memberPk: Int,
-        locationX: Int = Random.nextInt(0, 1000),
-        locationY: Int = Random.nextInt(0, 1000)
+        locationX: Int = Random.nextInt(0, 1200),
+        locationY: Int = Random.nextInt(0, 700)
     ) = userInfoRepository.updateCurrentLocation(
         memberPk = memberPk,
         locationX = locationX,
