@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
+import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.util.PointAnimator
@@ -43,11 +44,21 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                 setUserPointAnimation(view.root, userPath)
             }
         })
+
+        viewModel.places.observe(this, Observer { places ->
+            places.forEach { place ->
+                val pin = LayoutPlacePinBinding.inflate(layoutInflater)
+                pin.place = place
+                pin.root.x = place.locationX.toFloat()
+                pin.root.y = place.locationY.toFloat()
+                binding.mapRootLayout.addView(pin.root)
+            }
+        })
     }
 
     override fun start() {
         viewModel.getAllPlace()
-        viewModel.start()
+        //viewModel.start()
     }
 
     private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =

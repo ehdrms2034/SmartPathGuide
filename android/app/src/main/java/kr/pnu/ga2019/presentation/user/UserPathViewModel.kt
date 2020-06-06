@@ -11,6 +11,7 @@ import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import kr.pnu.ga2019.data.repository.*
 import kr.pnu.ga2019.domain.entity.Path
+import kr.pnu.ga2019.domain.entity.Place
 import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.domain.entity.User
 import kr.pnu.ga2019.domain.repository.*
@@ -39,11 +40,17 @@ class UserPathViewModel(
     val userPath: LiveData<Path>
         get() = _userPath
 
+    val places = MutableLiveData<List<Place>>()
+
     fun getAllPlace() =
         placeRepository.getAllPlace()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
-            .subscribe()
+            .subscribe({ list ->
+                places.value = list
+            }, { throwable ->
+                logError(throwable)
+            })
             .addDisposable()
 
     fun start() {

@@ -5,6 +5,7 @@
     <!-- ImageView Description -->
     <string name="image_view_map_description">메인화면에서 보여줄 지도 이미지뷰</string>
     <string name="image_view_point_description">포인트가 추가될 이미지뷰</string>
+    <string name="image_view_pin_description">전시관 각 지점을 의미하는 이미지뷰</string>
 
     <!-- TextView Text -->
     <string name="text_view_start_dispose">START</string>
