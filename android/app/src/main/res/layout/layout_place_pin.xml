@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/image_pin"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/image_view_pin_description"
             app:srcCompat="@drawable/icon_pin"
