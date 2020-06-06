@@ -6,12 +6,9 @@ import android.content.Context
 import android.graphics.Path
 import android.view.LayoutInflater
 import android.view.View
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
@@ -33,9 +30,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         }
     }
 
-    override val viewModel: UserPathViewModel by lazy {
-        ViewModelProvider(this).get(UserPathViewModel::class.java)
-    }
+    override val viewModel: UserPathViewModel by viewModels()
 
     override fun bindViewModel() {
         binding.viewModel = viewModel
@@ -52,7 +47,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 
     override fun start() {
         viewModel.getAllPlace()
-        //viewModel.start()
+        viewModel.start()
     }
 
     private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =

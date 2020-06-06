@@ -86,6 +86,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
+    implementation "androidx.activity:activity-ktx:1.1.0"
 
     // Logger
     implementation 'com.orhanobut:logger:2.2.0'
