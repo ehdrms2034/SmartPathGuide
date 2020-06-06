@@ -47,7 +47,7 @@ class UserPathViewModel(
             .addDisposable()
 
     fun start() {
-        stop()
+        clear()
         showToast("Start")
         Single.timer(1, TimeUnit.SECONDS)
             .repeat()

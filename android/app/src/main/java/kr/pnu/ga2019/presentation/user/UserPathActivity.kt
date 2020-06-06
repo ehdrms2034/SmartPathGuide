@@ -50,22 +50,6 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         })
     }
 
-    override fun setRecyclerView() {
-        with(binding.userPathRecyclerview) {
-            layoutManager = LinearLayoutManager(
-                this@UserPathActivity,
-                RecyclerView.VERTICAL,
-                false
-            ).apply {
-                stackFromEnd = true
-            }
-            itemAnimator = DefaultItemAnimator()
-            adapter = UserPathAdapter {
-                scrollToPosition(adapter?.itemCount!! - 1)
-            }
-        }
-    }
-
     override fun start() {
         viewModel.getAllPlace()
         //viewModel.start()
