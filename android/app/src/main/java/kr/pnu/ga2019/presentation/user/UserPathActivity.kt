@@ -47,7 +47,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             places.forEach { place ->
                 val pin = LayoutPlacePinBinding.inflate(layoutInflater)
                 pin.place = place
-                pin.root.x = place.locationX.toFloat()
+                pin.root.x = place.locationX.times(0.8).toFloat()
                 pin.root.y = place.locationY.times(2).toFloat()
                 binding.mapRootLayout.addView(pin.root)
             }
@@ -55,6 +55,8 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     }
 
     override fun start() {
+        binding.moveButton.setOnClickListener {  }
+
         viewModel.getAllPlace()
     }
 
@@ -79,7 +81,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     private fun getUserPointPath(userPath: UserPath): Path =
         Path().apply {
             moveTo(
-                userPath.getPointLocations().first().locationX.toFloat(),
+                userPath.getPointLocations().first().locationX.times(0.8).toFloat(),
                 userPath.getPointLocations().first().locationY.times(2).toFloat()
             )
 

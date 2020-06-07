@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <data>
         <variable
             name="viewModel"
-            type="kr.pnu.ga2019.presentation.splash.SplashViewModel" />
+            type="kr.pnu.ga2019.presentation.splash.SplashViewModel"
+            />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBrown">
+        android:background="@color/colorBrown"
+        >
 
         <TextView
             android:id="@+id/splash_title"
@@ -25,7 +28,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/img_musium"
-            tools:ignore="SpUsage" />
+            tools:ignore="SpUsage"
+            />
 
         <ImageView
             android:id="@+id/img_musium"
@@ -35,7 +39,8 @@
             app:layout_constraintTop_toBottomOf="@id/splash_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/enter_button"/>
+            app:layout_constraintBottom_toTopOf="@id/enter_button"
+            />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/enter_button"
@@ -50,7 +55,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/colorWhite">
+            app:cardBackgroundColor="@color/colorWhite"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -60,7 +66,8 @@
                 android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
-                tools:ignore="SpUsage" />
+                tools:ignore="SpUsage"
+                />
 
         </androidx.cardview.widget.CardView>
 
