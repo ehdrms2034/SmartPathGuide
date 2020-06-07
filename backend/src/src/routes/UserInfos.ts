@@ -31,6 +31,11 @@ router.put("/", async (req: Request, res: Response) => {
     painting,
     world,
     craft,
+    science,
+    space,
+    human,
+    natural,
+    future
   } = req.body;
 
   const dummyUserInfo = new UserInfo();
@@ -41,6 +46,11 @@ router.put("/", async (req: Request, res: Response) => {
   dummyUserInfo.painting = painting;
   dummyUserInfo.world = world;
   dummyUserInfo.craft = craft;
+  dummyUserInfo.science = science;
+  dummyUserInfo.space = space;
+  dummyUserInfo.human = human;
+  dummyUserInfo.natural = natural;
+  dummyUserInfo.future = future;
 
   const userInfoDao = new UserInfoDao();
   try {

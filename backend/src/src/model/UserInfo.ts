@@ -37,6 +37,26 @@ export class UserInfo extends Model<UserInfo> {
     @Column
     craft !:number;
 
+    @Default(0)
+    @Column
+    science !:number;
+
+    @Default(0)
+    @Column
+    space !: number;
+
+    @Default(0)
+    @Column
+    human !: number;
+
+    @Default(0)
+    @Column
+    natural !: number;
+
+    @Default(0)
+    @Column
+    future !: number;
+    
     @BelongsTo(()=>Member)
     member !:Member;
 }

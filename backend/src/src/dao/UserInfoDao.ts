@@ -45,6 +45,11 @@ export default class UserInfoDao {
     userInfo.painting = reqUserInfo.painting;
     userInfo.world = reqUserInfo.world;
     userInfo.craft = reqUserInfo.craft;
+    userInfo.science = reqUserInfo.science;
+    userInfo.space = reqUserInfo.space;
+    userInfo.human = reqUserInfo.human;
+    userInfo.natural = reqUserInfo.natural;
+    userInfo.future = reqUserInfo.future;
     await userInfo.save();
   }
 }

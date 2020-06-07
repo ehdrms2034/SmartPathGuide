@@ -45,6 +45,11 @@ class PathGuideService {
         userInfo.painting,
         userInfo.world,
         userInfo.craft,
+        userInfo.science,
+        userInfo.space,
+        userInfo.human,
+        userInfo.natural,
+        userInfo.future
       ],
     ]);
     const isAncient = await pathRecommendService.recommandAntient(userTensor);
@@ -54,6 +59,11 @@ class PathGuideService {
     const isPainting = await pathRecommendService.recommandPainting(userTensor);
     const isWorld = await pathRecommendService.recommandPainting(userTensor);
     const isCraft = await pathRecommendService.recommandCraft(userTensor);
+    const isScience = await pathRecommendService.recommandScience(userTensor);
+    const isSpace = await pathRecommendService.recommandSpace(userTensor);
+    const isHuman = await pathRecommendService.recommandHuman(userTensor);
+    const isNatural = await pathRecommendService.recommandNatural(userTensor);
+    const isFuture = await pathRecommendService.recommandFuture(userTensor);
 
     const recommendResult = [
       isAncient,
@@ -63,6 +73,11 @@ class PathGuideService {
       isPainting,
       isWorld,
       isCraft,
+      isScience,
+      isSpace,
+      isHuman,
+      isNatural,
+      isFuture
     ];
 
     const recommends = recommendResult
@@ -83,6 +98,16 @@ class PathGuideService {
             return "world";
           case 6:
             return "craft";
+          case 7:
+            return "science"
+          case 8:
+            return "space"
+          case 9:
+            return "human"
+          case 10:
+            return "natural"
+          case 11:
+            return "future"
         }
       }) as Array<string>;
 
@@ -95,7 +120,7 @@ class PathGuideService {
 
     let places: Array<Place> = [];
     const myTmpLocation = new Place({
-      name: "myLocation",
+      name: "Entrance/Exit",
       locationX: myLocation.locationX,
       locationY: myLocation.locationY,
       maxPeople: 0,
@@ -140,6 +165,7 @@ class PathGuideService {
       totalVisit++;
       parsedList.push(places[currentVisit]);
     }
+    parsedList.push(myTmpLocation);
     const resultData = parsedList.map((it,index)=>{return {seq : index ,name : it.name, locationX : it.locationX, locationY : it.locationY}});
     return resultData;
   }

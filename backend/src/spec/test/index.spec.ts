@@ -56,6 +56,11 @@ import { CustomError } from "@models/customError";
 //       newUserInfo.painting = Math.round(Math.random() * 100) + 1;
 //       newUserInfo.world = Math.round(Math.random() * 100) + 1;
 //       newUserInfo.craft = Math.round(Math.random() * 100) + 1;
+//       newUserInfo.science = Math.round(Math.random() * 100) + 1;
+//       newUserInfo.space = Math.round(Math.random() * 100) + 1;
+//       newUserInfo.human = Math.round(Math.random() * 100) + 1;
+//       newUserInfo.natural = Math.round(Math.random() * 100) + 1;
+//       newUserInfo.future = Math.round(Math.random() * 100) + 1;
 //       await userInfoDao.createUserInfo(member.userSeq);
 //       await userInfoDao.setUserInfo(member.userSeq, newUserInfo);
 
@@ -68,6 +73,11 @@ import { CustomError } from "@models/customError";
 //       const isPainting = Math.round(Math.random()*100 / newUserInfo.painting) <= 1 ? 1 : 0;
 //       const isWorld = Math.round(Math.random()*100 / newUserInfo.world) <= 1 ? 1 : 0;
 //       const isCraft = Math.round(Math.random()*100 / newUserInfo.craft) <= 1 ? 1 : 0;
+//       const isScience = Math.round(Math.random()*100 / newUserInfo.science) <= 1 ? 1 : 0;
+//       const isSpace = Math.round(Math.random()*100 / newUserInfo.space) <= 1 ? 1 : 0;
+//       const isHuman = Math.round(Math.random()*100 / newUserInfo.human) <= 1 ? 1 : 0;
+//       const isNatural = Math.round(Math.random()*100 / newUserInfo.natural) <= 1 ? 1 : 0;
+//       const isFuture = Math.round(Math.random()*100 / newUserInfo.future) <= 1 ? 1 : 0;
 
 //       const reqPaths :RequestPath = {
 //         ancient : isAncient,
@@ -76,34 +86,44 @@ import { CustomError } from "@models/customError";
 //         donation : isDonation,
 //         painting : isPainting,
 //         world : isWorld,
-//         craft : isCraft
+//         craft : isCraft,
+//         science : isScience,
+//         space : isSpace,
+//         human : isHuman,
+//         natural : isNatural,
+//         future : isFuture
 //       };
 
-//       await pathsDao.createPaths(member);
-//       await pathsDao.setPaths(member.userSeq, reqPaths);
-
+//       await pathsDao.createPaths(member,reqPaths);
+//       await pathsDao.setPaths(member.userSeq,reqPaths);
 //     }
-//   });
+//   },2000000);
 // });
 
-// describe("Tensorflow",()=>{
-//   beforeAll(()=>{
-//     sequelize;
-//     tf;
-//   });
-//   it("tesorTuto",async ()=>{
-//     const PathRecommendService = new PathRecommendService();
-//     await PathRecommendService.makeAncientModel();
-//     await PathRecommendService.makeMedievalModel();
-//     await PathRecommendService.makeModernModel();
-//     await PathRecommendService.makePaintingModel();
-//     await PathRecommendService.makeDonationModel();
-//     await PathRecommendService.makeWorldModel();
-//     await PathRecommendService.makeCraftModel();
+describe("Tensorflow",()=>{
+  beforeAll(()=>{
+    sequelize;
+    tf;
+  });
+  it("tesorTuto",async ()=>{
+    const pathRecommendService = new PathRecommendService();
+    await pathRecommendService.makeAncientModel();
+    await pathRecommendService.makeMedievalModel();
+    await pathRecommendService.makeModernModel();
+    await pathRecommendService.makePaintingModel();
+    await pathRecommendService.makeDonationModel();
+    await pathRecommendService.makeWorldModel();
+    await pathRecommendService.makeCraftModel();
+    await pathRecommendService.makeScienceModel();
+    await pathRecommendService.makeSpaceModel();
+    await pathRecommendService.makeHumanModel();
+    await pathRecommendService.makeNaturalModel();
+    await pathRecommendService.makeFutureModel();
 
-//     //tf.tensor([1,2]).print();
-//   },2000000);
-// })
+
+    //tf.tensor([1,2]).print();
+  },2000000);
+})
 
 // describe("Tensorflow", () => {
 //   beforeAll(() => {
@@ -135,20 +155,20 @@ import { CustomError } from "@models/customError";
 //   }, 2000000);
 // });
 
-describe("Redis", () => {
-  beforeAll(() => {
-    sequelize;
-    tf;
-  });
-  it("redis", async () => {
-    const userLocationService = new UserLocationService();
-    await userLocationService.setUserLocation(23,2.1,3.6);
-    await userLocationService.setUserLocation(21,102,3.6);
-    await userLocationService.setUserLocation(22,32,20);
-    const data = await userLocationService.getUserLocation(23);
-    console.log(data);
-  }, 2000000);
-});
+// describe("Redis", () => {
+//   beforeAll(() => {
+//     sequelize;
+//     tf;
+//   });
+//   it("redis", async () => {
+//     const userLocationService = new UserLocationService();
+//     await userLocationService.setUserLocation(23,2.1,3.6);
+//     await userLocationService.setUserLocation(21,102,3.6);
+//     await userLocationService.setUserLocation(22,32,20);
+//     const data = await userLocationService.getUserLocation(23);
+//     console.log(data);
+//   }, 2000000);
+// });
 
 // describe("placeSave", () => {
 //   beforeAll(() => {
