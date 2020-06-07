@@ -39,4 +39,18 @@ export class Paths extends Model<Paths> {
     @Column
     public craft !: number;
     
+    @Column
+    public science !:number;
+
+    @Column
+    public space !: number;
+
+    @Column
+    public human !: number;
+
+    @Column
+    public natural !: number;
+
+    @Column
+    public future !: number;
 }

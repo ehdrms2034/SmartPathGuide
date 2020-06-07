@@ -16,7 +16,12 @@ export interface RequestPath {
   donation : number,
   painting : number,
   world : number,
-  craft : number
+  craft : number,
+  science : number,
+  space : number,
+  human : number,
+  natural : number,
+  future : number
 };
 
 export class PathsDao {
@@ -48,6 +53,11 @@ export class PathsDao {
     paths.painting = reqPath.painting;
     paths.world = reqPath.world;
     paths.craft = reqPath.craft;
+    paths.science = reqPath.science;
+    paths.space = reqPath.space;
+    paths.human = reqPath.human;
+    paths.natural = reqPath.natural;
+    paths.future = reqPath.future;
     return await paths.save();
   }
 
