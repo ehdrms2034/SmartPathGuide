@@ -10,5 +10,6 @@
     <string name="text_view_start_dispose">START</string>
     <string name="text_view_restart_dispose">RE-START</string>
     <string name="text_view_stop_dispose">STOP</string>
+    <string name="text_view_enter_button">입장하기</string>
 
 </resources>
