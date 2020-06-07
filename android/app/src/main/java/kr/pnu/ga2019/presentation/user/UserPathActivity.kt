@@ -54,9 +54,11 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         })
     }
 
-    override fun start() {
-        binding.moveButton.setOnClickListener {  }
+    override fun setListener() {
 
+    }
+
+    override fun start() {
         viewModel.getAllPlace()
     }
 

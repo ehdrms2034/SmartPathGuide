@@ -3,7 +3,6 @@
  */
 package kr.pnu.ga2019.presentation.splash
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
@@ -17,14 +16,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
         ViewModelProvider(this).get(SplashViewModel::class.java)
     }
 
-    override fun bindViewModel() {
-        binding.viewModel = viewModel
-    }
-
-    override fun observeLiveData() {
-        viewModel.start.observe(this, Observer {
-            UserPathActivity.start(context = this)
-        })
+    override fun setListener() {
+        binding.enterButton.setOnClickListener { UserPathActivity.start(context = this) }
     }
 
     override fun start() {

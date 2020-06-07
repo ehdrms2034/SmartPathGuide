@@ -24,6 +24,8 @@ abstract class BaseActivity<T : ViewDataBinding, V: BaseViewModel>(
 
     open fun observeLiveData() { /* explicitly empty */ }
 
+    open fun setListener() { /* explicitly empty */ }
+
     abstract fun start()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ abstract class BaseActivity<T : ViewDataBinding, V: BaseViewModel>(
         bindViewModel()
         observeLiveData()
         observeError()
+        setListener()
         setRecyclerView()
         start()
     }
