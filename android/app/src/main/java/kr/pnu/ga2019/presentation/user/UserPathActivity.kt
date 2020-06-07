@@ -13,6 +13,7 @@ import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
+import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import org.jetbrains.anko.intentFor
 import kotlin.random.Random
@@ -22,9 +23,13 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     resourceId = R.layout.activity_path
 ) {
     companion object {
-        fun start(context: Context) {
+        private const val EXTRA_PREFERENCE: String = "preference"
+
+        fun start(context: Context, preference: Preference) {
             context.startActivity(
-                context.intentFor<UserPathActivity>()
+                context.intentFor<UserPathActivity>(
+                    EXTRA_PREFERENCE to preference
+                )
             )
         }
     }

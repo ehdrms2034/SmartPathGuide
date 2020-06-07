@@ -3,6 +3,7 @@
  */
 package kr.pnu.ga2019.presentation.user
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.CompletableObserver
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class UserPathViewModel(
+    application: Application,
     private val userRepository: UserRepository =
         UserRepositoryImpl(),
     private val userInfoRepository: UserInfoRepository =
@@ -34,7 +36,7 @@ class UserPathViewModel(
         PlaceRepositoryImpl(),
     private val scheduler: BaseSchedulerProvider =
         AppSchedulerProvider()
-) : BaseViewModel() {
+) : BaseViewModel(application) {
 
     private val _userPath = MutableLiveData<Path>()
     val userPath: LiveData<Path>
