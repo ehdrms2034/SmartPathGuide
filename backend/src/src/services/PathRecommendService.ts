@@ -541,7 +541,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -591,7 +591,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
