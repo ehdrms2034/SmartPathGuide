@@ -83,6 +83,16 @@ class PathGuideService {
             return "world";
           case 6:
             return "craft";
+          case 7:
+            return "science"
+          case 8:
+            return "space"
+          case 9:
+            return "human"
+          case 10:
+            return "natural"
+          case 11:
+            return "future"
         }
       }) as Array<string>;
 

@@ -8,6 +8,7 @@ import path from "path";
 
 class PathRecommendService {
   private USER_RECOMMAND_PERCENT = 0.5;
+  private INPUT_SHAPE = 12;
 
   private userInfoDao: UserInfoDao;
   private pathsDao: PathsDao;
@@ -39,7 +40,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -60,7 +61,7 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30]]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
@@ -88,7 +89,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -109,7 +110,7 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30]]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
@@ -137,7 +138,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -158,7 +159,7 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30]]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
@@ -186,7 +187,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -207,7 +208,9 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
@@ -235,7 +238,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -256,7 +259,9 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
@@ -284,7 +289,7 @@ class PathRecommendService {
 
     const model = tf.sequential({
       layers: [
-        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
         tf.layers.dense({ units: 8, activation: "relu" }),
         tf.layers.dense({ units: 1, activation: "sigmoid" }),
       ],
@@ -305,7 +310,9 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
@@ -324,6 +331,207 @@ class PathRecommendService {
     const testPaths = await this.getTestPathSet();
     const target = trainPaths.map((it) => it.donation);
     const testTarget = testPaths.map((it) => it.donation);
+
+    const input = tf.tensor(trainSet);
+    const output = tf.tensor(target);
+
+    const xTest = tf.tensor(testSet);
+    const yTest = tf.tensor(testTarget);
+
+    const model = tf.sequential({
+      layers: [
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
+        tf.layers.dense({ units: 8, activation: "relu" }),
+        tf.layers.dense({ units: 1, activation: "sigmoid" }),
+      ],
+    });
+
+    model.compile({
+      optimizer: tf.train.adam(),
+      loss: "binaryCrossentropy",
+      metrics: ["accuracy"],
+    });
+
+    await model.fit(input, output, {
+      epochs: 300,
+      batchSize: 70,
+      shuffle: true,
+      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc" })],
+    });
+
+    // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
+    // const acc = scores[1].dataSync();
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
+    predict.print();
+    // console.log(predict.shape);
+    const test = model.predict(predict) as tf.Tensor;
+    console.log("이사람이 donation 갈 확률 :", test.dataSync()[0]);
+
+    model.save("file://./src/TensorModel/donation");
+
+    // console.log(acc[0]*100);
+    // model.predict(trainSet);
+  }
+
+  public async makeScienceModel() {
+    const trainSet = await this.getTrainSet();
+    const testSet = await this.getTestSet();
+    const trainPaths = await this.getTrainPathSet();
+    const testPaths = await this.getTestPathSet();
+    const target = trainPaths.map((it) => it.science);
+    const testTarget = testPaths.map((it) => it.science);
+
+    const input = tf.tensor(trainSet);
+    const output = tf.tensor(target);
+
+    const xTest = tf.tensor(testSet);
+    const yTest = tf.tensor(testTarget);
+
+    const model = tf.sequential({
+      layers: [
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
+        tf.layers.dense({ units: 8, activation: "relu" }),
+        tf.layers.dense({ units: 1, activation: "sigmoid" }),
+      ],
+    });
+
+    model.compile({
+      optimizer: tf.train.adam(),
+      loss: "binaryCrossentropy",
+      metrics: ["accuracy"],
+    });
+
+    await model.fit(input, output, {
+      epochs: 300,
+      batchSize: 70,
+      shuffle: true,
+      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc" })],
+    });
+
+    // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
+    // const acc = scores[1].dataSync();
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
+    predict.print();
+    // console.log(predict.shape);
+    const test = model.predict(predict) as tf.Tensor;
+    console.log("이사람이 science 갈 확률 :", test.dataSync()[0]);
+
+    model.save("file://./src/TensorModel/science");
+
+    // console.log(acc[0]*100);
+    // model.predict(trainSet);
+  }
+  public async makeSpaceModel() {
+    const trainSet = await this.getTrainSet();
+    const testSet = await this.getTestSet();
+    const trainPaths = await this.getTrainPathSet();
+    const testPaths = await this.getTestPathSet();
+    const target = trainPaths.map((it) => it.space);
+    const testTarget = testPaths.map((it) => it.space);
+
+    const input = tf.tensor(trainSet);
+    const output = tf.tensor(target);
+
+    const xTest = tf.tensor(testSet);
+    const yTest = tf.tensor(testTarget);
+
+    const model = tf.sequential({
+      layers: [
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
+        tf.layers.dense({ units: 8, activation: "relu" }),
+        tf.layers.dense({ units: 1, activation: "sigmoid" }),
+      ],
+    });
+
+    model.compile({
+      optimizer: tf.train.adam(),
+      loss: "binaryCrossentropy",
+      metrics: ["accuracy"],
+    });
+
+    await model.fit(input, output, {
+      epochs: 300,
+      batchSize: 70,
+      shuffle: true,
+      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc" })],
+    });
+
+    // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
+    // const acc = scores[1].dataSync();
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
+    predict.print();
+    // console.log(predict.shape);
+    const test = model.predict(predict) as tf.Tensor;
+    console.log("이사람이 space 갈 확률 :", test.dataSync()[0]);
+
+    model.save("file://./src/TensorModel/space");
+
+    // console.log(acc[0]*100);
+    // model.predict(trainSet);
+  }
+  public async makeNaturalModel() {
+    const trainSet = await this.getTrainSet();
+    const testSet = await this.getTestSet();
+    const trainPaths = await this.getTrainPathSet();
+    const testPaths = await this.getTestPathSet();
+    const target = trainPaths.map((it) => it.natural);
+    const testTarget = testPaths.map((it) => it.natural);
+
+    const input = tf.tensor(trainSet);
+    const output = tf.tensor(target);
+
+    const xTest = tf.tensor(testSet);
+    const yTest = tf.tensor(testTarget);
+
+    const model = tf.sequential({
+      layers: [
+        tf.layers.dense({ units: 64, inputShape: [this.INPUT_SHAPE] }),
+        tf.layers.dense({ units: 8, activation: "relu" }),
+        tf.layers.dense({ units: 1, activation: "sigmoid" }),
+      ],
+    });
+
+    model.compile({
+      optimizer: tf.train.adam(),
+      loss: "binaryCrossentropy",
+      metrics: ["accuracy"],
+    });
+
+    await model.fit(input, output, {
+      epochs: 300,
+      batchSize: 70,
+      shuffle: true,
+      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc" })],
+    });
+
+    // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
+    // const acc = scores[1].dataSync();
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
+    predict.print();
+    // console.log(predict.shape);
+    const test = model.predict(predict) as tf.Tensor;
+    console.log("이사람이 natural 갈 확률 :", test.dataSync()[0]);
+
+    model.save("file://./src/TensorModel/natural");
+
+    // console.log(acc[0]*100);
+    // model.predict(trainSet);
+  }
+  public async makeHumanModel() {
+    const trainSet = await this.getTrainSet();
+    const testSet = await this.getTestSet();
+    const trainPaths = await this.getTrainPathSet();
+    const testPaths = await this.getTestPathSet();
+    const target = trainPaths.map((it) => it.human);
+    const testTarget = testPaths.map((it) => it.human);
 
     const input = tf.tensor(trainSet);
     const output = tf.tensor(target);
@@ -354,13 +562,65 @@ class PathRecommendService {
 
     // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
     // const acc = scores[1].dataSync();
-    const predict = tf.tensor([[0, 100, 100, 100, 100, 100, 100]]);
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
     predict.print();
     // console.log(predict.shape);
     const test = model.predict(predict) as tf.Tensor;
-    console.log("이사람이 donation 갈 확률 :", test.dataSync()[0]);
+    console.log("이사람이 human 갈 확률 :", test.dataSync()[0]);
 
-    model.save("file://./src/TensorModel/donation");
+    model.save("file://./src/TensorModel/human");
+
+    // console.log(acc[0]*100);
+    // model.predict(trainSet);
+  }
+  public async makeFutureModel() {
+    const trainSet = await this.getTrainSet();
+    const testSet = await this.getTestSet();
+    const trainPaths = await this.getTrainPathSet();
+    const testPaths = await this.getTestPathSet();
+    const target = trainPaths.map((it) => it.future);
+    const testTarget = testPaths.map((it) => it.future);
+
+    const input = tf.tensor(trainSet);
+    const output = tf.tensor(target);
+
+    const xTest = tf.tensor(testSet);
+    const yTest = tf.tensor(testTarget);
+
+    const model = tf.sequential({
+      layers: [
+        tf.layers.dense({ units: 64, inputShape: [7] }),
+        tf.layers.dense({ units: 8, activation: "relu" }),
+        tf.layers.dense({ units: 1, activation: "sigmoid" }),
+      ],
+    });
+
+    model.compile({
+      optimizer: tf.train.adam(),
+      loss: "binaryCrossentropy",
+      metrics: ["accuracy"],
+    });
+
+    await model.fit(input, output, {
+      epochs: 300,
+      batchSize: 70,
+      shuffle: true,
+      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc" })],
+    });
+
+    // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
+    // const acc = scores[1].dataSync();
+    const predict = tf.tensor([
+      [0, 100, 100, 100, 100, 100, 100, 20, 30, 20, 50, 30],
+    ]);
+    predict.print();
+    // console.log(predict.shape);
+    const test = model.predict(predict) as tf.Tensor;
+    console.log("이사람이 future 갈 확률 :", test.dataSync()[0]);
+
+    model.save("file://./src/TensorModel/future");
 
     // console.log(acc[0]*100);
     // model.predict(trainSet);
@@ -448,6 +708,66 @@ class PathRecommendService {
     else return false;
   }
 
+  public async recommandScience(tensor: tf.Tensor) {
+    const model = await tf.loadLayersModel(
+      "file://./src/TensorModel/science/model.json"
+    );
+    const predict = model.predict(tensor) as tf.Tensor;
+    const result = predict.dataSync()[0];
+    console.log(result);
+
+    if (result >= this.USER_RECOMMAND_PERCENT) return true;
+    else return false;
+  }
+
+  public async recommandSpace(tensor: tf.Tensor) {
+    const model = await tf.loadLayersModel(
+      "file://./src/TensorModel/space/model.json"
+    );
+    const predict = model.predict(tensor) as tf.Tensor;
+    const result = predict.dataSync()[0];
+    console.log(result);
+
+    if (result >= this.USER_RECOMMAND_PERCENT) return true;
+    else return false;
+  }
+
+  public async recommandHuman(tensor: tf.Tensor) {
+    const model = await tf.loadLayersModel(
+      "file://./src/TensorModel/human/model.json"
+    );
+    const predict = model.predict(tensor) as tf.Tensor;
+    const result = predict.dataSync()[0];
+    console.log(result);
+
+    if (result >= this.USER_RECOMMAND_PERCENT) return true;
+    else return false;
+  }
+
+  public async recommandNatural(tensor: tf.Tensor) {
+    const model = await tf.loadLayersModel(
+      "file://./src/TensorModel/natural/model.json"
+    );
+    const predict = model.predict(tensor) as tf.Tensor;
+    const result = predict.dataSync()[0];
+    console.log(result);
+
+    if (result >= this.USER_RECOMMAND_PERCENT) return true;
+    else return false;
+  }
+
+  public async recommandFuture(tensor: tf.Tensor) {
+    const model = await tf.loadLayersModel(
+      "file://./src/TensorModel/future/model.json"
+    );
+    const predict = model.predict(tensor) as tf.Tensor;
+    const result = predict.dataSync()[0];
+    console.log(result);
+
+    if (result >= this.USER_RECOMMAND_PERCENT) return true;
+    else return false;
+  }
+
   public async getTrainPathSet() {
     const allPath = await this.pathsDao.getAllMemberPaths();
     return allPath.slice(0, Math.round(allPath.length * 0.8));
@@ -475,6 +795,11 @@ class PathRecommendService {
         userInfo.painting,
         userInfo.world,
         userInfo.craft,
+        userInfo.science,
+        userInfo.space,
+        userInfo.human,
+        userInfo.natural,
+        userInfo.future,
       ]);
     }
     return mapList;
@@ -497,6 +822,11 @@ class PathRecommendService {
         userInfo.painting,
         userInfo.world,
         userInfo.craft,
+        userInfo.science,
+        userInfo.space,
+        userInfo.human,
+        userInfo.natural,
+        userInfo.future,
       ]);
     }
     return mapList;
