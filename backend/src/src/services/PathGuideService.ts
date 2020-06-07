@@ -45,6 +45,11 @@ class PathGuideService {
         userInfo.painting,
         userInfo.world,
         userInfo.craft,
+        userInfo.science,
+        userInfo.space,
+        userInfo.human,
+        userInfo.natural,
+        userInfo.future
       ],
     ]);
     const isAncient = await pathRecommendService.recommandAntient(userTensor);
@@ -54,6 +59,11 @@ class PathGuideService {
     const isPainting = await pathRecommendService.recommandPainting(userTensor);
     const isWorld = await pathRecommendService.recommandPainting(userTensor);
     const isCraft = await pathRecommendService.recommandCraft(userTensor);
+    const isScience = await pathRecommendService.recommandScience(userTensor);
+    const isSpace = await pathRecommendService.recommandSpace(userTensor);
+    const isHuman = await pathRecommendService.recommandHuman(userTensor);
+    const isNatural = await pathRecommendService.recommandNatural(userTensor);
+    const isFuture = await pathRecommendService.recommandFuture(userTensor);
 
     const recommendResult = [
       isAncient,
@@ -63,6 +73,11 @@ class PathGuideService {
       isPainting,
       isWorld,
       isCraft,
+      isScience,
+      isSpace,
+      isHuman,
+      isNatural,
+      isFuture
     ];
 
     const recommends = recommendResult
