@@ -105,7 +105,7 @@ class PathGuideService {
 
     let places: Array<Place> = [];
     const myTmpLocation = new Place({
-      name: "myLocation",
+      name: "Entrance/Exit",
       locationX: myLocation.locationX,
       locationY: myLocation.locationY,
       maxPeople: 0,
@@ -150,6 +150,7 @@ class PathGuideService {
       totalVisit++;
       parsedList.push(places[currentVisit]);
     }
+    parsedList.push(myTmpLocation);
     const resultData = parsedList.map((it,index)=>{return {seq : index ,name : it.name, locationX : it.locationX, locationY : it.locationY}});
     return resultData;
   }
