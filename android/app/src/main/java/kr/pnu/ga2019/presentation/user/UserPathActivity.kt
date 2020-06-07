@@ -1,34 +1,40 @@
 package kr.pnu.ga2019.presentation.user
 
-import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.Path
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.Animation
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
+import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
-import kr.pnu.ga2019.presentation.adapter.UserPathAdapter
+import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseActivity
-import kr.pnu.ga2019.util.PointAnimator
+import org.jetbrains.anko.intentFor
+import kotlin.random.Random
 import kr.pnu.ga2019.domain.entity.Path as UserPath
 
 class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     resourceId = R.layout.activity_path
 ) {
     companion object {
-        private const val ANIMATION_DURATION: Long = 20000L
+        private const val EXTRA_PREFERENCE: String = "preference"
+
+        fun start(context: Context, preference: Preference) {
+            context.startActivity(
+                context.intentFor<UserPathActivity>(
+                    EXTRA_PREFERENCE to preference
+                )
+            )
+        }
     }
 
-    override val viewModel: UserPathViewModel by lazy {
-        ViewModelProvider(this).get(UserPathViewModel::class.java)
-    }
+    override val viewModel: UserPathViewModel by viewModels()
 
     override fun bindViewModel() {
         binding.viewModel = viewModel
@@ -41,26 +47,24 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                 setUserPointAnimation(view.root, userPath)
             }
         })
+
+        viewModel.places.observe(this, Observer { places ->
+            places.forEach { place ->
+                val pin = LayoutPlacePinBinding.inflate(layoutInflater)
+                pin.place = place
+                pin.root.x = place.locationX.times(0.8).toFloat()
+                pin.root.y = place.locationY.times(2).toFloat()
+                binding.mapRootLayout.addView(pin.root)
+            }
+        })
     }
 
-    override fun setRecyclerView() {
-        with(binding.userPathRecyclerview) {
-            layoutManager = LinearLayoutManager(
-                this@UserPathActivity,
-                RecyclerView.VERTICAL,
-                false
-            ).apply {
-                stackFromEnd = true
-            }
-            itemAnimator = DefaultItemAnimator()
-            adapter = UserPathAdapter {
-                scrollToPosition(adapter?.itemCount!! - 1)
-            }
-        }
+    override fun setListener() {
+
     }
 
     override fun start() {
-        viewModel.start()
+        viewModel.getAllPlace()
     }
 
     private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =
@@ -75,23 +79,21 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 
     private fun setUserPointAnimation(view: View, userPath: UserPath) {
         ObjectAnimator.ofFloat(view, View.X, View.Y, getUserPointPath(userPath)).apply {
-            duration =
-                ANIMATION_DURATION
-            addListener(object: PointAnimator() {
-                override fun onAnimationEnd(animation: Animator) {
-                    val target: View? = target as? View
-                    binding.mapRootLayout.removeView(target)
-                }
-            })
+            duration = Random.nextLong(180000L, 360000L)
+            repeatCount = Animation.REVERSE
         }.start()
 
     }
 
     private fun getUserPointPath(userPath: UserPath): Path =
         Path().apply {
-            moveTo(userPath.getMyLocation().locationX.toFloat(), userPath.getMyLocation().locationY.toFloat())
+            moveTo(
+                userPath.getPointLocations().first().locationX.times(0.8).toFloat(),
+                userPath.getPointLocations().first().locationY.times(2).toFloat()
+            )
+
             userPath.getPointLocations().forEach { point ->
-                lineTo(point.locationX.toFloat(), point.locationY.toFloat())
+                lineTo(point.locationX.toFloat(), point.locationY.times(2).toFloat())
             }
             close()
         }

@@ -3,23 +3,19 @@
  */
 package kr.pnu.ga2019.presentation.user
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.CompletableObserver
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
-import kr.pnu.ga2019.data.repository.PathRepositoryImpl
-import kr.pnu.ga2019.data.repository.RecommendRepositoryImpl
-import kr.pnu.ga2019.data.repository.UserInfoRepositoryImpl
-import kr.pnu.ga2019.data.repository.UserRepositoryImpl
+import kr.pnu.ga2019.data.repository.*
 import kr.pnu.ga2019.domain.entity.Path
+import kr.pnu.ga2019.domain.entity.Place
 import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.domain.entity.User
-import kr.pnu.ga2019.domain.repository.PathRepository
-import kr.pnu.ga2019.domain.repository.RecommendRepository
-import kr.pnu.ga2019.domain.repository.UserInfoRepository
-import kr.pnu.ga2019.domain.repository.UserRepository
+import kr.pnu.ga2019.domain.repository.*
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.util.AppSchedulerProvider
 import kr.pnu.ga2019.util.BaseSchedulerProvider
@@ -27,6 +23,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 class UserPathViewModel(
+    application: Application,
     private val userRepository: UserRepository =
         UserRepositoryImpl(),
     private val userInfoRepository: UserInfoRepository =
@@ -35,19 +32,35 @@ class UserPathViewModel(
         PathRepositoryImpl(),
     private val recommendRepository: RecommendRepository =
         RecommendRepositoryImpl(),
+    private val placeRepository: PlaceRepository =
+        PlaceRepositoryImpl(),
     private val scheduler: BaseSchedulerProvider =
         AppSchedulerProvider()
-) : BaseViewModel() {
+) : BaseViewModel(application) {
 
     private val _userPath = MutableLiveData<Path>()
     val userPath: LiveData<Path>
         get() = _userPath
 
+    val places = MutableLiveData<List<Place>>()
+
+    fun getAllPlace() =
+        placeRepository.getAllPlace()
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.mainThread())
+            .subscribe({ list ->
+                places.value = list
+                start()
+            }, { throwable ->
+                logError(throwable)
+            })
+            .addDisposable()
+
     fun start() {
-        stop()
+        clear()
         showToast("Start")
-        Single.timer(1, TimeUnit.SECONDS)
-            .repeat()
+        Single.timer(200L, TimeUnit.MILLISECONDS)
+            .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe { insertUser() }
@@ -95,8 +108,8 @@ class UserPathViewModel(
 
     private fun updateCurrentLocation(
         memberPk: Int,
-        locationX: Int = Random.nextInt(0, 1000),
-        locationY: Int = Random.nextInt(0, 1000)
+        locationX: Int = Random.nextInt(0, 1200),
+        locationY: Int = Random.nextInt(0, 700)
     ) = userInfoRepository.updateCurrentLocation(
         memberPk = memberPk,
         locationX = locationX,
