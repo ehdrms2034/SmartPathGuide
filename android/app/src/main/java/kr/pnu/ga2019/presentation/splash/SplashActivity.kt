@@ -5,6 +5,7 @@ package kr.pnu.ga2019.presentation.splash
 
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
@@ -14,7 +15,7 @@ import org.jetbrains.anko.toast
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
 ) {
-    override val viewModel: SplashViewModel by viewModels()
+    override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
 
     override fun observeLiveData() {
         viewModel.preferenceState.observe(this, Observer(::observeUiState))
@@ -37,7 +38,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
             }
             is SplashUiState.Empty -> {
                 toast(state.message)
+                Logger.d(state.message)
                 // TODO : Show Dialog
+
             }
         }
     }

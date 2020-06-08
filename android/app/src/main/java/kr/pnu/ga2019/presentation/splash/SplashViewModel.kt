@@ -5,6 +5,7 @@ package kr.pnu.ga2019.presentation.splash
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.data.repository.PreferenceRepositoryImpl
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.domain.repository.PreferenceRepository
@@ -27,7 +28,7 @@ class SplashViewModel(
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({
-
+                Logger.d("Clear User Preference")
             }, { throwable ->
                 logError(throwable)
             })
