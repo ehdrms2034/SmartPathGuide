@@ -29,9 +29,7 @@ class SplashViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({
                 Logger.d("Clear User Preference")
-            }, { throwable ->
-                logError(throwable)
-            })
+            }, { throwable -> preferenceState.value = setFailureState(throwable) })
             .addDisposable()
 
     fun checkUserPreferenceExistence() =
@@ -43,9 +41,7 @@ class SplashViewModel(
                     preferenceState.value = setEmptyState()
                 else
                     getUserPreference()
-            }, { throwable ->
-                logError(throwable)
-            })
+            }, { throwable -> preferenceState.value = setFailureState(throwable) })
             .addDisposable()
 
     fun setUserPreference(preference: Preference) =
@@ -62,8 +58,6 @@ class SplashViewModel(
             .subscribe({ preference ->
                 Logger.d("저장된 유저 성향 : $preference")
                 preferenceState.value = setAvailableState(preference)
-            }, { throwable ->
-                logError(throwable)
-            })
+            }, { throwable -> preferenceState.value = setFailureState(throwable) })
             .addDisposable()
 }

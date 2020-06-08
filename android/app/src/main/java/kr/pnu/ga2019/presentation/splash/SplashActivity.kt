@@ -15,6 +15,10 @@ import kr.pnu.ga2019.presentation.user.UserPathActivity
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
 ) {
+    companion object {
+        private const val TAG: String = "SplashActivity"
+    }
+
     override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
 
     override fun observeLiveData() {
@@ -38,6 +42,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
             is SplashUiState.Empty -> {
                 Logger.d(state.message)
                 showPreferenceDialog()
+            }
+            is SplashUiState.Failure -> {
+                Logger.log(Logger.ERROR, TAG, state.throwable.message, state.throwable)
             }
         }
     }
