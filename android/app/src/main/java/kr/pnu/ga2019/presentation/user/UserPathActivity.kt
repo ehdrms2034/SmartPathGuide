@@ -25,6 +25,17 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 ) {
     companion object {
         private const val EXTRA_PREFERENCE: String = "preference"
+        private const val FACTOR_WIDTH: Double = 0.8
+        private const val FACTOR_HEIGHT: Int = 2
+        private val PERSON_IMAGES: List<Int> = listOf(
+            R.drawable.image_person_1,
+            R.drawable.image_person_2,
+            R.drawable.image_person_3,
+            R.drawable.image_person_4,
+            R.drawable.image_person_5,
+            R.drawable.image_person_6,
+            R.drawable.image_person_7
+        )
 
         fun start(context: Context, preference: Preference) {
             context.startActivity(
@@ -44,7 +55,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 
     override fun observeLiveData() {
         viewModel.userPath.observe(this, Observer { userPath ->
-            createUserPoint(userPath).let { view ->
+            createUserPoint().let { view ->
                 binding.mapRootLayout.addView(view.root)
                 setUserPointAnimation(view.root, userPath)
             }
@@ -54,33 +65,33 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             places.forEach { place ->
                 val pin = LayoutPlacePinBinding.inflate(layoutInflater)
                 pin.place = place
-                pin.root.x = place.locationX.times(0.8).toFloat()
-                pin.root.y = place.locationY.times(2).toFloat()
+                pin.root.x = place.locationX.times(FACTOR_WIDTH).toFloat()
+                pin.root.y = place.locationY.times(FACTOR_HEIGHT).toFloat()
                 binding.mapRootLayout.addView(pin.root)
             }
         })
 
         viewModel.myPath.observe(this, Observer { myPath ->
-
+            // TODO 나의 경로 표시
         })
     }
 
     override fun setListener() {
-
+        // TODO 다음으로 이동하기
     }
 
     override fun start() {
         viewModel.getAllPlace(preference)
     }
 
-    private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =
+    private fun createUserPoint(): LayoutUserPointBinding =
         DataBindingUtil.inflate<LayoutUserPointBinding>(
             LayoutInflater.from(this),
             R.layout.layout_user_point,
             null,
             false
         ).apply {
-            userId = userPath.memberPk.toString()
+            userImage.setImageResource(PERSON_IMAGES.random())
         }
 
     private fun setUserPointAnimation(view: View, userPath: UserPath) {
@@ -93,12 +104,12 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     private fun getUserPointPath(userPath: UserPath): Path =
         Path().apply {
             moveTo(
-                userPath.getPointLocations().first().locationX.times(0.8).toFloat(),
-                userPath.getPointLocations().first().locationY.times(2).toFloat()
+                userPath.getPointLocations().first().locationX.times(FACTOR_WIDTH).toFloat(),
+                userPath.getPointLocations().first().locationY.times(FACTOR_HEIGHT).toFloat()
             )
 
             userPath.getPointLocations().forEach { point ->
-                lineTo(point.locationX.toFloat(), point.locationY.times(2).toFloat())
+                lineTo(point.locationX.toFloat(), point.locationY.times(FACTOR_HEIGHT).toFloat())
             }
             close()
         }

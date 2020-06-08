@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/image_pin"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_marginTop="8dp"
             android:contentDescription="@string/image_view_pin_description"
             app:srcCompat="@drawable/icon_pin"
@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@{place.name}"
-            android:textSize="12dp"
+            android:textSize="14dp"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/image_pin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

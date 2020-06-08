@@ -65,23 +65,8 @@ class UserPathViewModel(
             .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
-            .subscribe(object: FlowableSubscriber<Long> {
-                override fun onComplete() {
-                    enterPersonalUser(preference)
-                }
-
-                override fun onSubscribe(s: Subscription) {
-                    /* explicitly empty */
-                }
-
-                override fun onNext(t: Long) {
-                    insertUser()
-                }
-
-                override fun onError(throwable: Throwable) {
-                    logError(throwable)
-                }
-            })
+            .subscribe { insertUser() }
+            .addDisposable()
     }
 
     private fun enterPersonalUser(preference: Preference) {

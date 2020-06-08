@@ -31,7 +31,7 @@
                 android:layout_height="0dp"
                 android:src="@drawable/image_01"
                 android:scaleType="centerCrop"
-                android:alpha="0.5"
+                android:alpha="0.4"
                 android:contentDescription="@string/image_view_map_description"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
