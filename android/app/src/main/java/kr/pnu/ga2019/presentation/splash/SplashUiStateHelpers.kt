@@ -12,10 +12,10 @@ fun Throwable.asEmptyState(): SplashUiState.Empty =
         message = this.message.toString()
     )
 
-fun String.asEmptyState(): SplashUiState.Empty =
+fun String?.asEmptyState(): SplashUiState.Empty =
     SplashUiState.Empty(
         isExist = false,
-        message = this
+        message = if(this.isNullOrEmpty()) "user preference not exist" else this
     )
 
 fun Preference.asAvailableState(): SplashUiState.Available =
