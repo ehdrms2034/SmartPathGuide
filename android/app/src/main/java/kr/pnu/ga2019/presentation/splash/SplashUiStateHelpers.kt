@@ -6,16 +6,22 @@ package kr.pnu.ga2019.presentation.splash
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 
-fun SplashUiState.asEmptyState(): SplashUiState.Empty =
+fun Throwable.asEmptyState(): SplashUiState.Empty =
     SplashUiState.Empty(
         isExist = false,
-        message = "user preference not exist"
+        message = this.message.toString()
     )
 
-fun SplashUiState.asAvailableState(preference: Preference): SplashUiState.Available =
+fun String.asEmptyState(): SplashUiState.Empty =
+    SplashUiState.Empty(
+        isExist = false,
+        message = this
+    )
+
+fun Preference.asAvailableState(): SplashUiState.Available =
     SplashUiState.Available(
         isExist = true,
-        preference = preference
+        preference = this
     )
 
 fun BaseViewModel.setEmptyState(): SplashUiState.Empty =
