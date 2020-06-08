@@ -14,7 +14,7 @@ import kr.pnu.ga2019.databinding.DialogUserPreferenceBinding
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.util.setOnProgressChanged
 
-typealias PreferenceClickListener = (Preference) -> Unit
+private typealias PreferenceClickListener = (Preference) -> Unit
 
 class PreferenceSettingDialog(
     context: Context,
@@ -28,17 +28,19 @@ class PreferenceSettingDialog(
         setBinding()
         setWindowAttr()
         setContentView(binding.root)
-
-
         setPreferenceTextChanged()
-        binding.enterButton.setOnClickListener {
-            clickListener.invoke(getUserPreference())
-            dismiss()
-        }
+        setListener()
     }
 
     private fun setBinding() {
         binding = DialogUserPreferenceBinding.inflate(layoutInflater)
+    }
+
+    private fun setListener() {
+        binding.enterButton.setOnClickListener {
+            clickListener.invoke(getUserPreference())
+            dismiss()
+        }
     }
 
     private fun setWindowAttr() {

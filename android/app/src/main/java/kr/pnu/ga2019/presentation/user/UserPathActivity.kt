@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
@@ -58,6 +59,10 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                 binding.mapRootLayout.addView(pin.root)
             }
         })
+
+        viewModel.myPath.observe(this, Observer { myPath ->
+
+        })
     }
 
     override fun setListener() {
@@ -65,7 +70,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     }
 
     override fun start() {
-        viewModel.getAllPlace()
+        viewModel.getAllPlace(preference)
     }
 
     private fun createUserPoint(userPath: UserPath): LayoutUserPointBinding =
@@ -83,7 +88,6 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             duration = Random.nextLong(180000L, 360000L)
             repeatCount = Animation.REVERSE
         }.start()
-
     }
 
     private fun getUserPointPath(userPath: UserPath): Path =

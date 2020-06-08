@@ -7,18 +7,17 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.CompletableObserver
+import io.reactivex.FlowableSubscriber
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import kr.pnu.ga2019.data.repository.*
-import kr.pnu.ga2019.domain.entity.Path
-import kr.pnu.ga2019.domain.entity.Place
-import kr.pnu.ga2019.domain.entity.Point
-import kr.pnu.ga2019.domain.entity.User
+import kr.pnu.ga2019.domain.entity.*
 import kr.pnu.ga2019.domain.repository.*
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.util.AppSchedulerProvider
 import kr.pnu.ga2019.util.BaseSchedulerProvider
+import org.reactivestreams.Subscription
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -42,30 +41,76 @@ class UserPathViewModel(
     val userPath: LiveData<Path>
         get() = _userPath
 
+    private val _myPath = MutableLiveData<Path>()
+    val myPath: LiveData<Path> get() = _myPath
+
     val places = MutableLiveData<List<Place>>()
 
-    fun getAllPlace() =
+    fun getAllPlace(preference: Preference) =
         placeRepository.getAllPlace()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({ list ->
                 places.value = list
-                start()
+                start(preference)
             }, { throwable ->
                 logError(throwable)
             })
             .addDisposable()
 
-    fun start() {
+    private fun start(preference: Preference) {
         clear()
         showToast("Start")
         Single.timer(200L, TimeUnit.MILLISECONDS)
             .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
-            .subscribe { insertUser() }
-            .addDisposable()
+            .subscribe(object: FlowableSubscriber<Long> {
+                override fun onComplete() {
+                    enterPersonalUser(preference)
+                }
+
+                override fun onSubscribe(s: Subscription) {
+                    /* explicitly empty */
+                }
+
+                override fun onNext(t: Long) {
+                    insertUser()
+                }
+
+                override fun onError(throwable: Throwable) {
+                    logError(throwable)
+                }
+            })
     }
+
+    private fun enterPersonalUser(preference: Preference) {
+        userRepository.insert(
+            age = preference.age,
+            ancient = preference.ancient,
+            medieval = preference.medieval,
+            modern = preference.modern,
+            donation = preference.donation,
+            painting = preference.painting,
+            world = preference.world,
+            craft = preference.craft)
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.mainThread())
+            .subscribe(object: SingleObserver<User> {
+                override fun onSuccess(user: User) {
+                    updateCurrentLocation(user.id, isMyLocation = true)
+                }
+
+                override fun onSubscribe(d: Disposable) {
+                    /* explicitly empty */
+                }
+
+                override fun onError(throwable: Throwable) {
+                    logError(throwable)
+                }
+            })
+    }
+
 
     fun stop(){
         clear()
@@ -109,7 +154,8 @@ class UserPathViewModel(
     private fun updateCurrentLocation(
         memberPk: Int,
         locationX: Int = Random.nextInt(0, 1200),
-        locationY: Int = Random.nextInt(0, 700)
+        locationY: Int = Random.nextInt(0, 700),
+        isMyLocation: Boolean = false
     ) = userInfoRepository.updateCurrentLocation(
         memberPk = memberPk,
         locationX = locationX,
@@ -118,7 +164,7 @@ class UserPathViewModel(
         .observeOn(scheduler.mainThread())
         .subscribe(object: CompletableObserver {
             override fun onComplete() {
-                recommendPath(memberPk = memberPk)
+                recommendPath(memberPk = memberPk, isMyLocation = isMyLocation)
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -130,13 +176,16 @@ class UserPathViewModel(
             }
         })
 
-    private fun recommendPath(memberPk: Int) =
+    private fun recommendPath(memberPk: Int, isMyLocation: Boolean = false) =
         recommendRepository.getRecommend(memberPk = memberPk)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe(object: SingleObserver<List<Point>> {
                 override fun onSuccess(points: List<Point>) {
-                    _userPath.value = Path(memberPk, points)
+                    if(isMyLocation)
+                        _myPath.value = Path(memberPk, points)
+                    else
+                        _userPath.value = Path(memberPk, points)
                 }
 
                 override fun onSubscribe(d: Disposable) {
