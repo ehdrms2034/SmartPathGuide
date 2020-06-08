@@ -10,8 +10,8 @@ import kr.pnu.ga2019.data.repository.PreferenceRepositoryImpl
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.domain.repository.PreferenceRepository
 import kr.pnu.ga2019.presentation.base.BaseViewModel
-import kr.pnu.ga2019.util.AppSchedulerProvider
-import kr.pnu.ga2019.util.BaseSchedulerProvider
+import kr.pnu.ga2019.utility.AppSchedulerProvider
+import kr.pnu.ga2019.utility.BaseSchedulerProvider
 
 class SplashViewModel(
     application: Application,

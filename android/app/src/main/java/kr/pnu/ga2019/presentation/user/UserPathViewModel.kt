@@ -14,8 +14,8 @@ import kr.pnu.ga2019.data.repository.*
 import kr.pnu.ga2019.domain.entity.*
 import kr.pnu.ga2019.domain.repository.*
 import kr.pnu.ga2019.presentation.base.BaseViewModel
-import kr.pnu.ga2019.util.AppSchedulerProvider
-import kr.pnu.ga2019.util.BaseSchedulerProvider
+import kr.pnu.ga2019.utility.AppSchedulerProvider
+import kr.pnu.ga2019.utility.BaseSchedulerProvider
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 

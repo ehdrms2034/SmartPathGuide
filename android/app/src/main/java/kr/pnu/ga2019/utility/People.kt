@@ -1,4 +1,4 @@
-package kr.pnu.ga2019.util
+package kr.pnu.ga2019.utility
 
 import kr.pnu.ga2019.R
 

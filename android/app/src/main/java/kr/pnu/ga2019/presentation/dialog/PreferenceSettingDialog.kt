@@ -12,7 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import kr.pnu.ga2019.databinding.DialogUserPreferenceBinding
 import kr.pnu.ga2019.domain.entity.Preference
-import kr.pnu.ga2019.util.setOnProgressChanged
+import kr.pnu.ga2019.utility.setOnProgressChanged
 
 private typealias PreferenceClickListener = (Preference) -> Unit
 

@@ -1,7 +1,7 @@
 /*
  * Created by Lee Oh Hyoung on 2020/06/08 .. 
  */
-package kr.pnu.ga2019.util
+package kr.pnu.ga2019.utility
 
 import android.widget.SeekBar
 import android.widget.TextView

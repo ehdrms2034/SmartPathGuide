@@ -15,7 +15,7 @@ import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseActivity
-import kr.pnu.ga2019.util.People
+import kr.pnu.ga2019.utility.People
 import org.jetbrains.anko.intentFor
 import kotlin.random.Random
 import kr.pnu.ga2019.domain.entity.Path as UserPath
