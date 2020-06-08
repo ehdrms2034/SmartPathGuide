@@ -9,13 +9,13 @@ import android.view.animation.Animation
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseActivity
+import kr.pnu.ga2019.util.People
 import org.jetbrains.anko.intentFor
 import kotlin.random.Random
 import kr.pnu.ga2019.domain.entity.Path as UserPath
@@ -27,15 +27,6 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         private const val EXTRA_PREFERENCE: String = "preference"
         private const val FACTOR_WIDTH: Double = 0.8
         private const val FACTOR_HEIGHT: Int = 2
-        private val PERSON_IMAGES: List<Int> = listOf(
-            R.drawable.image_person_1,
-            R.drawable.image_person_2,
-            R.drawable.image_person_3,
-            R.drawable.image_person_4,
-            R.drawable.image_person_5,
-            R.drawable.image_person_6,
-            R.drawable.image_person_7
-        )
 
         fun start(context: Context, preference: Preference) {
             context.startActivity(
@@ -91,7 +82,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             null,
             false
         ).apply {
-            userImage.setImageResource(PERSON_IMAGES.random())
+            userImage.setImageResource(People.random())
         }
 
     private fun setUserPointAnimation(view: View, userPath: UserPath) {

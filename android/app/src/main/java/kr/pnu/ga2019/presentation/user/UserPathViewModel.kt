@@ -7,17 +7,16 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.CompletableObserver
-import io.reactivex.FlowableSubscriber
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import kr.pnu.ga2019.data.repository.*
 import kr.pnu.ga2019.domain.entity.*
 import kr.pnu.ga2019.domain.repository.*
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.util.AppSchedulerProvider
 import kr.pnu.ga2019.util.BaseSchedulerProvider
-import org.reactivestreams.Subscription
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
@@ -42,7 +41,8 @@ class UserPathViewModel(
         get() = _userPath
 
     private val _myPath = MutableLiveData<Path>()
-    val myPath: LiveData<Path> get() = _myPath
+    val myPath: LiveData<Path>
+        get() = _myPath
 
     val places = MutableLiveData<List<Place>>()
 
