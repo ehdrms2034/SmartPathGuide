@@ -22,9 +22,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     }
 
     override fun setListener() {
-        binding.enterButton.setOnClickListener {
-            viewModel.checkUserPreferenceExistence()
-        }
+        binding.enterButton.setOnClickListener { viewModel.checkUserPreferenceExistence() }
+        binding.setPreferenceButton.setOnClickListener { showPreferenceDialog() }
     }
 
     override fun start() {
@@ -38,10 +37,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
             }
             is SplashUiState.Empty -> {
                 Logger.d(state.message)
-                PreferenceSettingDialog(this) { preference ->
-                    viewModel.setUserPreference(preference)
-                }.show()
+                showPreferenceDialog()
             }
         }
+    }
+
+    private fun showPreferenceDialog() {
+        PreferenceSettingDialog(this) { preference ->
+            viewModel.setUserPreference(preference)
+        }.show()
     }
 }
