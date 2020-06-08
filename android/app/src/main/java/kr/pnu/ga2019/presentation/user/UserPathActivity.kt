@@ -34,7 +34,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
         }
     }
 
-    override val viewModel: UserPathViewModel by viewModels()
+    override val viewModel: UserPathViewModel by viewModels { UserPathViewModelFactory(application) }
     private val preference: Preference by lazy { intent.getSerializableExtra(EXTRA_PREFERENCE) as Preference }
 
     override fun bindViewModel() {

@@ -33,9 +33,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".presentation.personal.PersonalPathActivity"
-            android:launchMode="singleTop" />
     </application>
 
 </manifest>

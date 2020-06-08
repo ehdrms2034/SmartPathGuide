@@ -60,6 +60,7 @@ class SplashViewModel(
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({ preference ->
+                Logger.d("저장된 유저 성향 : $preference")
                 preferenceState.value = setAvailableState(preference)
             }, { throwable ->
                 logError(throwable)

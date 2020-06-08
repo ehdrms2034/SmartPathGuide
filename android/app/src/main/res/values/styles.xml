@@ -21,10 +21,29 @@
     </style>
 
     <style name="TextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:textSize" tools:ignore="SpUsage">14dp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">16dp</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DialogStyle">
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:layout_marginEnd">40dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="SeekBarStyle" parent="Widget.AppCompat.SeekBar">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">50</item>
     </style>
 
 </resources>

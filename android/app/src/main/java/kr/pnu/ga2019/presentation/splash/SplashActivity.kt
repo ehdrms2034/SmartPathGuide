@@ -9,8 +9,8 @@ import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
+import kr.pnu.ga2019.presentation.dialog.PreferenceSettingDialog
 import kr.pnu.ga2019.presentation.user.UserPathActivity
-import org.jetbrains.anko.toast
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
@@ -37,10 +37,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
                 UserPathActivity.start(context = this, preference = state.preference)
             }
             is SplashUiState.Empty -> {
-                toast(state.message)
                 Logger.d(state.message)
-                // TODO : Show Dialog
-
+                PreferenceSettingDialog(this) { preference ->
+                    viewModel.setUserPreference(preference)
+                }.show()
             }
         }
     }
