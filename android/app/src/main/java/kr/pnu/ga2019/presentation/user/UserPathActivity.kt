@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
 import kr.pnu.ga2019.databinding.LayoutMyLocationBinding
@@ -18,6 +19,7 @@ import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.utility.People
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.toast
 import kotlin.random.Random
 import kr.pnu.ga2019.domain.entity.Path as UserPath
 
@@ -25,6 +27,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     resourceId = R.layout.activity_path
 ) {
     companion object {
+        private const val TAG: String = "UserPathActivity"
         private const val EXTRA_PREFERENCE: String = "preference"
         private const val FACTOR_WIDTH: Double = 0.8
         private const val FACTOR_HEIGHT: Int = 2
@@ -72,9 +75,12 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                         binding.mapRootLayout.addView(view.root)
                         view.root.x = state.path.getPointLocations().first().locationX.times(FACTOR_WIDTH).toFloat()
                         view.root.y = state.path.getPointLocations().first().locationY.times(FACTOR_HEIGHT).toFloat()
+                        binding.moveText.text = "다음 지점으로 이동하기"
+                        binding.moveButton.setOnClickListener { moveNextPlace(state, view.root) }
                     }
-                    binding.moveText.text = "다음 지점으로 이동하기"
-                    binding.moveButton.setOnClickListener { /* explicitly empty */ }
+                }
+                is UserPathUiState.Error -> {
+                    Logger.log(Logger.ERROR, TAG, state.throwable.message, state.throwable)
                 }
             }
         })
@@ -82,6 +88,20 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 
     override fun start() {
         viewModel.getAllPlace()
+    }
+
+    private fun moveNextPlace(state: UserPathUiState.LoadMyPath, view: View) {
+        if(state.currentLocation != state.path.getPointLocations().count() - 1) {
+            state.currentLocation++
+            view.x = state.path.getPointLocations()[state.currentLocation].locationX.times(FACTOR_WIDTH).toFloat()
+            view.y = state.path.getPointLocations()[state.currentLocation].locationY.times(FACTOR_HEIGHT).toFloat()
+        } else {
+            binding.moveText.text = "퇴장하기"
+            binding.moveButton.setOnClickListener {
+                toast("퇴장처리 되었습니다")
+                onBackPressed()
+            }
+        }
     }
 
     private fun createUserPoint(): LayoutUserPointBinding =

@@ -45,7 +45,7 @@ class UserPathViewModel(
                 uiState.value = UserPathUiState.LoadPlace("places", list)
                 start()
             }, { throwable ->
-                logError(throwable)
+                uiState.value = UserPathUiState.Error("error", throwable)
             })
             .addDisposable()
 
@@ -58,8 +58,8 @@ class UserPathViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({
                 insertUser()
-            }, {
-
+            }, { throwable ->
+                uiState.value = UserPathUiState.Error("error", throwable)
             }, {
                 Logger.d("visitor setting is done")
                 uiState.value = UserPathUiState.SetVisitor
@@ -89,7 +89,7 @@ class UserPathViewModel(
                 }
 
                 override fun onError(throwable: Throwable) {
-                    logError(throwable)
+                    uiState.value = UserPathUiState.Error("error", throwable)
                 }
             })
     }
@@ -129,7 +129,7 @@ class UserPathViewModel(
             }
 
             override fun onError(throwable: Throwable) {
-                logError(throwable)
+                uiState.value = UserPathUiState.Error("error", throwable)
             }
         })
 
@@ -154,7 +154,7 @@ class UserPathViewModel(
             }
 
             override fun onError(throwable: Throwable) {
-                logError(throwable)
+                uiState.value = UserPathUiState.Error("error", throwable)
             }
         })
 
@@ -175,7 +175,7 @@ class UserPathViewModel(
                 }
 
                 override fun onError(throwable: Throwable) {
-                    logError(throwable)
+                    uiState.value = UserPathUiState.Error("error", throwable)
                 }
             })
 }

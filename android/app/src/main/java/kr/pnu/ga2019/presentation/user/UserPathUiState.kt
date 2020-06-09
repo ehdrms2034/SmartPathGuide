@@ -22,7 +22,8 @@ sealed class UserPathUiState {
 
     data class LoadMyPath(
         override val state: String,
-        val path: Path
+        val path: Path,
+        var currentLocation: Int = 0
     ): UserPathUiState()
 
     data class LoadPlace(
