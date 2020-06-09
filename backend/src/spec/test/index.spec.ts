@@ -100,26 +100,39 @@ import { CustomError } from "@models/customError";
 //   },2000000);
 // });
 
+// describe("Tensorflow",()=>{
+//   beforeAll(()=>{
+//     sequelize;
+//     tf;
+//   });
+//   it("tesorTuto",async ()=>{
+//     const pathRecommendService = new PathRecommendService();
+//     await pathRecommendService.makeAncientModel();
+//     await pathRecommendService.makeMedievalModel();
+//     await pathRecommendService.makeModernModel();
+//     await pathRecommendService.makePaintingModel();
+//     await pathRecommendService.makeDonationModel();
+//     await pathRecommendService.makeWorldModel();
+//     await pathRecommendService.makeCraftModel();
+//     await pathRecommendService.makeScienceModel();
+//     await pathRecommendService.makeSpaceModel();
+//     await pathRecommendService.makeHumanModel();
+//     await pathRecommendService.makeNaturalModel();
+//     await pathRecommendService.makeFutureModel();
+
+
+//     //tf.tensor([1,2]).print();
+//   },2000000);
+// })
+
 describe("Tensorflow",()=>{
   beforeAll(()=>{
     sequelize;
     tf;
   });
-  it("tesorTuto",async ()=>{
+  it("lstm",async ()=>{
     const pathRecommendService = new PathRecommendService();
-    await pathRecommendService.makeAncientModel();
-    await pathRecommendService.makeMedievalModel();
-    await pathRecommendService.makeModernModel();
-    await pathRecommendService.makePaintingModel();
-    await pathRecommendService.makeDonationModel();
-    await pathRecommendService.makeWorldModel();
-    await pathRecommendService.makeCraftModel();
-    await pathRecommendService.makeScienceModel();
-    await pathRecommendService.makeSpaceModel();
-    await pathRecommendService.makeHumanModel();
-    await pathRecommendService.makeNaturalModel();
-    await pathRecommendService.makeFutureModel();
-
+    await pathRecommendService.makeRecommendModel();
 
     //tf.tensor([1,2]).print();
   },2000000);
