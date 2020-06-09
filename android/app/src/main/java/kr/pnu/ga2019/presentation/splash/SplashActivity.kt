@@ -43,7 +43,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
                 Logger.d(state.message)
                 showPreferenceDialog()
             }
-            is SplashUiState.Failure -> {
+            is SplashUiState.Error -> {
                 Logger.log(Logger.ERROR, TAG, state.throwable.message, state.throwable)
             }
         }

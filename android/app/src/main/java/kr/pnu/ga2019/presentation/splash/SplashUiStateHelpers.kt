@@ -12,8 +12,8 @@ fun Throwable.asEmptyState(): SplashUiState.Empty =
         message = this.message.toString()
     )
 
-fun Throwable.asFailureState(): SplashUiState.Failure =
-    SplashUiState.Failure(
+fun Throwable.asFailureState(): SplashUiState.Error =
+    SplashUiState.Error(
         isExist = false,
         throwable = this
     )
@@ -42,8 +42,8 @@ fun BaseViewModel.setAvailableState(preference: Preference): SplashUiState.Avail
         preference = preference
     )
 
-fun BaseViewModel.setFailureState(throwable: Throwable): SplashUiState.Failure =
-    SplashUiState.Failure(
+fun BaseViewModel.setFailureState(throwable: Throwable): SplashUiState.Error =
+    SplashUiState.Error(
         isExist = false,
         throwable = throwable
     )
