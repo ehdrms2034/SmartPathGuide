@@ -22,7 +22,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
 
     override fun observeLiveData() {
-        viewModel.preferenceState.observe(this, Observer(::observeUiState))
+        viewModel.uiState.observe(this, Observer(::observeUiState))
     }
 
     override fun setListener() {

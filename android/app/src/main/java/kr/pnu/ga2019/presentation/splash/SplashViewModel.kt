@@ -21,7 +21,7 @@ class SplashViewModel(
         AppSchedulerProvider()
 ) : BaseViewModel(application) {
 
-    val preferenceState = MutableLiveData<SplashUiState>()
+    val uiState = MutableLiveData<SplashUiState>()
 
     fun clearUserPreference() =
         preferenceRepository.clear()
@@ -29,7 +29,7 @@ class SplashViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({
                 Logger.d("Clear User Preference")
-            }, { throwable -> preferenceState.value = asErrorState(throwable) })
+            }, { throwable -> uiState.value = asErrorState(throwable) })
             .addDisposable()
 
     fun checkUserPreferenceExistence() =
@@ -38,10 +38,10 @@ class SplashViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({ count ->
                 if(count != 1)
-                    preferenceState.value = setEmptyState()
+                    uiState.value = setEmptyState()
                 else
                     getUserPreference()
-            }, { throwable -> preferenceState.value = asErrorState(throwable) })
+            }, { throwable -> uiState.value = asErrorState(throwable) })
             .addDisposable()
 
     fun setUserPreference(preference: Preference) =
@@ -57,7 +57,7 @@ class SplashViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({ preference ->
                 Logger.d("저장된 유저 성향 : $preference")
-                preferenceState.value = setAvailableState(preference)
-            }, { throwable -> preferenceState.value = asErrorState(throwable) })
+                uiState.value = setAvailableState(preference)
+            }, { throwable -> uiState.value = asErrorState(throwable) })
             .addDisposable()
 }
