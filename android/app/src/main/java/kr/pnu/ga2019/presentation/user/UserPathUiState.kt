@@ -5,8 +5,9 @@ package kr.pnu.ga2019.presentation.user
 
 import kr.pnu.ga2019.domain.entity.Path
 import kr.pnu.ga2019.domain.entity.Place
+import kr.pnu.ga2019.presentation.UiState
 
-sealed class UserPathUiState {
+sealed class UserPathUiState : UiState {
 
     abstract val state: String
 

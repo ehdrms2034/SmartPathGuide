@@ -4,8 +4,9 @@
 package kr.pnu.ga2019.presentation.splash
 
 import kr.pnu.ga2019.domain.entity.Preference
+import kr.pnu.ga2019.presentation.UiState
 
-sealed class SplashUiState {
+sealed class SplashUiState : UiState {
     abstract val isExist: Boolean
 
     data class Available(
