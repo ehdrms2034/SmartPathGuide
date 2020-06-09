@@ -6,7 +6,7 @@ import UserInfoDao from "@daos/UserInfoDao";
 import * as tf from "@tensorflow/tfjs-node";
 import Graph from "node-dijkstra";
 import { Place } from "@models/Place";
-import { math } from "@tensorflow/tfjs-node";
+import { math, reshape } from "@tensorflow/tfjs-node";
 
 class PathGuideService {
   private userLocationService: UserLocationService;
@@ -52,34 +52,9 @@ class PathGuideService {
         userInfo.future
       ],
     ]);
-    const isAncient = await pathRecommendService.recommandAntient(userTensor);
-    const isMedieval = await pathRecommendService.recommandMedieval(userTensor);
-    const isModern = await pathRecommendService.recommandModern(userTensor);
-    const isDonation = await pathRecommendService.recommandDonation(userTensor);
-    const isPainting = await pathRecommendService.recommandPainting(userTensor);
-    const isWorld = await pathRecommendService.recommandPainting(userTensor);
-    const isCraft = await pathRecommendService.recommandCraft(userTensor);
-    const isScience = await pathRecommendService.recommandScience(userTensor);
-    const isSpace = await pathRecommendService.recommandSpace(userTensor);
-    const isHuman = await pathRecommendService.recommandHuman(userTensor);
-    const isNatural = await pathRecommendService.recommandNatural(userTensor);
-    const isFuture = await pathRecommendService.recommandFuture(userTensor);
-
-    const recommendResult = [
-      isAncient,
-      isMedieval,
-      isModern,
-      isDonation,
-      isPainting,
-      isWorld,
-      isCraft,
-      isScience,
-      isSpace,
-      isHuman,
-      isNatural,
-      isFuture
-    ];
-
+    const parsedData = reshape(userTensor,[1,1,12]);
+    const predictPaths = await pathRecommendService.predictPaths(parsedData);
+    const recommendResult = Object.values(predictPaths);
     const recommends = recommendResult
       .filter((it) => it === true)
       .map((value, index) => {
