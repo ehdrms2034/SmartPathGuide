@@ -5,13 +5,15 @@ package kr.pnu.ga2019.presentation.user
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.orhanobut.logger.Logger
 import io.reactivex.CompletableObserver
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
 import kr.pnu.ga2019.data.repository.*
-import kr.pnu.ga2019.domain.entity.*
+import kr.pnu.ga2019.domain.entity.Path
+import kr.pnu.ga2019.domain.entity.Point
+import kr.pnu.ga2019.domain.entity.Preference
+import kr.pnu.ga2019.domain.entity.User
 import kr.pnu.ga2019.domain.repository.*
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.utility.AppSchedulerProvider
@@ -41,12 +43,8 @@ class UserPathViewModel(
         placeRepository.getAllPlace()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
-            .subscribe({ list ->
-                uiState.value = UserPathUiState.LoadPlace("places", list)
-                start()
-            }, { throwable ->
-                uiState.value = UserPathUiState.Error("error", throwable)
-            })
+            .subscribe({ list -> setPlaceState(list); start() },
+                { throwable -> setErrorState(throwable) })
             .addDisposable()
 
     private fun start() {
@@ -56,14 +54,9 @@ class UserPathViewModel(
             .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
-            .subscribe({
-                insertUser()
-            }, { throwable ->
-                uiState.value = UserPathUiState.Error("error", throwable)
-            }, {
-                Logger.d("visitor setting is done")
-                uiState.value = UserPathUiState.SetVisitor
-            })
+            .subscribe({ insertUser() },
+                { throwable -> setErrorState(throwable) },
+                { setVisitorSetState() })
             .addDisposable()
     }
 
@@ -89,7 +82,7 @@ class UserPathViewModel(
                 }
 
                 override fun onError(throwable: Throwable) {
-                    uiState.value = UserPathUiState.Error("error", throwable)
+                    setErrorState(throwable)
                 }
             })
     }
@@ -129,7 +122,7 @@ class UserPathViewModel(
             }
 
             override fun onError(throwable: Throwable) {
-                uiState.value = UserPathUiState.Error("error", throwable)
+                setErrorState(throwable)
             }
         })
 
@@ -154,7 +147,7 @@ class UserPathViewModel(
             }
 
             override fun onError(throwable: Throwable) {
-                uiState.value = UserPathUiState.Error("error", throwable)
+                setErrorState(throwable)
             }
         })
 
@@ -165,9 +158,9 @@ class UserPathViewModel(
             .subscribe(object: SingleObserver<List<Point>> {
                 override fun onSuccess(points: List<Point>) {
                     if(isMyLocation)
-                        uiState.value = UserPathUiState.LoadMyPath("myPath", Path(memberPk, points))
+                        setMyPathState(Path(memberPk, points))
                     else
-                        uiState.value = UserPathUiState.LoadVisitorPath("visitor", Path(memberPk, points))
+                        setVisitorPathState(Path(memberPk, points))
                 }
 
                 override fun onSubscribe(d: Disposable) {
@@ -175,7 +168,7 @@ class UserPathViewModel(
                 }
 
                 override fun onError(throwable: Throwable) {
-                    uiState.value = UserPathUiState.Error("error", throwable)
+                    setErrorState(throwable)
                 }
             })
 }

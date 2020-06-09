@@ -3,11 +3,9 @@ package kr.pnu.ga2019.presentation.user
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Path
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
@@ -105,18 +103,13 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     }
 
     private fun createUserPoint(): LayoutUserPointBinding =
-        DataBindingUtil.inflate<LayoutUserPointBinding>(
-            LayoutInflater.from(this),
-            R.layout.layout_user_point,
-            null,
-            false
-        ).apply {
+        LayoutUserPointBinding.inflate(layoutInflater).apply {
             userImage.setImageResource(People.random())
         }
 
     private fun setUserPointAnimation(view: View, userPath: UserPath) {
         ObjectAnimator.ofFloat(view, View.X, View.Y, getUserPointPath(userPath)).apply {
-            duration = Random.nextLong(180000L, 360000L)
+            duration = Random.nextLong(120000L, 240000L)
             repeatCount = Animation.REVERSE
         }.start()
     }
