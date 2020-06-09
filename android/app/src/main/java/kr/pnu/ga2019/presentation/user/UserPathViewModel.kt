@@ -4,8 +4,8 @@
 package kr.pnu.ga2019.presentation.user
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.orhanobut.logger.Logger
 import io.reactivex.CompletableObserver
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -35,22 +35,14 @@ class UserPathViewModel(
         AppSchedulerProvider()
 ) : BaseViewModel(application) {
 
-    private val _userPath = MutableLiveData<Path>()
-    val userPath: LiveData<Path>
-        get() = _userPath
-
-    private val _myPath = MutableLiveData<Path>()
-    val myPath: LiveData<Path>
-        get() = _myPath
-
-    val places = MutableLiveData<List<Place>>()
+    val uiState = MutableLiveData<UserPathUiState>()
 
     fun getAllPlace() =
         placeRepository.getAllPlace()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({ list ->
-                places.value = list
+                uiState.value = UserPathUiState.LoadPlace("places", list)
                 start()
             }, { throwable ->
                 logError(throwable)
@@ -64,11 +56,18 @@ class UserPathViewModel(
             .repeat(10)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
-            .subscribe { insertUser() }
+            .subscribe({
+                insertUser()
+            }, {
+
+            }, {
+                Logger.d("visitor setting is done")
+                uiState.value = UserPathUiState.SetVisitor
+            })
             .addDisposable()
     }
 
-    private fun enterPersonalUser(preference: Preference) {
+    fun enterPersonalUser(preference: Preference) {
         userRepository.insert(
             age = preference.age,
             ancient = preference.ancient,
@@ -94,7 +93,6 @@ class UserPathViewModel(
                 }
             })
     }
-
 
     fun stop(){
         clear()
@@ -167,9 +165,9 @@ class UserPathViewModel(
             .subscribe(object: SingleObserver<List<Point>> {
                 override fun onSuccess(points: List<Point>) {
                     if(isMyLocation)
-                        _myPath.value = Path(memberPk, points)
+                        uiState.value = UserPathUiState.LoadMyPath("myPath", Path(memberPk, points))
                     else
-                        _userPath.value = Path(memberPk, points)
+                        uiState.value = UserPathUiState.LoadVisitorPath("visitor", Path(memberPk, points))
                 }
 
                 override fun onSubscribe(d: Disposable) {

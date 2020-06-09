@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivityPathBinding
+import kr.pnu.ga2019.databinding.LayoutMyLocationBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.domain.entity.Preference
@@ -45,34 +46,42 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
     }
 
     override fun observeLiveData() {
-        viewModel.userPath.observe(this, Observer { userPath ->
-            createUserPoint().let { view ->
-                binding.mapRootLayout.addView(view.root)
-                setUserPointAnimation(view.root, userPath)
+        viewModel.uiState.observe(this, Observer { state ->
+            when(state) {
+                UserPathUiState.SetVisitor -> {
+                    binding.moveText.isEnabled = true
+                    binding.moveButton.setOnClickListener { viewModel.enterPersonalUser(preference) }
+                }
+                is UserPathUiState.LoadVisitorPath -> {
+                    createUserPoint().let { view ->
+                        binding.mapRootLayout.addView(view.root)
+                        setUserPointAnimation(view.root, state.path)
+                    }
+                }
+                is UserPathUiState.LoadPlace -> {
+                    state.places.forEach { place ->
+                        val pin = LayoutPlacePinBinding.inflate(layoutInflater)
+                        pin.place = place
+                        pin.root.x = place.locationX.times(FACTOR_WIDTH).toFloat()
+                        pin.root.y = place.locationY.times(FACTOR_HEIGHT).toFloat()
+                        binding.mapRootLayout.addView(pin.root)
+                    }
+                }
+                is UserPathUiState.LoadMyPath -> {
+                    LayoutMyLocationBinding.inflate(layoutInflater).let { view ->
+                        binding.mapRootLayout.addView(view.root)
+                        view.root.x = state.path.getPointLocations().first().locationX.times(FACTOR_WIDTH).toFloat()
+                        view.root.y = state.path.getPointLocations().first().locationY.times(FACTOR_HEIGHT).toFloat()
+                    }
+                    binding.moveText.text = "다음 지점으로 이동하기"
+                    binding.moveButton.setOnClickListener { /* explicitly empty */ }
+                }
             }
         })
-
-        viewModel.places.observe(this, Observer { places ->
-            places.forEach { place ->
-                val pin = LayoutPlacePinBinding.inflate(layoutInflater)
-                pin.place = place
-                pin.root.x = place.locationX.times(FACTOR_WIDTH).toFloat()
-                pin.root.y = place.locationY.times(FACTOR_HEIGHT).toFloat()
-                binding.mapRootLayout.addView(pin.root)
-            }
-        })
-
-        viewModel.myPath.observe(this, Observer { myPath ->
-            // TODO 나의 경로 표시
-        })
-    }
-
-    override fun setListener() {
-        // TODO 다음으로 이동하기
     }
 
     override fun start() {
-        viewModel.getAllPlace(preference)
+        viewModel.getAllPlace()
     }
 
     private fun createUserPoint(): LayoutUserPointBinding =
