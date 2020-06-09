@@ -12,6 +12,11 @@
     <string name="text_view_restart_dispose">RE-START</string>
     <string name="text_view_stop_dispose">STOP</string>
     <string name="text_view_enter_button">입장하기</string>
+    <string name="text_view_exit_button">퇴장하기</string>
+    <string name="text_view_move_next_button">다음 지점으로 이동하기</string>
     <string name="text_view_set_preference_button">유저 성향 설정</string>
+
+    <!-- Toast Message -->
+    <string name="toast_exit_success">퇴장처리 되었습니다</string>
 
 </resources>

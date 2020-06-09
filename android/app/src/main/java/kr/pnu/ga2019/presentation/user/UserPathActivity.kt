@@ -65,6 +65,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                         pin.place = place
                         pin.root.x = place.locationX.times(FACTOR_WIDTH).toFloat()
                         pin.root.y = place.locationY.times(FACTOR_HEIGHT).toFloat()
+                        pin.root.setOnClickListener { toast(place.name) }
                         binding.mapRootLayout.addView(pin.root)
                     }
                 }
@@ -73,7 +74,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
                         binding.mapRootLayout.addView(view.root)
                         view.root.x = state.path.getPointLocations().first().locationX.times(FACTOR_WIDTH).toFloat()
                         view.root.y = state.path.getPointLocations().first().locationY.times(FACTOR_HEIGHT).toFloat()
-                        binding.moveText.text = "다음 지점으로 이동하기"
+                        binding.moveText.text = getString(R.string.text_view_move_next_button)
                         binding.moveButton.setOnClickListener { moveNextPlace(state, view.root) }
                     }
                 }
@@ -94,9 +95,9 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
             view.x = state.path.getPointLocations()[state.currentLocation].locationX.times(FACTOR_WIDTH).toFloat()
             view.y = state.path.getPointLocations()[state.currentLocation].locationY.times(FACTOR_HEIGHT).toFloat()
         } else {
-            binding.moveText.text = "퇴장하기"
+            binding.moveText.text = getString(R.string.text_view_exit_button)
             binding.moveButton.setOnClickListener {
-                toast("퇴장처리 되었습니다")
+                toast(R.string.toast_exit_success)
                 onBackPressed()
             }
         }
