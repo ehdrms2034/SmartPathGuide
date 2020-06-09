@@ -5,12 +5,13 @@ package kr.pnu.ga2019.presentation.splash
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.data.repository.PreferenceRepositoryImpl
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.domain.repository.PreferenceRepository
 import kr.pnu.ga2019.presentation.base.BaseViewModel
-import kr.pnu.ga2019.util.AppSchedulerProvider
-import kr.pnu.ga2019.util.BaseSchedulerProvider
+import kr.pnu.ga2019.utility.AppSchedulerProvider
+import kr.pnu.ga2019.utility.BaseSchedulerProvider
 
 class SplashViewModel(
     application: Application,
@@ -20,17 +21,15 @@ class SplashViewModel(
         AppSchedulerProvider()
 ) : BaseViewModel(application) {
 
-    val preferenceState = MutableLiveData<SplashUiState>()
+    val uiState = MutableLiveData<SplashUiState>()
 
     fun clearUserPreference() =
         preferenceRepository.clear()
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({
-
-            }, { throwable ->
-                logError(throwable)
-            })
+                Logger.d("Clear User Preference")
+            }, { throwable -> uiState.value = asErrorState(throwable) })
             .addDisposable()
 
     fun checkUserPreferenceExistence() =
@@ -39,12 +38,10 @@ class SplashViewModel(
             .observeOn(scheduler.mainThread())
             .subscribe({ count ->
                 if(count != 1)
-                    preferenceState.value = setEmptyState()
+                    uiState.value = setEmptyState()
                 else
                     getUserPreference()
-            }, { throwable ->
-                logError(throwable)
-            })
+            }, { throwable -> uiState.value = asErrorState(throwable) })
             .addDisposable()
 
     fun setUserPreference(preference: Preference) =
@@ -59,9 +56,8 @@ class SplashViewModel(
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({ preference ->
-                preferenceState.value = setAvailableState(preference)
-            }, { throwable ->
-                logError(throwable)
-            })
+                Logger.d("저장된 유저 성향 : $preference")
+                uiState.value = setAvailableState(preference)
+            }, { throwable -> uiState.value = asErrorState(throwable) })
             .addDisposable()
 }

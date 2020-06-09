@@ -10,13 +10,23 @@
 
         <ImageView
             android:id="@+id/user_image"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@drawable/image_person_1"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/location"
+            app:layout_constraintTop_toBottomOf="@id/text_current_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_current_location"
+            style="@style/TextViewStyle"
+            android:text="현재위치"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/user_image"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

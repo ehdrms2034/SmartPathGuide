@@ -38,5 +38,4 @@ class SmartPathGuide : Application() {
                 )
             }
     }
-
 }

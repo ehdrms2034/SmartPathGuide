@@ -6,11 +6,10 @@ package kr.pnu.ga2019.presentation.base
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.orhanobut.logger.Logger
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import kr.pnu.ga2019.util.SingleLiveEvent
+import kr.pnu.ga2019.utility.SingleLiveEvent
 
 abstract class BaseViewModel(
     application: Application

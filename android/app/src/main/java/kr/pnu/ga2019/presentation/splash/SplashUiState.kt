@@ -18,4 +18,9 @@ sealed class SplashUiState {
         val message: String
     ) : SplashUiState()
 
+    data class Error(
+        override val isExist: Boolean,
+        val throwable: Throwable
+    ) : SplashUiState()
+
 }

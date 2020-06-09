@@ -5,25 +5,29 @@ package kr.pnu.ga2019.presentation.splash
 
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
+import kr.pnu.ga2019.presentation.dialog.PreferenceSettingDialog
 import kr.pnu.ga2019.presentation.user.UserPathActivity
-import org.jetbrains.anko.toast
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
 ) {
-    override val viewModel: SplashViewModel by viewModels()
+    companion object {
+        private const val TAG: String = "SplashActivity"
+    }
+
+    override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
 
     override fun observeLiveData() {
-        viewModel.preferenceState.observe(this, Observer(::observeUiState))
+        viewModel.uiState.observe(this, Observer(::observeUiState))
     }
 
     override fun setListener() {
-        binding.enterButton.setOnClickListener {
-            viewModel.checkUserPreferenceExistence()
-        }
+        binding.enterButton.setOnClickListener { viewModel.checkUserPreferenceExistence() }
+        binding.setPreferenceButton.setOnClickListener { showPreferenceDialog() }
     }
 
     override fun start() {
@@ -36,9 +40,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
                 UserPathActivity.start(context = this, preference = state.preference)
             }
             is SplashUiState.Empty -> {
-                toast(state.message)
-                // TODO : Show Dialog
+                Logger.d(state.message)
+                showPreferenceDialog()
+            }
+            is SplashUiState.Error -> {
+                Logger.log(Logger.ERROR, TAG, state.throwable.message, state.throwable)
             }
         }
+    }
+
+    private fun showPreferenceDialog() {
+        PreferenceSettingDialog(this) { preference ->
+            viewModel.setUserPreference(preference)
+        }.show()
     }
 }
