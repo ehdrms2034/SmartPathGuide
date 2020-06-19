@@ -1,6 +1,7 @@
 <resources>
 
-    <string name="app_name">SmartPathGuide</string>
+    <string name="app_name">국립부산박물관</string>
+    <string name="app_sub_name">National Museum of Pusan</string>
 
     <!-- ImageView Description -->
     <string name="image_view_map_description">메인화면에서 보여줄 지도 이미지뷰</string>

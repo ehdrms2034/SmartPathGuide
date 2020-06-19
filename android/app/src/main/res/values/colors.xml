@@ -9,5 +9,8 @@
     <color name="colorBlack">#000000</color>
 
     <color name="colorBrown">#D2B48C</color>
+    <color name="cerulean">#007cba</color>
+    <color name="cerulean_alpha_20">#33007cba</color>
+    <color name="sky">#012345</color>
 
 </resources>
