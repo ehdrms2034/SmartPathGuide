@@ -6,12 +6,13 @@ package kr.pnu.ga2019.presentation.splash
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.pnu.ga2019.databinding.LayoutSplashPointBinding
-import kr.pnu.ga2019.domain.entity.Point
+import kr.pnu.ga2019.domain.entity.Museum
 
 class SplashPointAdapter : RecyclerView.Adapter<SplashPointAdapter.PointViewHolder>() {
 
-    private val points: ArrayList<Point> = arrayListOf()
+    private val points: ArrayList<Museum> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PointViewHolder {
         return PointViewHolder(
@@ -27,7 +28,7 @@ class SplashPointAdapter : RecyclerView.Adapter<SplashPointAdapter.PointViewHold
         holder.bindTo(points[position])
     }
 
-    fun update(list: List<Point>) {
+    fun update(list: List<Museum>) {
         points.clear()
         points.addAll(list)
         notifyDataSetChanged()
@@ -37,8 +38,11 @@ class SplashPointAdapter : RecyclerView.Adapter<SplashPointAdapter.PointViewHold
         private val binding: LayoutSplashPointBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindTo(point: Point) {
-            binding.pointTitle.text = point.name
+        fun bindTo(museum: Museum) {
+            binding.pointTitle.text = museum.name
+            Glide.with(itemView.context)
+                .load(museum.resId)
+                .into(binding.pointImage)
         }
     }
 }

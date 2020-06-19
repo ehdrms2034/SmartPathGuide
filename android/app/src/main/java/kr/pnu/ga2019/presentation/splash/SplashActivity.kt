@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
+import kr.pnu.ga2019.domain.entity.Museum
 import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.presentation.dialog.PreferenceSettingDialog
@@ -51,7 +52,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
                 val position: Int = parent.getChildAdapterPosition(view)
 
                 outRect.bottom = 10.dpToPixel()
-                outRect.top = 10.dpToPixel()
+                outRect.top = 12.dpToPixel()
                 outRect.right = 10.dpToPixel()
                 if(position == 0) { outRect.left = 16.dpToPixel() }
             }
@@ -61,17 +62,15 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     override fun start() {
         //viewModel.clearUserPreference()
 
-        val points = listOf(
-            Point(0, "국립중앙박물관", 0.0, 0.0),
-            Point(1, "국립춘천박물관", 0.0, 0.0),
-            Point(2, "국립청주박물관", 0.0, 0.0),
-            Point(3, "국립공주박물관", 0.0, 0.0),
-            Point(4, "국립부여박물관", 0.0, 0.0),
-            Point(5, "국립익산박물관", 0.0, 0.0),
-            Point(6, "국립전주박물관", 0.0, 0.0),
-            Point(7, "국립대구박물관", 0.0, 0.0)
+        val museums = listOf(
+            Museum( "국립중앙박물관", R.drawable.img_point_1),
+            Museum( "국립춘천박물관", R.drawable.img_point_2),
+            Museum( "국립청주박물관", R.drawable.img_point_3),
+            Museum( "국립익산박물관", R.drawable.img_point_4),
+            Museum( "국립대구박물관", R.drawable.img_point_5),
+            Museum( "국립광주박물관", R.drawable.img_point_6)
         )
-        pointAdapter.update(points)
+        pointAdapter.update(museums)
     }
 
     private fun observeUiState(state: SplashUiState) {
