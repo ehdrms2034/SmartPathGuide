@@ -67,10 +67,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/points_recyclerview"
                 android:layout_width="0dp"
-                android:layout_height="156dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/enter_button"/>
+                app:layout_constraintBottom_toTopOf="@id/enter_button"
+                tools:listitem="@layout/layout_splash_point"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/enter_button"

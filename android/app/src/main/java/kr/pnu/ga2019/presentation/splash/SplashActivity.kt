@@ -3,6 +3,8 @@
  */
 package kr.pnu.ga2019.presentation.splash
 
+import android.graphics.Rect
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,6 +17,7 @@ import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.presentation.dialog.PreferenceSettingDialog
 import kr.pnu.ga2019.presentation.user.UserPathActivity
+import kr.pnu.ga2019.utility.dpToPixel
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
@@ -38,6 +41,25 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
         binding.pointsRecyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         binding.pointsRecyclerview.adapter = pointAdapter
         binding.pointsRecyclerview.itemAnimator = DefaultItemAnimator()
+        binding.pointsRecyclerview.addItemDecoration(object: RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
+                val position: Int = parent.getChildAdapterPosition(view)
+
+                outRect.bottom = 10.dpToPixel()
+                outRect.top = 10.dpToPixel()
+                if(position == 0) {
+                    outRect.left = 10.dpToPixel()
+                }
+                if(position != state.itemCount - 1) {
+                    outRect.right = 10.dpToPixel()
+                }
+            }
+        })
     }
 
     override fun start() {
