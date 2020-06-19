@@ -50,9 +50,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
             ) {
                 val position: Int = parent.getChildAdapterPosition(view)
 
-                outRect.bottom = 16.dpToPixel()
-                outRect.top = 16.dpToPixel()
-                outRect.right = 16.dpToPixel()
+                outRect.bottom = 10.dpToPixel()
+                outRect.top = 10.dpToPixel()
+                outRect.right = 10.dpToPixel()
                 if(position == 0) { outRect.left = 16.dpToPixel() }
             }
         })
@@ -62,12 +62,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
         //viewModel.clearUserPreference()
 
         val points = listOf(
-            Point(0, "국립전시관", 0.0, 0.0),
-            Point(0, "국립전시관", 0.0, 0.0),
-            Point(0, "국립전시관", 0.0, 0.0),
-            Point(0, "국립전시관", 0.0, 0.0),
-            Point(0, "국립전시관", 0.0, 0.0),
-            Point(0, "국립전시관", 0.0, 0.0)
+            Point(0, "국립중앙박물관", 0.0, 0.0),
+            Point(1, "국립춘천박물관", 0.0, 0.0),
+            Point(2, "국립청주박물관", 0.0, 0.0),
+            Point(3, "국립공주박물관", 0.0, 0.0),
+            Point(4, "국립부여박물관", 0.0, 0.0),
+            Point(5, "국립익산박물관", 0.0, 0.0),
+            Point(6, "국립전주박물관", 0.0, 0.0),
+            Point(7, "국립대구박물관", 0.0, 0.0)
         )
         pointAdapter.update(points)
     }
