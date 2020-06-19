@@ -50,14 +50,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
             ) {
                 val position: Int = parent.getChildAdapterPosition(view)
 
-                outRect.bottom = 10.dpToPixel()
-                outRect.top = 10.dpToPixel()
-                if(position == 0) {
-                    outRect.left = 10.dpToPixel()
-                }
-                if(position != state.itemCount - 1) {
-                    outRect.right = 10.dpToPixel()
-                }
+                outRect.bottom = 16.dpToPixel()
+                outRect.top = 16.dpToPixel()
+                outRect.right = 16.dpToPixel()
+                if(position == 0) { outRect.left = 16.dpToPixel() }
             }
         })
     }
