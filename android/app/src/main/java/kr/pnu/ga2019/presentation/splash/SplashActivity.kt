@@ -71,17 +71,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
             }
             is SplashUiState.Empty -> {
                 Logger.d(state.message)
-                showPreferenceDialog()
             }
             is SplashUiState.Error -> {
                 Logger.log(Logger.ERROR, TAG, state.throwable.message, state.throwable)
             }
         }
-    }
-
-    private fun showPreferenceDialog() {
-        PreferenceSettingDialog(this) { preference ->
-            viewModel.setUserPreference(preference)
-        }.show()
     }
 }
