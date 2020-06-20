@@ -41,10 +41,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         return false
     }
 
-    override fun onBackPressed() {
-        finish()
-    }
-
     override fun start() {
         /* explicitly empty */
     }

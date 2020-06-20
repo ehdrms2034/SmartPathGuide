@@ -54,7 +54,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
 
                 outRect.bottom = 10.dpToPixel()
                 outRect.top = 12.dpToPixel()
-                outRect.right = 10.dpToPixel()
+                outRect.right = if(position == state.itemCount -1) 16.dpToPixel() else 10.dpToPixel()
                 if(position == 0) { outRect.left = 16.dpToPixel() }
             }
         })
