@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
-import kr.pnu.ga2019.domain.entity.Museum
-import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.presentation.base.BaseActivity
-import kr.pnu.ga2019.presentation.dialog.PreferenceSettingDialog
 import kr.pnu.ga2019.presentation.user.UserPathActivity
 import kr.pnu.ga2019.utility.Const
 import kr.pnu.ga2019.utility.dpToPixel
+import org.jetbrains.anko.toast
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
@@ -30,8 +28,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
 
     override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
     private val pointAdapter: SplashPointAdapter by lazy {
-        SplashPointAdapter { pointId ->
-            //TODO : Dialog
+        SplashPointAdapter { museum ->
+            //TODO : Dialog for Testing
+            toast("id: ${museum.id}, name: ${museum.name}")
         }
     }
 
