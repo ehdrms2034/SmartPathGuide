@@ -63,12 +63,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
         //viewModel.clearUserPreference()
 
         val museums = listOf(
-            Museum( "국립중앙박물관", R.drawable.img_point_1),
-            Museum( "국립춘천박물관", R.drawable.img_point_2),
-            Museum( "국립청주박물관", R.drawable.img_point_3),
-            Museum( "국립익산박물관", R.drawable.img_point_4),
-            Museum( "국립대구박물관", R.drawable.img_point_5),
-            Museum( "국립광주박물관", R.drawable.img_point_6)
+            Museum( "전쟁전시관", R.drawable.img_point_1),
+            Museum( "고대전시관", R.drawable.img_point_2),
+            Museum( "중세전시관", R.drawable.img_point_3),
+            Museum( "현대전시관", R.drawable.img_point_4),
+            Museum( "미래전시관", R.drawable.img_point_5),
+            Museum( "예술전시관", R.drawable.img_point_6)
         )
         pointAdapter.update(museums)
     }
