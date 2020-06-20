@@ -29,6 +29,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".presentation.main.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".presentation.user.UserPathActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

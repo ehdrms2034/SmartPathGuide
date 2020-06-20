@@ -26,6 +26,8 @@ abstract class BaseActivity<T : ViewDataBinding, V: BaseViewModel>(
 
     open fun setListener() { /* explicitly empty */ }
 
+    open fun setToolbar() { /* explicitly empty */ }
+
     abstract fun start()
 
     override fun onCreate(savedInstanceState: Bundle?) {

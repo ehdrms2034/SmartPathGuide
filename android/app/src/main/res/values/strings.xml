@@ -17,6 +17,9 @@
     <string name="text_view_move_next_button">다음 지점으로 이동하기</string>
     <string name="text_view_set_preference_button">유저 성향 설정</string>
 
+    <!-- Toolbar Title -->
+    <string name="toolbar_main_activity">국립부산박물관</string>
+
     <!-- Toast Message -->
     <string name="toast_exit_success">퇴장처리 되었습니다</string>
 

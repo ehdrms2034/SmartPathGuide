@@ -14,6 +14,7 @@ import com.orhanobut.logger.Logger
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
+import kr.pnu.ga2019.presentation.main.MainActivity
 import kr.pnu.ga2019.presentation.user.UserPathActivity
 import kr.pnu.ga2019.utility.Const
 import kr.pnu.ga2019.utility.dpToPixel
@@ -57,6 +58,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
                 if(position == 0) { outRect.left = 16.dpToPixel() }
             }
         })
+    }
+
+    override fun setListener() {
+        binding.enterButton.setOnClickListener { MainActivity.start(this) }
     }
 
     override fun start() {
