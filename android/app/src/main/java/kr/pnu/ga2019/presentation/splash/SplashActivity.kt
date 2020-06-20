@@ -18,6 +18,7 @@ import kr.pnu.ga2019.domain.entity.Point
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.presentation.dialog.PreferenceSettingDialog
 import kr.pnu.ga2019.presentation.user.UserPathActivity
+import kr.pnu.ga2019.utility.Const
 import kr.pnu.ga2019.utility.dpToPixel
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
@@ -28,14 +29,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     }
 
     override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
-    private val pointAdapter: SplashPointAdapter by lazy { SplashPointAdapter() }
+    private val pointAdapter: SplashPointAdapter by lazy {
+        SplashPointAdapter { pointId ->
+            //TODO : Dialog
+        }
+    }
 
     override fun observeLiveData() {
         viewModel.uiState.observe(this, Observer(::observeUiState))
-    }
-
-    override fun setListener() {
-        //binding.enterButton.setOnClickListener { viewModel.checkUserPreferenceExistence() }
     }
 
     override fun setRecyclerView() {
@@ -60,17 +61,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     }
 
     override fun start() {
-        //viewModel.clearUserPreference()
-
-        val museums = listOf(
-            Museum( "전쟁전시관", R.drawable.img_point_1),
-            Museum( "고대전시관", R.drawable.img_point_2),
-            Museum( "중세전시관", R.drawable.img_point_3),
-            Museum( "현대전시관", R.drawable.img_point_4),
-            Museum( "미래전시관", R.drawable.img_point_5),
-            Museum( "예술전시관", R.drawable.img_point_6)
-        )
-        pointAdapter.update(museums)
+        pointAdapter.update(Const.MUSEUM_POINTS)
     }
 
     private fun observeUiState(state: SplashUiState) {

@@ -15,7 +15,7 @@ import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.domain.entity.Preference
 import kr.pnu.ga2019.presentation.base.BaseActivity
-import kr.pnu.ga2019.utility.People
+import kr.pnu.ga2019.utility.Const
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import kotlin.random.Random
@@ -105,7 +105,7 @@ class UserPathActivity : BaseActivity<ActivityPathBinding, UserPathViewModel>(
 
     private fun createUserPoint(): LayoutUserPointBinding =
         LayoutUserPointBinding.inflate(layoutInflater).apply {
-            userImage.setImageResource(People.random())
+            userImage.setImageResource(Const.random())
         }
 
     private fun setUserPointAnimation(view: View, userPath: UserPath) {

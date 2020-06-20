@@ -6,6 +6,7 @@ package kr.pnu.ga2019.domain.entity
 import kr.pnu.ga2019.domain.Entity
 
 data class Museum(
+    val id: Int,
     val name: String,
     val resId: Int
 ): Entity
