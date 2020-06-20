@@ -36,6 +36,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         binding.toolbar.findViewById<TextView>(R.id.toolbar_title).setText(R.string.toolbar_main_activity)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return false
+    }
+
+    override fun onBackPressed() {
+        finish()
+    }
+
     override fun start() {
         /* explicitly empty */
     }

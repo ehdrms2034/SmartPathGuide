@@ -33,6 +33,7 @@ abstract class BaseActivity<T : ViewDataBinding, V: BaseViewModel>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setBinding()
+        setToolbar()
         bindViewModel()
         observeLiveData()
         observeError()
