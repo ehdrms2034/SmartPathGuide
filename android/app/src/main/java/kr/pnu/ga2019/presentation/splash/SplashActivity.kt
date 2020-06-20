@@ -27,7 +27,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
         private const val TAG: String = "SplashActivity"
     }
 
-    override val viewModel: SplashViewModel by viewModels { SplashViewModelFactory(application) }
+    override val viewModel: SplashViewModel by viewModels()
     private val pointAdapter: SplashPointAdapter by lazy {
         SplashPointAdapter { museum ->
             //TODO : Dialog for Testing

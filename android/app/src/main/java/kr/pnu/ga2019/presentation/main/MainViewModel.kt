@@ -3,11 +3,8 @@
  */
 package kr.pnu.ga2019.presentation.main
 
-import android.app.Application
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 
-class MainViewModel(
-    application: Application
-) : BaseViewModel(application) {
+class MainViewModel : BaseViewModel() {
     /* explicitly empty */
 }

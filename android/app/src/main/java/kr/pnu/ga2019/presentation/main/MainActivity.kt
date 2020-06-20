@@ -42,7 +42,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
     }
 
     override fun start() {
-        /* explicitly empty */
+        setTabLayout()
+    }
+
+    private fun setTabLayout() {
+        binding.tabLayout.apply {
+//            addTab(newTab().setCustomView())
+        }
     }
 
 }
