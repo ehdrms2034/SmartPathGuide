@@ -27,4 +27,12 @@ object Const {
         Museum(4,"미래전시관", R.drawable.img_point_5),
         Museum(5,"예술전시관", R.drawable.img_point_6)
     )
+
+    val POINT_IMAGES: List<Int> = MUSEUM_POINTS.map { it.resId }
+
+    val PAGE_IMAGES: List<Int> = listOf(
+        R.drawable.img_pager_1,
+        R.drawable.img_pager_2,
+        R.drawable.img_pager_3
+    )
 }
