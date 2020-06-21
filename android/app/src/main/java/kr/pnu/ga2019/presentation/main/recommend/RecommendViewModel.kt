@@ -38,6 +38,7 @@ class RecommendViewModel(
             })
             .addDisposable()
 
+    // 다음 추천 지점을 받아옴
     fun getRecommend() {
         //recommendRepository.getRecommend()
     }
