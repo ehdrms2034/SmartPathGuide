@@ -3,10 +3,7 @@
  */
 package kr.pnu.ga2019.presentation.main.recommend
 
-import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
@@ -17,7 +14,6 @@ import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.FragmentRecommendBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
-import kr.pnu.ga2019.domain.entity.Place
 import kr.pnu.ga2019.presentation.base.BaseFragment
 import kr.pnu.ga2019.utility.Const
 import org.jetbrains.anko.support.v4.toast
@@ -54,7 +50,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         binding.firstEnterMessage.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.shake))
         viewModel.getAllPlace()
 
-        binding.pinchZoomZoomLayout.addOnZoomListener(object: ZoomLayout.OnZoomListener {
+        binding.pinchZoomLayout.addOnZoomListener(object: ZoomLayout.OnZoomListener {
             override fun onZoomBegin(view: ZoomLayout?, scale: Float) {
             }
 
@@ -85,18 +81,17 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 //                pin.root.y = place.locationY.toFloat()
                 pin.root.x = Random.nextInt(-400, 400).toFloat()
                 pin.root.y = Random.nextInt(100, 1600).toFloat()
-                pin.root.setOnClickListener { toast(place.name) }
 
                 pinViews.add(pin.root)
-                binding.pinchZoomZoomLayout.addView(pin.root)
+                binding.pinchZoomLayout.addView(pin.root)
             }
         })
     }
 
     override fun onResume() {
         super.onResume()
-        pinViews.forEach { view -> binding.pinchZoomZoomLayout.addView(view) }
-        binding.pinchZoomZoomLayout.addView(myLocation.root)
+        pinViews.forEach { view -> binding.pinchZoomLayout.addView(view) }
+        binding.pinchZoomLayout.addView(myLocation.root)
         if(isSelectMoved) {
             binding.firstEnterMessage.visibility = View.GONE
         }
@@ -104,17 +99,14 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
     override fun onPause() {
         super.onPause()
-        pinViews.forEach { view -> binding.pinchZoomZoomLayout.removeView(view) }
-        binding.pinchZoomZoomLayout.removeView(myLocation.root)
+        pinViews.forEach { view -> binding.pinchZoomLayout.removeView(view) }
+        binding.pinchZoomLayout.removeView(myLocation.root)
 
     }
 
     private fun setMoveButtonClickListener() {
         binding.moveAncientButton.setOnClickListener {
             toast("고대전시관")
-//            viewModel.startTimer()
-//            // 고대전시관 placeId: 1
-//            viewModel.updatePathList(0, cachedPlaces["고대 전시관"]!!)
             binding.firstEnterMessage.animation = null
             binding.firstEnterMessage.visibility = View.GONE
             if(pinViews.isNotEmpty()) {
@@ -122,6 +114,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
                     .x(pinViews[0].x)
                     .y(pinViews[0].y)
                 isSelectMoved = true
+                viewModel.startTimer()
+                //viewModel.updatePathList(0, 1) // 고대전시관 placeId: 1
             }
         }
         binding.moveScienceButton.setOnClickListener {
@@ -133,6 +127,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
                     .x(pinViews[7].x)
                     .y(pinViews[7].y)
                 isSelectMoved = true
+                viewModel.startTimer()
+                //viewModel.updatePathList(0, 7) // 과학전시관 placeId: 7
             }
         }
     }

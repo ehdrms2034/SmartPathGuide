@@ -8,7 +8,7 @@
         android:layout_height="match_parent">
 
         <com.shopgun.android.zoomlayout.ZoomLayout
-            android:id="@+id/pinch_zoom_zoom_layout"
+            android:id="@+id/pinch_zoom_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
