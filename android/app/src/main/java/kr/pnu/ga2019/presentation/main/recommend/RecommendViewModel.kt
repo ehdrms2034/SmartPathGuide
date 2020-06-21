@@ -27,6 +27,8 @@ class RecommendViewModel(
     private val _places = SingleLiveEvent<List<Place>>()
     val places: LiveData<List<Place>> get() = _places
 
+    private val emptyRequestList: ArrayList<ArrayList<Any>> = makeEmptyPathList()
+
     init {
         getRecommend()
     }
@@ -46,7 +48,7 @@ class RecommendViewModel(
     // 다음 추천 지점을 받아옴
     fun getRecommend() {
         val request =
-        recommendRepository.getRecommend(makePathData())
+        recommendRepository.getRecommend(emptyRequestList)
             .subscribeOn(scheduler.io())
             .observeOn(scheduler.mainThread())
             .subscribe({
@@ -58,20 +60,26 @@ class RecommendViewModel(
 
     }
 
-    private fun makePathData(): List<List<Any>> {
-        return ArrayList<List<Any>>().apply {
-            add(listOf(0, 1, 10))
-            add(listOf(1, 2, 10))
-            add(listOf(2, 3, 12))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
-            add(listOf(0, 0, 0))
+    fun updatePathList(index: Int, seq: Int, placeId: Int, stayTime: Int){
+        emptyRequestList[index][0] = seq
+        emptyRequestList[index][1] = placeId
+        emptyRequestList[index][2] = stayTime
+    }
+
+    private fun makeEmptyPathList(): ArrayList<ArrayList<Any>> {
+        return ArrayList<ArrayList<Any>>().apply {
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
+            add(arrayListOf(0, 0, 0))
         }
     }
 }
