@@ -76,6 +76,12 @@ class RecommendViewModel(
 
     // 다음 추천 지점을 받아옴
     fun getRecommend(currentPlaceId: Int) {
+        if(pathIndex != 0){
+            if(currentPlaceId == 1 || currentPlaceId == 8) {
+                _finish.call()
+                return
+            }
+        }
         stopTimer()
         updatePathList(pathIndex, currentPlaceId)
         recommendRepository.getRecommend(emptyRequestList)

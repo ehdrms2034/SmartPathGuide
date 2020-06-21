@@ -106,10 +106,6 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
         viewModel.recommendResult.observe(viewLifecycleOwner, Observer {
             it?.let { result ->
-                if(result.first.placeId == 1 || result.first.placeId == 8){
-                    activity?.onBackPressed()
-                    return@Observer
-                }
                 cachedPlaces.first { place -> place.id == result.first.placeId }
                     .let { currentPlace ->
                         toast("${currentPlace.name}으로 이동하세요")
@@ -130,8 +126,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         })
 
         viewModel.finish.observe(viewLifecycleOwner, Observer {
-            toast("즐거운 관람 되셨나요?\n다음에 다시 방문해주세요")
-            activity?.onBackPressed()
+            showExitDialog()
         })
     }
 
@@ -149,6 +144,12 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         pinViews.forEach { view -> binding.pinchZoomLayout.removeView(view) }
         binding.pinchZoomLayout.removeView(myLocation.root)
 
+    }
+
+    private fun showExitDialog() {
+        ExitDialog(requireActivity()) {
+            activity?.onBackPressed()
+        }.show()
     }
 
     private fun setMoveButtonClickListener() {
