@@ -145,7 +145,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/get_recommend_button"/>
+            app:layout_constraintEnd_toStartOf="@id/get_recommend_button"
+            tools:listitem="@layout/layout_visited_place"
+            tools:itemCount="3"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/get_recommend_button"
