@@ -9,6 +9,7 @@ const router = Router();
 
 router.post("/", async (req, res) => {
   let { pathData } = req.body;
+  console.log(pathData);
   const pathGuideService = new PathRecommendService();
   try {
     const newData = (pathData as Array<any>).map(it=>{return [it[1],it[2]]})
