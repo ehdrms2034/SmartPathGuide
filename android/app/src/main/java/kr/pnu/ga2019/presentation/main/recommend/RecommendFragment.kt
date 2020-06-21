@@ -37,8 +37,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
     private val myLocation: LayoutUserPointBinding by lazy {
         createUserPoint().apply {
-            root.x = 0.toFloat()
-            root.y = 1600.toFloat()
+            root.x = (-450).toFloat()
+            root.y = 1450.toFloat()
         }
     }
 

@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/user_image"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:src="@drawable/image_person_1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="현재위치"
-            android:textSize="12dp"
+            android:textSize="18dp"
             android:textColor="@android:color/holo_red_dark"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/user_image"
