@@ -11,6 +11,7 @@ import kr.pnu.ga2019.domain.repository.PlaceRepository
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.utility.AppSchedulerProvider
 import kr.pnu.ga2019.utility.BaseSchedulerProvider
+import kr.pnu.ga2019.utility.SingleLiveEvent
 
 class RecommendViewModel(
     private val placeRepository: PlaceRepository =
@@ -19,7 +20,7 @@ class RecommendViewModel(
         AppSchedulerProvider()
 ) : BaseViewModel() {
 
-    private val _places = MutableLiveData<List<Place>>()
+    private val _places = SingleLiveEvent<List<Place>>()
     val places: LiveData<List<Place>> get() = _places
 
     // 박물관 각 지점의 정보를 가져옴

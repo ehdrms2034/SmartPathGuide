@@ -32,8 +32,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
     private val myLocation: LayoutUserPointBinding by lazy {
         createUserPoint().apply {
-            root.x = 400f
-            root.y = 800f
+            root.x = 0.toFloat()
+            root.y = 1600.toFloat()
         }
     }
 
@@ -42,7 +42,6 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
     override val viewModel: RecommendViewModel by viewModels()
 
     override fun start() {
-        pinchZoom()
         viewModel.getAllPlace()
     }
 
@@ -60,8 +59,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
                 pin.root.x = place.locationX.toFloat()
                 pin.root.y = place.locationY.toFloat()
-
                 pin.root.setOnClickListener { toast(place.name) }
+
                 pinViews.add(pin.root)
                 binding.pinchZoomZoomLayout.addView(pin.root)
             }
@@ -75,9 +74,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
     override fun onPause() {
         super.onPause()
-        pinViews.forEach { view ->
-            binding.pinchZoomZoomLayout.removeView(view)
-        }
+        pinViews.forEach { view -> binding.pinchZoomZoomLayout.removeView(view) }
         binding.pinchZoomZoomLayout.removeView(myLocation.root)
 
     }
@@ -86,8 +83,4 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         LayoutUserPointBinding.inflate(layoutInflater).apply {
             userImage.setImageResource(Const.random())
         }
-
-    private fun pinchZoom() {
-
-    }
 }
