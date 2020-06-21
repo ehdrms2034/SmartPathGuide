@@ -88,9 +88,12 @@
                     android:layout_marginTop="16dp"
                     android:overScrollMode="never"
                     android:scrollbars="none"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/user_scenario_title_hint"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:listitem="@layout/layout_watch_method"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

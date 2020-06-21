@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:textSize="16dp"
+                android:textSize="28dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
                 tools:text="@string/user_watch_description_1"
