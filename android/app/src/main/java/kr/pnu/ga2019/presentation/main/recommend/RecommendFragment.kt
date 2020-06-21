@@ -3,7 +3,12 @@
  */
 package kr.pnu.ga2019.presentation.main.recommend
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.graphics.Path
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
@@ -14,6 +19,7 @@ import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.FragmentRecommendBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
 import kr.pnu.ga2019.databinding.LayoutUserPointBinding
+import kr.pnu.ga2019.domain.entity.Place
 import kr.pnu.ga2019.presentation.base.BaseFragment
 import kr.pnu.ga2019.utility.Const
 import org.jetbrains.anko.support.v4.toast
@@ -41,10 +47,14 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
     }
 
     private val pinViews: ArrayList<View> = arrayListOf()
-    private val cachedPlaces: HashMap<String, Int> = hashMapOf()
+    private val cachedPlaces: ArrayList<Place> = arrayListOf()
     private var isSelectMoved: Boolean = false
 
     override val viewModel: RecommendViewModel by viewModels()
+
+    override fun bindViewModel() {
+        binding.viewModel = viewModel
+    }
 
     override fun start() {
         binding.firstEnterMessage.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.shake))
@@ -68,8 +78,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         super.observeLiveData()
         viewModel.places.observe(viewLifecycleOwner, Observer { places ->
             cachedPlaces.clear()
+//            cachedPlaces.addAll(places)
             setMoveButtonClickListener()
-            places.map { place -> cachedPlaces.put(place.name, place.id) }
 
             places?.forEach { place ->
                 val pin = LayoutPlacePinBinding.inflate(layoutInflater)
@@ -79,11 +89,42 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
                 // y: +100 ~ +1600
 //                pin.root.x = place.locationX.toFloat()
 //                pin.root.y = place.locationY.toFloat()
-                pin.root.x = Random.nextInt(-400, 400).toFloat()
-                pin.root.y = Random.nextInt(100, 1600).toFloat()
+
+                val randomX: Int = Random.nextInt(-400, 400)
+                val randomY: Int = Random.nextInt(100, 1600)
+
+                pin.root.x = randomX.toFloat()
+                pin.root.y = randomY.toFloat()
+                place.locationX = randomX
+                place.locationY = randomY
+                cachedPlaces.add(place)
 
                 pinViews.add(pin.root)
                 binding.pinchZoomLayout.addView(pin.root)
+            }
+        })
+
+        viewModel.recommendResult.observe(viewLifecycleOwner, Observer {
+            it?.let { result ->
+                cachedPlaces.first { place -> place.id == result.first.placeId }
+                    .let { currentPlace ->
+                        Log.d("currentPlace", "현재 위치 : ${currentPlace.name}, x: ${currentPlace.locationX}, y: ${currentPlace.locationY}")
+                        viewModel.startTimer()
+                        binding.currentPlace = currentPlace
+//                        myLocation.root
+//                            .x(currentPlace.locationX.toFloat())
+//                            .y(currentPlace.locationY.toFloat())
+//                            .start()
+
+                        val moveX = ObjectAnimator.ofFloat(myLocation.root, "x", currentPlace.locationX.toFloat())
+                        val moveY = ObjectAnimator.ofFloat(myLocation.root, "y", currentPlace.locationY.toFloat())
+
+                        val animatorSet = AnimatorSet()
+                        animatorSet.playTogether(moveX, moveY)
+                        animatorSet.duration = 500L
+                        animatorSet.start()
+                    }
+
             }
         })
     }
@@ -110,12 +151,24 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
             binding.firstEnterMessage.animation = null
             binding.firstEnterMessage.visibility = View.GONE
             if(pinViews.isNotEmpty()) {
-                myLocation.root.animate()
-                    .x(pinViews[0].x)
-                    .y(pinViews[0].y)
+//                myLocation.root.animate()
+//                    .x(pinViews[0].x)
+//                    .y(pinViews[0].y)
+//                    .start()
+
+                val moveX = ObjectAnimator.ofFloat(myLocation.root, "x", pinViews[0].x)
+                val moveY = ObjectAnimator.ofFloat(myLocation.root, "y", pinViews[0].y)
+
+                val animatorSet = AnimatorSet()
+                animatorSet.playTogether(moveX, moveY)
+                animatorSet.duration = 500L
+                animatorSet.start()
+
+
                 isSelectMoved = true
+                binding.currentPlace = cachedPlaces[0]
                 viewModel.startTimer()
-                //viewModel.updatePathList(0, 1) // 고대전시관 placeId: 1
+                binding.currentState.visibility = View.VISIBLE
             }
         }
         binding.moveScienceButton.setOnClickListener {
@@ -123,12 +176,24 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
             binding.firstEnterMessage.animation = null
             binding.firstEnterMessage.visibility = View.GONE
             if(pinViews.isNotEmpty()) {
-                myLocation.root.animate()
-                    .x(pinViews[7].x)
-                    .y(pinViews[7].y)
+//                myLocation.root.animate()
+//                    .x(pinViews[7].x)
+//                    .y(pinViews[7].y)
+//                    .start()
+
+                val moveX = ObjectAnimator.ofFloat(myLocation.root, "x", pinViews[7].x)
+                val moveY = ObjectAnimator.ofFloat(myLocation.root, "y", pinViews[7].y)
+
+                val animatorSet = AnimatorSet()
+                animatorSet.playTogether(moveX, moveY)
+                animatorSet.duration = 500L
+                animatorSet.start()
+
                 isSelectMoved = true
+                binding.currentPlace = cachedPlaces[7]
+
                 viewModel.startTimer()
-                //viewModel.updatePathList(0, 7) // 과학전시관 placeId: 7
+                binding.currentState.visibility = View.VISIBLE
             }
         }
     }

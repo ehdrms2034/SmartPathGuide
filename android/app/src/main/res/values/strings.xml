@@ -23,4 +23,6 @@
     <!-- Toast Message -->
     <string name="toast_exit_success">퇴장처리 되었습니다</string>
 
+    <string name="format_current_place">현재위치: %s, 관람시간: %d분</string>
+
 </resources>
