@@ -4,6 +4,9 @@
 package kr.pnu.ga2019.presentation.main.recommend
 
 import androidx.lifecycle.LiveData
+import com.orhanobut.logger.Logger
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import kr.pnu.ga2019.data.repository.PlaceRepositoryImpl
 import kr.pnu.ga2019.data.repository.RecommendRepositoryImpl
 import kr.pnu.ga2019.domain.entity.PathData
@@ -14,6 +17,7 @@ import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.utility.AppSchedulerProvider
 import kr.pnu.ga2019.utility.BaseSchedulerProvider
 import kr.pnu.ga2019.utility.SingleLiveEvent
+import java.util.concurrent.TimeUnit
 
 class RecommendViewModel(
     private val placeRepository: PlaceRepository =
@@ -28,9 +32,30 @@ class RecommendViewModel(
     val places: LiveData<List<Place>> get() = _places
 
     private val emptyRequestList: ArrayList<ArrayList<Any>> = makeEmptyPathList()
+    private var stayTime: Int = 0
+    private var pathIndex: Int = 0
+    private var timerDisposable: Disposable =
+        Observable.interval(1000L, TimeUnit.MILLISECONDS)
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.mainThread())
+            .subscribe(::setStayTime)
 
     init {
         getRecommend()
+        startTimer()
+    }
+
+    private fun setStayTime(seconds: Long) {
+        stayTime = seconds.toInt()
+        Logger.d("stayTime: $stayTime")
+    }
+
+    fun startTimer(){
+        timerDisposable.addDisposable()
+    }
+
+    fun stopTimer() {
+        timerDisposable.dispose()
     }
 
     // 박물관 각 지점의 정보를 가져옴
@@ -60,10 +85,11 @@ class RecommendViewModel(
 
     }
 
-    fun updatePathList(index: Int, seq: Int, placeId: Int, stayTime: Int){
-        emptyRequestList[index][0] = seq
-        emptyRequestList[index][1] = placeId
-        emptyRequestList[index][2] = stayTime
+    fun updatePathList(seq: Int, placeId: Int){
+        emptyRequestList[pathIndex][0] = seq
+        emptyRequestList[pathIndex][1] = placeId
+        emptyRequestList[pathIndex][2] = stayTime
+        pathIndex++
     }
 
     private fun makeEmptyPathList(): ArrayList<ArrayList<Any>> {
