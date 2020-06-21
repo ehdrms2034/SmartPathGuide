@@ -12,7 +12,7 @@ import retrofit2.http.*
 
 interface RecommendApi : Api {
 
-    @FormUrlEncoded
+    @JvmSuppressWildcards
     @POST("/api/recommend/")
     fun getRecommend(
         @Body pathData: PathDataRequest

@@ -6,9 +6,9 @@ package kr.pnu.ga2019.domain.entity
 import androidx.annotation.IntRange
 
 data class PathData(
-    val one: Int = 0,
-    val two: Int = 0,
+    val seq: Int = 0,
+    val placeId: Int = 0,
 
     @IntRange(from = 0, to = 30)
-    val three: Int = 0
+    val stayTime: Int = 0
 )

@@ -1,10 +1,7 @@
 package kr.pnu.ga2019.data
 
 import com.orhanobut.logger.Logger
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import okhttp3.ResponseBody
+import okhttp3.*
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Retrofit
@@ -48,6 +45,7 @@ object RetrofitManager {
 
         override fun intercept(chain: Interceptor.Chain): Response {
             val response: Response = chain.proceed(chain.request().newBuilder().build())
+            val request: Request = chain.request().newBuilder().build()
             val body: String = response.body?.string() ?: ""
             try {
                 JSONObject(body)
@@ -55,6 +53,7 @@ object RetrofitManager {
             } catch (e: JSONException) {
                 Logger.t(TAG).d(body)
             } finally {
+                Logger.d("REQUEST : $request")
                 return response.newBuilder()
                     .body(ResponseBody.create(
                         response.body?.contentType(),

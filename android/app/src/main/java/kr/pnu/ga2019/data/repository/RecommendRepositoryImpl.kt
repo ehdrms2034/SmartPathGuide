@@ -18,7 +18,7 @@ class RecommendRepositoryImpl(
         RetrofitManager.create(RecommendApi::class.java)
 ) : RecommendRepository {
 
-    override fun getRecommend(pathData: List<PathData>): Single<RecommendedPlace> =
-        recommendApi.getRecommend(PathDataRequest(pathData = pathData))
+    override fun getRecommend(pathData: List<List<Any>>): Single<RecommendedPlace> =
+        recommendApi.getRecommend(PathDataRequest(pathData))
             .map { it.toEntity() }
 }
