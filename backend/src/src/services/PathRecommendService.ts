@@ -138,31 +138,31 @@ class PathRecommendService {
   public placeId2Name(placeId: number) {
     switch (placeId) {
       case 0:
-        return "ENTRANCE";
+        return "입구";
       case 1:
-        return "ANCIENT";
+        return "고대 전시관";
       case 2:
-        return "MEDIEVAL";
+        return "중세 전시관";
       case 3:
-        return "MODERN";
+        return "현대 전시관";
       case 4:
-        return "DONATION";
+        return "기부관";
       case 5:
-        return "PAINTING";
+        return "예술 전시관";
       case 6:
-        return "WORLD";
+        return "세계 전시관";
       case 7:
-        return "CRAFT";
+        return "전쟁 전시관";
       case 8:
-        return "SCIENCE";
+        return "과학 전시관";
       case 9:
-        return "SPACE";
+        return "우주 전시관";
       case 10:
-        return "HUMAN";
+        return "인류 전시관";
       case 11:
-        return "NATURAL";
+        return "자연 전시관";
       case 12:
-        return "FUTURE";
+        return "미래 전시관";
     }
   }
 
