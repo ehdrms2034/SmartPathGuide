@@ -14,6 +14,7 @@ import kr.pnu.ga2019.databinding.ActivityMainBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.presentation.base.BaseFragment
 import kr.pnu.ga2019.presentation.main.intro.IntroFragment
+import kr.pnu.ga2019.presentation.main.recommend.RecommendFragment
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.singleTop
 
@@ -29,14 +30,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         }
     }
 
-    enum class TabPosition() {
-        INTRO,
-        RECOMMEND
-    }
-
     private val fragments: List<Fragment> = listOf(
         IntroFragment.newInstance(),
-        IntroFragment.newInstance()
+        RecommendFragment.newInstance()
     )
 
     override val viewModel: MainViewModel by viewModels()
@@ -65,8 +61,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     private fun setTabLayout() {
         binding.tabLayout.apply {
-            addTab(newTab().setIcon(R.drawable.img_musium))
-            addTab(newTab().setIcon(R.drawable.img_musium))
+            addTab(newTab().setIcon(R.drawable.ic_menu_book_black_36dp).setText("소개"))
+            addTab(newTab().setIcon(R.drawable.ic_location_on_black_36dp).setText("추천경로"))
             tabGravity = TabLayout.GRAVITY_FILL
 
             addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {

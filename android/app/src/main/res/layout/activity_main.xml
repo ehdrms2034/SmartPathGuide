@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tabIndicatorColor="@color/sky"
-            app:tabBackground="@color/colorWhite"/>
+            app:tabBackground="@color/colorWhite" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
