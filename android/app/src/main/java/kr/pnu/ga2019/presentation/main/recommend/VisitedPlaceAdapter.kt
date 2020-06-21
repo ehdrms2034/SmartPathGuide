@@ -43,6 +43,8 @@ class VisitedPlaceAdapter(
         onScrollWhenItemInserted.invoke()
     }
 
+    fun getPlaces(): ArrayList<Place> = places
+
     inner class VisitedPlaceViewHolder(
         private val binding: LayoutVisitedPlaceBinding
     ) : RecyclerView.ViewHolder(binding.root) {
