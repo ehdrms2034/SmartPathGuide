@@ -61,8 +61,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 
     private fun setTabLayout() {
         binding.tabLayout.apply {
-            addTab(newTab().setIcon(R.drawable.ic_menu_book_black_36dp))
-            addTab(newTab().setIcon(R.drawable.ic_location_on_black_36dp))
+            addTab(newTab().setIcon(R.drawable.ic_menu_book_black_36dp).setText("소개"))
+            addTab(newTab().setIcon(R.drawable.ic_location_on_black_36dp).setText("추천경로"))
             tabGravity = TabLayout.GRAVITY_FILL
 
             addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {

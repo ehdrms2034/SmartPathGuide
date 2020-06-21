@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.orhanobut.logger.Logger
+import com.shopgun.android.zoomlayout.ZoomLayout
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.FragmentRecommendBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
@@ -43,6 +45,19 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
     override fun start() {
         viewModel.getAllPlace()
+
+        binding.pinchZoomZoomLayout.addOnZoomListener(object: ZoomLayout.OnZoomListener {
+            override fun onZoomBegin(view: ZoomLayout?, scale: Float) {
+            }
+
+            override fun onZoom(view: ZoomLayout?, scale: Float) {
+                // Default : 1.0f, Max : 3.0f
+                Logger.d("zoom scale: $scale")
+            }
+
+            override fun onZoomEnd(view: ZoomLayout?, scale: Float) {
+            }
+        })
     }
 
     override fun observeLiveData() {
