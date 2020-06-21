@@ -5,8 +5,6 @@ package kr.pnu.ga2019.presentation.main.recommend
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
-import android.graphics.Path
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -30,6 +28,8 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 ) {
 
     companion object {
+
+        private const val MOVE_ANIMATION_DURATION: Long = 2500L
 
         fun newInstance(): RecommendFragment {
             val args = Bundle()
@@ -78,7 +78,6 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         super.observeLiveData()
         viewModel.places.observe(viewLifecycleOwner, Observer { places ->
             cachedPlaces.clear()
-//            cachedPlaces.addAll(places)
             setMoveButtonClickListener()
 
             places?.forEach { place ->
@@ -90,6 +89,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 //                pin.root.x = place.locationX.toFloat()
 //                pin.root.y = place.locationY.toFloat()
 
+                // 임의로 위치를 넣어줌 ... 향후 서버에서 수정 필요함
                 val randomX: Int = Random.nextInt(-400, 400)
                 val randomY: Int = Random.nextInt(100, 1600)
 
@@ -106,26 +106,32 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
         viewModel.recommendResult.observe(viewLifecycleOwner, Observer {
             it?.let { result ->
+                if(result.first.placeId == 1 || result.first.placeId == 8){
+                    activity?.onBackPressed()
+                    return@Observer
+                }
                 cachedPlaces.first { place -> place.id == result.first.placeId }
                     .let { currentPlace ->
+                        toast("${currentPlace.name}으로 이동하세요")
                         Log.d("currentPlace", "현재 위치 : ${currentPlace.name}, x: ${currentPlace.locationX}, y: ${currentPlace.locationY}")
                         viewModel.startTimer()
                         binding.currentPlace = currentPlace
-//                        myLocation.root
-//                            .x(currentPlace.locationX.toFloat())
-//                            .y(currentPlace.locationY.toFloat())
-//                            .start()
 
-                        val moveX = ObjectAnimator.ofFloat(myLocation.root, "x", currentPlace.locationX.toFloat())
-                        val moveY = ObjectAnimator.ofFloat(myLocation.root, "y", currentPlace.locationY.toFloat())
+                        val moveX: ObjectAnimator = ObjectAnimator.ofFloat(myLocation.root, "x", currentPlace.locationX.toFloat())
+                        val moveY: ObjectAnimator = ObjectAnimator.ofFloat(myLocation.root, "y", currentPlace.locationY.toFloat())
 
                         val animatorSet = AnimatorSet()
                         animatorSet.playTogether(moveX, moveY)
-                        animatorSet.duration = 500L
+                        animatorSet.duration = MOVE_ANIMATION_DURATION
                         animatorSet.start()
                     }
 
             }
+        })
+
+        viewModel.finish.observe(viewLifecycleOwner, Observer {
+            toast("즐거운 관람 되셨나요?\n다음에 다시 방문해주세요")
+            activity?.onBackPressed()
         })
     }
 
@@ -147,21 +153,17 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
     private fun setMoveButtonClickListener() {
         binding.moveAncientButton.setOnClickListener {
-            toast("고대전시관")
+            toast("고대전시관으로 이동하세요")
             binding.firstEnterMessage.animation = null
             binding.firstEnterMessage.visibility = View.GONE
             if(pinViews.isNotEmpty()) {
-//                myLocation.root.animate()
-//                    .x(pinViews[0].x)
-//                    .y(pinViews[0].y)
-//                    .start()
 
-                val moveX = ObjectAnimator.ofFloat(myLocation.root, "x", pinViews[0].x)
-                val moveY = ObjectAnimator.ofFloat(myLocation.root, "y", pinViews[0].y)
+                val moveX: ObjectAnimator = ObjectAnimator.ofFloat(myLocation.root, "x", pinViews[0].x)
+                val moveY: ObjectAnimator = ObjectAnimator.ofFloat(myLocation.root, "y", pinViews[0].y)
 
                 val animatorSet = AnimatorSet()
                 animatorSet.playTogether(moveX, moveY)
-                animatorSet.duration = 500L
+                animatorSet.duration = MOVE_ANIMATION_DURATION
                 animatorSet.start()
 
 
@@ -172,21 +174,17 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
             }
         }
         binding.moveScienceButton.setOnClickListener {
-            toast("과학전시관")
+            toast("과학전시관으로 이동하세요")
             binding.firstEnterMessage.animation = null
             binding.firstEnterMessage.visibility = View.GONE
             if(pinViews.isNotEmpty()) {
-//                myLocation.root.animate()
-//                    .x(pinViews[7].x)
-//                    .y(pinViews[7].y)
-//                    .start()
 
-                val moveX = ObjectAnimator.ofFloat(myLocation.root, "x", pinViews[7].x)
-                val moveY = ObjectAnimator.ofFloat(myLocation.root, "y", pinViews[7].y)
+                val moveX: ObjectAnimator = ObjectAnimator.ofFloat(myLocation.root, "x", pinViews[7].x)
+                val moveY: ObjectAnimator = ObjectAnimator.ofFloat(myLocation.root, "y", pinViews[7].y)
 
                 val animatorSet = AnimatorSet()
                 animatorSet.playTogether(moveX, moveY)
-                animatorSet.duration = 500L
+                animatorSet.duration = MOVE_ANIMATION_DURATION
                 animatorSet.start()
 
                 isSelectMoved = true
