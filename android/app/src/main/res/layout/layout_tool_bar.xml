@@ -16,7 +16,7 @@
         android:textColor="@color/colorBlack"
         android:gravity="center"
         android:singleLine="true"
-        android:textSize="16dp"
+        android:textSize="18dp"
         android:textStyle="bold"
         tools:text="툴바 중앙"
         tools:ignore="SpUsage" />
