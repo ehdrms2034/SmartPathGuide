@@ -17,7 +17,6 @@ import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.presentation.main.MainActivity
 import kr.pnu.ga2019.utility.Const
 import kr.pnu.ga2019.utility.dpToPixel
-import org.jetbrains.anko.toast
 
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     resourceId = R.layout.activity_splash
@@ -27,12 +26,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
     }
 
     override val viewModel: SplashViewModel by viewModels()
-    private val pointAdapter: SplashPointAdapter by lazy {
-        SplashPointAdapter { museum ->
-            //TODO : Dialog for Testing
-            toast("id: ${museum.id}, name: ${museum.name}")
-        }
-    }
+    private val pointAdapter: SplashPointAdapter by lazy { SplashPointAdapter() }
 
     override fun observeLiveData() {
         viewModel.uiState.observe(this, Observer(::observeUiState))

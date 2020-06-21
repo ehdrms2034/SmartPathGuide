@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +38,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
     }
 
     override fun setRecyclerView() {
-        binding.imagePageRecyclerView.apply {
+        binding.imagePageRecyclerView.run {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             adapter = IntroImageAdapter(resources = Const.PAGE_IMAGES)
             addItemDecoration(object: RecyclerView.ItemDecoration() {
@@ -72,7 +73,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
             smoothScrollToPosition(1)
         }
 
-        binding.imagePointRecyclerView.apply {
+        binding.imagePointRecyclerView.run {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             adapter = IntroPointAdapter(resources = Const.MUSEUM_POINTS)
             addItemDecoration(object: RecyclerView.ItemDecoration() {
@@ -99,6 +100,41 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
                             else -> {
                                 left = 2.dpToPixel()
                                 right = 2.dpToPixel()
+                            }
+                        }
+                    }
+                }
+            })
+            object: PagerSnapHelper() {}.attachToRecyclerView(this)
+        }
+
+        binding.methodRecyclerView.run {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            adapter = IntroWatchMethodAdapter(Const.METHOD_LIST)
+            itemAnimator = DefaultItemAnimator()
+            addItemDecoration(object: RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    val itemPosition = parent.getChildAdapterPosition(view)
+                    outRect.run {
+                        top = 4.dpToPixel()
+                        bottom = 4.dpToPixel()
+                        when(itemPosition) {
+                            0 -> {
+                                left = 16.dpToPixel()
+                                right = 4.dpToPixel()
+                            }
+                            state.itemCount -1 -> {
+                                left = 4.dpToPixel()
+                                right = 16.dpToPixel()
+                            }
+                            else -> {
+                                left = 4.dpToPixel()
+                                right = 4.dpToPixel()
                             }
                         }
                     }
