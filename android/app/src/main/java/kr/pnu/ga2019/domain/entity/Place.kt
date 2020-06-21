@@ -6,8 +6,9 @@ package kr.pnu.ga2019.domain.entity
 import kr.pnu.ga2019.domain.Entity
 
 data class Place(
+    val id: Int,
     val name: String,
     val maxPeople: Int,
-    var locationX: Int,
-    var locationY: Int
+    val locationX: Int,
+    val locationY: Int
 ) : Entity

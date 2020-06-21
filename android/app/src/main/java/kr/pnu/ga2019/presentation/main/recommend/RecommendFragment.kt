@@ -16,7 +16,6 @@ import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.presentation.base.BaseFragment
 import kr.pnu.ga2019.utility.Const
 import org.jetbrains.anko.support.v4.toast
-import kotlin.random.Random
 
 class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewModel>(
     resourceId = R.layout.fragment_recommend
@@ -69,9 +68,6 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
                 // x: -400 ~ +400
                 // y: +100 ~ +1600
-                place.locationX = Random.nextInt(-400, 400)
-                place.locationY = Random.nextInt(100, 1600)
-
                 pin.root.x = place.locationX.toFloat()
                 pin.root.y = place.locationY.toFloat()
                 pin.root.setOnClickListener { toast(place.name) }
