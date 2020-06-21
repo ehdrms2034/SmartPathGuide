@@ -7,7 +7,7 @@ export default class UserInfoDao {
   constructor() {}
 
   public async createUserInfo(memberPK: number) {
-    const newUserInfo = UserInfo.build({
+    const newUserInfo = new UserInfo({
       userSeq: memberPK,
     });
 

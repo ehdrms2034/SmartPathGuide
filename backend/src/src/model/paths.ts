@@ -1,6 +1,7 @@
-import { ForeignKey, Column, Table, PrimaryKey, Model, AutoIncrement, BelongsTo, Unique } from 'sequelize-typescript';
+import { ForeignKey, Column, Table, PrimaryKey, Model, AutoIncrement, BelongsTo, Unique, HasOne } from 'sequelize-typescript';
 import { Member } from './member';
 import { DataTypes } from 'sequelize';
+import { Place } from './Place';
 
 @Table
 export class Paths extends Model<Paths> {
@@ -11,7 +12,6 @@ export class Paths extends Model<Paths> {
     public pathSeq !: number;
 
     @ForeignKey(()=>Member)
-    @Unique
     @Column
     public userSeq !: number;
 
@@ -19,38 +19,14 @@ export class Paths extends Model<Paths> {
     public member !: Member;
 
     @Column
-    public ancient !: number;
+    public sequence !: number;
 
     @Column
-    public medieval !: number;
+    public placeId !: number;
+
+    @HasOne(()=>Place)
+    public place !: Place;
 
     @Column
-    public modern !: number;
-
-    @Column
-    public donation !: number;
-
-    @Column
-    public painting !: number;
-
-    @Column
-    public world !: number;
-
-    @Column
-    public craft !: number;
-    
-    @Column
-    public science !:number;
-
-    @Column
-    public space !: number;
-
-    @Column
-    public human !: number;
-
-    @Column
-    public natural !: number;
-
-    @Column
-    public future !: number;
+    public stayTime !: number;
 }

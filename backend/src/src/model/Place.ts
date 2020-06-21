@@ -1,4 +1,5 @@
-import {Table ,Model, PrimaryKey, AutoIncrement, Column} from 'sequelize-typescript';
+import {Table ,Model, PrimaryKey, AutoIncrement, Column, ForeignKey} from 'sequelize-typescript';
+import { Paths } from './paths';
 
 @Table
 export class Place extends Model<Place> {
@@ -6,7 +7,8 @@ export class Place extends Model<Place> {
     @PrimaryKey
     @AutoIncrement
     @Column
-    public key !: Number;
+    @ForeignKey(()=>Paths)
+    public id !: Number;
 
     @Column
     public name !: string;
