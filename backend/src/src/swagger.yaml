@@ -11,122 +11,6 @@ tags:
   - name: Recommend
   - name: Place
 paths:
-  /api/member/members:
-    get:
-      tags:
-        - User
-      summary: 모든 유저들의 데이터를 조회한다.
-      description: ""
-      consumes:
-        - application/json
-      produces:
-        - application/json
-
-      responses:
-        "200성공":
-          description: 데이터 조회에 성공했을 때,
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: success
-                message: userList 출력에 성공했습니다.
-                data: 
-                  - { userSeq : 2, age: 23}
-                  - { userSeq : 3, age: 38}
-        "200실패":
-          description: 데이터 조회에 실패했을 때,
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: success
-                message: errorStack
-                data: null              
-
-  /api/member/:
-    post:
-      tags:
-        - User
-      summary: 유저를 추가한다.
-      description: ""
-      consumes:
-        - application/json
-      produces:
-        - application/json
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                age:
-                  type: integer
-                  example: 27
-                ancient:
-                  type : integer
-                  example : 100
-                medieval:
-                  type : integer
-                  example : 0
-                modern:
-                  type : integer
-                  example : 32
-                donation:
-                  type : integer
-                  example : 77
-                painting:
-                  type : integer
-                  example : 20
-                world:
-                  type : integer
-                  example : 18
-                craft:
-                  type : integer
-                  example : 42
-                science:
-                  type : integer
-                  example : 83
-                space:
-                  type : integer
-                  example : 30
-                human:
-                  type : integer
-                  example : 84
-                natural:
-                  type : integer
-                  example : 29
-                future:
-                  type : integer
-                  example: 92
-              
-      responses:
-        "200(성공)":
-          description: 회원추가에 성공할 때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: success
-                message: 회원추가에 성공했습니다.
-                data: null
-
-        "200(실패)":
-          description: 회원추가에 실패했을 때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: error
-                message: errorStack
-                data: null
-
   /api/place/places:
     get:
       tags:
@@ -148,9 +32,23 @@ paths:
               example:
                 response: success
                 message: 성공적으로 박물관 정보를 요청했습니다.
-                data: 
-                  - { name : ancient, maxPeople: 30, locationX : 100, locationY : 50 ,createdAt : "날짜", updatedAt : "날짜"}
-                  - { name : medieval, maxPeople: 40, locationX : 100, locationY : 110 ,createdAt : "날짜", updatedAt : "날짜"}
+                data:
+                  - {
+                      name: ancient,
+                      maxPeople: 30,
+                      locationX: 100,
+                      locationY: 50,
+                      createdAt: "날짜",
+                      updatedAt: "날짜",
+                    }
+                  - {
+                      name: medieval,
+                      maxPeople: 40,
+                      locationX: 100,
+                      locationY: 110,
+                      createdAt: "날짜",
+                      updatedAt: "날짜",
+                    }
         "200실패":
           description: 데이터 조회에 실패했을 때,
           content:
@@ -160,114 +58,114 @@ paths:
               example:
                 response: success
                 message: errorStack
-                data: null 
-
-  /api/userinfo/:
-    post:
-      tags:
-        - UserInfo
-      summary: 유저의 관심사항을 추가한다. (클라이언트 필요없음.)
-      description: ""
-      consumes:
-        - application/json
-      produces:
-        - application/json
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                memberSeq:
-                  type: integer
-                  example: 3
-      responses:
-        "200(성공)":
-          description: 유저정보 생성에 성공할때.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: success
-                message: userInfo 데이터 생성에 성공했습니다.
                 data: null
 
-        "200(실패)":
-          description: 유저정보 생성에 실패했을 때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: error
-                message: errorStack
-                data: null
-    put:
-      tags:
-        - UserInfo
-      summary: 유저의 관심사항을 수정한다. (클라이언튼 굳이 필요 X)
-      description: ""
-      consumes:
-        - application/json
-      produces:
-        - application/json
+  # /api/userinfo/:
+  #   post:
+  #     tags:
+  #       - UserInfo
+  #     summary: 유저의 관심사항을 추가한다. (클라이언트 필요없음.)
+  #     description: ""
+  #     consumes:
+  #       - application/json
+  #     produces:
+  #       - application/json
 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                memberSeq:
-                  type: integer
-                  example: 3
-                acient:
-                  type: integer
-                  example: 30
-                medieval:
-                  type: integer
-                  example: 20
-                modern:
-                  type: integer
-                  example: 40
-                donation:
-                  type: integer
-                  example: 30
-                painting:
-                  type: integer
-                  example: 99
-                word:
-                  type: integer
-                  example: 49
-                craft:
-                  type: integer
-                  example: 60
-      responses:
-        "200(성공)":
-          description: 성공할때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: success
-                message: 유저 Info를 성공적으로 수정했습니다..
-                data: null
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               memberSeq:
+  #                 type: integer
+  #                 example: 3
+  #     responses:
+  #       "200(성공)":
+  #         description: 유저정보 생성에 성공할때.
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Response"
+  #             example:
+  #               response: success
+  #               message: userInfo 데이터 생성에 성공했습니다.
+  #               data: null
 
-        "200(실패)":
-          description: 실패했을 때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: error
-                message: errorStack
-                data: null
+  #       "200(실패)":
+  #         description: 유저정보 생성에 실패했을 때
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Response"
+  #             example:
+  #               response: error
+  #               message: errorStack
+  #               data: null
+  #   put:
+  #     tags:
+  #       - UserInfo
+  #     summary: 유저의 관심사항을 수정한다. (클라이언튼 굳이 필요 X)
+  #     description: ""
+  #     consumes:
+  #       - application/json
+  #     produces:
+  #       - application/json
+
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               memberSeq:
+  #                 type: integer
+  #                 example: 3
+  #               acient:
+  #                 type: integer
+  #                 example: 30
+  #               medieval:
+  #                 type: integer
+  #                 example: 20
+  #               modern:
+  #                 type: integer
+  #                 example: 40
+  #               donation:
+  #                 type: integer
+  #                 example: 30
+  #               painting:
+  #                 type: integer
+  #                 example: 99
+  #               word:
+  #                 type: integer
+  #                 example: 49
+  #               craft:
+  #                 type: integer
+  #                 example: 60
+  #     responses:
+  #       "200(성공)":
+  #         description: 성공할때
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Response"
+  #             example:
+  #               response: success
+  #               message: 유저 Info를 성공적으로 수정했습니다..
+  #               data: null
+
+  # "200(실패)":
+  #   description: 실패했을 때
+  #   content:
+  #     application/json:
+  #       schema:
+  #         $ref: "#/components/schemas/Response"
+  #       example:
+  #         response: error
+  #         message: errorStack
+  #         data: null
 
   /api/userinfo/userlocation:
     post:
@@ -347,11 +245,11 @@ paths:
               example:
                 response: success
                 message: 사용자 경로를 성공적으로 불러왔습니다.
-                data: 
-                  myLocation : {memberSeq : 23, locationX : 2.1, locationY : 200}
-                  usersData :
-                    - {memberSeq : 24, locationX : 32, locationY : 43}
-                    - {memberSeq : 42, locationX : 39, locationY : 392}
+                data:
+                  myLocation: { memberSeq: 23, locationX: 2.1, locationY: 200 }
+                  usersData:
+                    - { memberSeq: 24, locationX: 32, locationY: 43 }
+                    - { memberSeq: 42, locationX: 39, locationY: 392 }
         "200(실패)":
           description: 실패했을 때
           content:
@@ -363,14 +261,91 @@ paths:
                 message: errorStack
                 data: null
 
-  /api/path/:
+  # /api/path/:
+  #   post:
+  #     tags:
+  #       - Path
+  #     summary: 유저가 방문한 박물관을 저장한다.
+  #     description: >
+  #       - 유저가 방문한 전시관을 저장한다, 주로 박물관에서 나갈때 실행하여 다음에 학습할 데이터를 쌓도록 한다.
+  #       - 방문했으면 1, 방문하지 않았으면 0
+  #     consumes:
+  #       - application/json
+  #     produces:
+  #       - application/json
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               isAncient:
+  #                 type : integer
+  #                 example : 1
+  #               isMedieval:
+  #                 type : integer
+  #                 example : 0
+  #               isModern:
+  #                 type : integer
+  #                 example : 1
+  #               isDonation:
+  #                 type : integer
+  #                 example : 0
+  #               isPainting:
+  #                 type : integer
+  #                 example : 1
+  #               isWorld:
+  #                 type : integer
+  #                 example : 0
+  #               isCraft:
+  #                 type : integer
+  #                 example : 1
+  #               isScience:
+  #                 type : integer
+  #                 example : 1
+  #               isSpace:
+  #                 type : integer
+  #                 example : 0
+  #               isHuman :
+  #                 type : integer
+  #                 example : 0
+  #               isNatural:
+  #                 type : integer
+  #                 example : 0
+  #               isFuture:
+  #                 type : integer
+  #                 example : 1
+
+  #     responses:
+  #       "200(성공)":
+  #         description: 성공할때
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Response"
+  #             example:
+  #               response: success
+  #               message: 유저의 방문경로를 저장하는데 성공했습니다.
+  #               data: null
+
+  #       "200(실패)":
+  #         description: 실패했을 때
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Response"
+  #             example:
+  #               response: error
+  #               message: errorStack
+  #               data: null
+
+  /api/recommend/:
     post:
       tags:
-        - Path
-      summary: 유저가 방문한 박물관을 저장한다.
-      description: >
-        - 유저가 방문한 전시관을 저장한다, 주로 박물관에서 나갈때 실행하여 다음에 학습할 데이터를 쌓도록 한다.
-        - 방문했으면 1, 방문하지 않았으면 0
+        - Recommend
+      summary: 유저의 경로를 토대로 경로를 추천한다.
+      description: ""
       consumes:
         - application/json
       produces:
@@ -382,84 +357,21 @@ paths:
             schema:
               type: object
               properties:
-                isAncient:
-                  type : integer
-                  example : 1
-                isMedieval:
-                  type : integer
-                  example : 0
-                isModern:
-                  type : integer
-                  example : 1
-                isDonation:
-                  type : integer
-                  example : 0
-                isPainting:
-                  type : integer
-                  example : 1
-                isWorld:
-                  type : integer
-                  example : 0
-                isCraft:
-                  type : integer
-                  example : 1
-                isScience:
-                  type : integer
-                  example : 1
-                isSpace:
-                  type : integer
-                  example : 0
-                isHuman :
-                  type : integer
-                  example : 0
-                isNatural:
-                  type : integer
-                  example : 0
-                isFuture:
-                  type : integer
-                  example : 1
-                
-      responses:
-        "200(성공)":
-          description: 성공할때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: success
-                message: 유저의 방문경로를 저장하는데 성공했습니다.
-                data: null
-                  
-
-        "200(실패)":
-          description: 실패했을 때
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Response"
-              example:
-                response: error
-                message: errorStack
-                data: null
-
-  /api/recommend/{memberPk}:
-    get:
-      tags:
-        - Recommend
-      summary: 유저의 경로를 토대로 경로를 추천한다.
-      description: ""
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: memberPk # Note the name is the same as in the path
-          required: true
-          schema:
-            type: integer
-            minimum: 1
+                pathData:
+                  type: array
+                  example: 
+                    - [0,1,12]
+                    - [1,2,4]
+                    - [2,4,8]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
+                    - [0,0,0]
       responses:
         "200(성공)":
           description: 성공할때
@@ -471,10 +383,9 @@ paths:
                 response: success
                 message: 성공적으로 경로를 추천했습니다.
                 data:
-                  - {seq : 0, name:myLocation , locationX : 200, locationY : 300}
-                  - {seq : 1, name:ancient, locationX : 250,locationY : 200}
+                  - { seq: 0, name:myLocation, locationX: 200, locationY: 300 }
+                  - { seq: 1, name:ancient, locationX: 250, locationY: 200 }
                   - ...
-                  
 
         "200(실패)":
           description: 실패했을 때
