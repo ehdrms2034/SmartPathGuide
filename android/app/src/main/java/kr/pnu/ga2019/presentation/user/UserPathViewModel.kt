@@ -138,7 +138,6 @@ class UserPathViewModel(
         .observeOn(scheduler.mainThread())
         .subscribe(object: CompletableObserver {
             override fun onComplete() {
-                recommendPath(memberPk = memberPk, isMyLocation = isMyLocation)
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -149,25 +148,4 @@ class UserPathViewModel(
                 setErrorState(throwable)
             }
         })
-
-    private fun recommendPath(memberPk: Int, isMyLocation: Boolean = false) =
-        recommendRepository.getRecommend(memberPk = memberPk)
-            .subscribeOn(scheduler.io())
-            .observeOn(scheduler.mainThread())
-            .subscribe(object: SingleObserver<List<Point>> {
-                override fun onSuccess(points: List<Point>) {
-                    if(isMyLocation)
-                        setMyPathState(Path(memberPk, points))
-                    else
-                        setVisitorPathState(Path(memberPk, points))
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                    /* explicitly empty */
-                }
-
-                override fun onError(throwable: Throwable) {
-                    setErrorState(throwable)
-                }
-            })
 }

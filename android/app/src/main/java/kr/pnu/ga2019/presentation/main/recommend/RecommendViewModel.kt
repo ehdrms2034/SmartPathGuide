@@ -4,10 +4,11 @@
 package kr.pnu.ga2019.presentation.main.recommend
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kr.pnu.ga2019.data.repository.PlaceRepositoryImpl
+import kr.pnu.ga2019.data.repository.RecommendRepositoryImpl
 import kr.pnu.ga2019.domain.entity.Place
 import kr.pnu.ga2019.domain.repository.PlaceRepository
+import kr.pnu.ga2019.domain.repository.RecommendRepository
 import kr.pnu.ga2019.presentation.base.BaseViewModel
 import kr.pnu.ga2019.utility.AppSchedulerProvider
 import kr.pnu.ga2019.utility.BaseSchedulerProvider
@@ -16,6 +17,8 @@ import kr.pnu.ga2019.utility.SingleLiveEvent
 class RecommendViewModel(
     private val placeRepository: PlaceRepository =
         PlaceRepositoryImpl(),
+    private val recommendRepository: RecommendRepository =
+        RecommendRepositoryImpl(),
     private val scheduler: BaseSchedulerProvider =
         AppSchedulerProvider()
 ) : BaseViewModel() {
@@ -34,4 +37,8 @@ class RecommendViewModel(
 
             })
             .addDisposable()
+
+    fun getRecommend() {
+        //recommendRepository.getRecommend()
+    }
 }
