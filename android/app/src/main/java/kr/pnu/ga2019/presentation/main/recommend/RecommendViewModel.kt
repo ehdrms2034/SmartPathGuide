@@ -41,7 +41,6 @@ class RecommendViewModel(
     var stayTime = MutableLiveData<Int>().apply { value = 0 }
     private var pathIndex: Int = 0
     private var timerDisposable: Disposable? = null
-    private val visitedPlaces: ArrayList<Place> = arrayListOf()
 
     private fun setStayTime(seconds: Long) {
         stayTime.value = seconds.toInt().plus(1)

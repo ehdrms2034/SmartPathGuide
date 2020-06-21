@@ -69,6 +69,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
                 }
             })
             object: PagerSnapHelper() {}.attachToRecyclerView(this)
+            smoothScrollToPosition(1)
         }
 
         binding.imagePointRecyclerView.apply {
