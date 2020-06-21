@@ -15,7 +15,6 @@ import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.ActivitySplashBinding
 import kr.pnu.ga2019.presentation.base.BaseActivity
 import kr.pnu.ga2019.presentation.main.MainActivity
-import kr.pnu.ga2019.presentation.user.UserPathActivity
 import kr.pnu.ga2019.utility.Const
 import kr.pnu.ga2019.utility.dpToPixel
 import org.jetbrains.anko.toast
@@ -70,9 +69,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(
 
     private fun observeUiState(state: SplashUiState) {
         when(state) {
-            is SplashUiState.Available -> {
-                UserPathActivity.start(context = this, preference = state.preference)
-            }
             is SplashUiState.Empty -> {
                 Logger.d(state.message)
             }
