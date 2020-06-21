@@ -3,6 +3,8 @@ import PathsDao from "@daos/pathsDao";
 import { UserInfo } from "@models/UserInfo";
 import * as tf from "@tensorflow/tfjs-node";
 import { userInfo } from "os";
+import fs from "fs";
+
 import {
   layers,
   train,
@@ -12,6 +14,7 @@ import {
 } from "@tensorflow/tfjs-node";
 import path from "path";
 import { Paths } from "@models/paths";
+import PlaceDao from '@daos/PlaceDao';
 
 class PathRecommendService {
   private USER_RECOMMAND_PERCENT = 0.5;
@@ -34,55 +37,56 @@ class PathRecommendService {
   public async makeRecommendModel() {
     const trainSet = await this.getTrainSet();
     const testSet = await this.getTestSet();
-    const trainPaths = await this.getTrainPathSet();
-    const testPaths = await this.getTestPathSet();
-    const target = trainPaths.map((it) => {
-      return [
-        it.ancient,
-        it.medieval,
-        it.modern,
-        it.donation,
-        it.painting,
-        it.world,
-        it.craft,
-        it.science,
-        it.space,
-        it.human,
-        it.natural,
-        it.future,
-      ];
-    });
-    const testTarget = testPaths.map((it) => it.ancient);
-    const input = reshape(tf.tensor(trainSet), [trainSet.length, 1, 12]);
-    const output = reshape(tf.tensor(target), [target.length, 1, 12]);
-    const xTest = tf.tensor(testSet);
-    const yTest = tf.tensor(testTarget);
+    const inputPath = trainSet[0];
+    const outputPath = trainSet[1];
+    const testInputPath = testSet[0];
+    const testOutputPath = testSet[1];
+    let max = -1;
+    console.log();
+
+    fs.writeFileSync("./inputPath.json", JSON.stringify(inputPath), "utf8");
+    fs.writeFileSync("./outputPath.json", JSON.stringify(outputPath), "utf8");
+    fs.writeFileSync(
+      "./testInputPath.json",
+      JSON.stringify(testInputPath),
+      "utf8"
+    );
+    fs.writeFileSync(
+      "./testOutputPath.json",
+      JSON.stringify(testOutputPath),
+      "utf8"
+    );
+
+    const input = reshape(tf.tensor(inputPath), [inputPath.length, 12, 2]);
+    const output = reshape(tf.tensor(outputPath), [outputPath.length, 13]);
+    input.print();
+    output.print();
+    const xTest = reshape(tf.tensor(testInputPath), [
+      testInputPath.length,
+      12,
+      2,
+    ]);
+    const yTest = reshape(tf.tensor(testOutputPath), [
+      testOutputPath.length,
+      13,
+    ]);
     const model = tf.sequential();
 
-    model.add(tf.layers.lstm({
-      units: 256,
-      activation: "tanh",
-      inputShape: [1, 12],
-      returnSequences: true,
-    }));
-
-    model.add(tf.layers.dense({ units: 192, activation: "relu" }));
-
-    model.add(tf.layers.dense({ units: 128, activation: "relu" }));
+    model.add(
+      tf.layers.lstm({
+        units: 128,
+        activation: "tanh",
+        inputShape: [12, 2],
+        batchInputShape: [1, 12, 2],
+      })
+    );
 
     model.add(tf.layers.dense({ units: 96, activation: "relu" }));
-
     model.add(tf.layers.dense({ units: 64, activation: "relu" }));
-
     model.add(tf.layers.dense({ units: 48, activation: "relu" }));
-
-    model.add(tf.layers.dense({ units: 40, activation: "softmax" }));
-
+    model.add(tf.layers.dense({ units: 40, activation: "relu" }));
     model.add(tf.layers.dense({ units: 36, activation: "relu" }));
-
-    model.add(tf.layers.dense({ units: 24, activation: "relu" }));
-
-    model.add(tf.layers.dense({ units: 12, activation: "sigmoid" }));
+    model.add(tf.layers.dense({ units: 13, activation: "sigmoid" }));
 
     model.compile({
       optimizer: tf.train.adam(0.001),
@@ -92,114 +96,189 @@ class PathRecommendService {
 
     await model.fit(input, output, {
       epochs: 500,
-      batchSize: 128,
-      shuffle: true,
-      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc", patience: 10 })],
+      batchSize: 32,
+      shuffle: false,
+      stepsPerEpoch: 10,
+      callbacks: [tf.callbacks.earlyStopping({ monitor: "acc", patience: 3 })],
+      validationData: [xTest, yTest],
+      verbose: 1,
     });
 
-    // const scores = model.evaluate(xTest,yTest) as tf.Scalar[];
-    // const acc = scores[1].dataSync();
-    const predict = reshape(
-      tf.tensor([[60, 100, 30, 100, 100, 100, 100, 20, 30, 20, 50, 30]]),
-      [1, 1, 12]
-    );
+    const index = 15;
+    const predata = tf.tensor(inputPath[index]);
+    predata.print();
+    const predict = reshape(predata, [1, 12, 2]);
     predict.print();
-    // const test = model.predict(predict) as tf.Tensor;
-    // console.log("이사람이 antient 갈 확률 :", test.dataSync()[0]);
-    // console.log(test.dataSync());
-    model.save("file://./src/TensorModel/model");
-
-    // console.log(acc[0]*100);
-    // model.predict(trainSet);
+    const test = model.predict(predict) as tf.Tensor;
+    test.print();
+    tf.argMax(test.dataSync()).print();
+    await model.save("file://./src/TensorModel/model");
   }
 
-
   public async predictPaths(tensor: tf.Tensor) {
-    const {USER_RECOMMAND_PERCENT} = this;
+    const { USER_RECOMMAND_PERCENT } = this;
     const model = await tf.loadLayersModel(
       "file://./src/TensorModel/model/model.json"
     );
+    const placeDao = new PlaceDao();
+    const places = placeDao.getPlaces();
     const predict = model.predict(tensor) as tf.Tensor;
     const result = predict.dataSync();
-    const data = {
-      isAncient : result[0] >= USER_RECOMMAND_PERCENT,
-      isMedieval : result[1] >= USER_RECOMMAND_PERCENT,
-      isModern : result[2] >= USER_RECOMMAND_PERCENT,
-      isDonation : result[3] >= USER_RECOMMAND_PERCENT,
-      isPainting : result[4] >= USER_RECOMMAND_PERCENT,
-      isWorld : result[5] >= USER_RECOMMAND_PERCENT,
-      isCraft : result[6] >= USER_RECOMMAND_PERCENT,
-      isScience : result[7] >= USER_RECOMMAND_PERCENT,
-      isSpace : result[8] >= USER_RECOMMAND_PERCENT,
-      isHuman : result[9] >= USER_RECOMMAND_PERCENT,
-      isNatural : result[10] >= USER_RECOMMAND_PERCENT,
-      isFuture : result[11] >= USER_RECOMMAND_PERCENT
+    const list = [];
+    for (let i = 0; i < result.length; i++) {
+      list.push({ placeId: i, name: this.placeId2Name(i),percent: result[i] });
     }
-    return data;
+    list.sort((a, b) => {
+      return a.percent < b.percent ? 1 : a.percent > b.percent ? -1 : 0;
+    });
+
+    return list;
   }
 
-  public async getTrainPathSet() {
-    const allPath = await this.pathsDao.getAllMemberPaths();
-    return allPath.slice(0, Math.round(allPath.length * 0.8));
-  }
-
-  public async getTestPathSet() {
-    const allPath = await this.pathsDao.getAllMemberPaths();
-    return allPath.slice(Math.round(allPath.length * 0.8), allPath.length);
+  public placeId2Name(placeId: number) {
+    switch (placeId) {
+      case 0:
+        return "ENTRANCE";
+      case 1:
+        return "ANCIENT";
+      case 2:
+        return "MEDIEVAL";
+      case 3:
+        return "MODERN";
+      case 4:
+        return "DONATION";
+      case 5:
+        return "PAINTING";
+      case 6:
+        return "WORLD";
+      case 7:
+        return "CRAFT";
+      case 8:
+        return "SCIENCE";
+      case 9:
+        return "SPACE";
+      case 10:
+        return "HUMAN";
+      case 11:
+        return "NATURAL";
+      case 12:
+        return "FUTURE";
+    }
   }
 
   public async getTrainSet() {
     const { userInfoDao, pathsDao } = this;
-    const allUserInfo = await userInfoDao.getAllUserInfo();
     const allPaths = await pathsDao.getAllMemberPaths();
     const mapList: Array<any> = [];
-    const maxNum = Math.round(allPaths.length * 0.8);
+    const maxNum = Math.round(allPaths.length * 0.1);
+    //[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let list = [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+    ];
     for (let i = 0; i < maxNum; i++) {
-      const userInfo = allUserInfo[i];
       const userPath = allPaths[i];
-      mapList.push([
-        userInfo.ancient,
-        userInfo.medieval,
-        userInfo.modern,
-        userInfo.donation,
-        userInfo.painting,
-        userInfo.world,
-        userInfo.craft,
-        userInfo.science,
-        userInfo.space,
-        userInfo.human,
-        userInfo.natural,
-        userInfo.future,
-      ]);
+
+      // list[userPath.sequence] = (userPath.sequence+1)/13;
+      list[userPath.sequence][0] = userPath.placeId;
+      list[userPath.sequence][1] = userPath.stayTime;
+      // list[userPath.sequence][2] = userPath.stayTime/360;
+      let data = await JSON.parse(JSON.stringify(list));
+      if (allPaths[i].userSeq === allPaths[i + 1].userSeq) mapList.push(data);
+      else
+        list = [
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+        ];
     }
-    return mapList;
+
+    const nextData = [];
+    for (let i = 0; i < maxNum; i++) {
+      const userPath = allPaths[i + 1];
+      const next = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      next[userPath.placeId] = 1;
+      if (allPaths[i].userSeq === allPaths[i + 1].userSeq) nextData.push(next);
+    }
+
+    const result = [mapList, nextData];
+    return result;
   }
 
   public async getTestSet() {
     const { userInfoDao, pathsDao } = this;
-    const allUserInfo = await userInfoDao.getAllUserInfo();
     const allPaths = await pathsDao.getAllMemberPaths();
     const mapList: Array<any> = [];
-    const maxNum = Math.round(allPaths.length * 0.8);
-    for (let i = maxNum; i < allPaths.length; i++) {
-      const userInfo = allUserInfo[i];
+    const maxNum = Math.round(allPaths.length * 0.95);
+    let list = [
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+      [0, 0],
+    ];
+    for (let i = maxNum; i < allPaths.length - 1; i++) {
       const userPath = allPaths[i];
-      mapList.push([
-        userInfo.ancient,
-        userInfo.medieval,
-        userInfo.modern,
-        userInfo.donation,
-        userInfo.painting,
-        userInfo.world,
-        userInfo.craft,
-        userInfo.science,
-        userInfo.space,
-        userInfo.human,
-        userInfo.natural,
-        userInfo.future,
-      ]);
+
+      // list[userPath.sequence][0] = (userPath.sequence+1)/13;
+      list[userPath.sequence][0] = userPath.placeId;
+      list[userPath.sequence][1] = userPath.stayTime;
+      // list[userPath.sequence][2] = userPath.stayTime/360;
+      let data = await JSON.parse(JSON.stringify(list));
+      if (allPaths[i].userSeq === allPaths[i + 1].userSeq) mapList.push(data);
+      else
+        list = [
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+          [0, 0],
+        ];
     }
-    return mapList;
+
+    const nextData = [];
+    for (let i = maxNum; i < allPaths.length - 1; i++) {
+      const userPath = allPaths[i + 1];
+      const next = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      next[userPath.placeId] = 1;
+      if (allPaths[i].userSeq === allPaths[i + 1].userSeq) nextData.push(next);
+    }
+
+    const result = [mapList, nextData];
+    return result;
   }
 }
 

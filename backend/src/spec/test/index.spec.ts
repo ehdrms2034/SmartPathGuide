@@ -4,16 +4,18 @@ import UserInfoDao from "@daos/UserInfoDao";
 import MemberDao from "@daos/memberDao";
 import PathsDao, { RequestPath } from "@daos/pathsDao";
 import { UserInfo } from "@models/UserInfo";
-import PathRecommendService from "@services/PathRecommendService";
-import { Disctricts } from "@models/Districts";
 import { ENUM } from "sequelize/types";
 import redisClient, { redisSetData, redisGetData } from "@modules/redis";
 import { Paths } from "@models/paths";
 import * as tf from "@tensorflow/tfjs-node";
+import {reshape} from "@tensorflow/tfjs-node";
 import UserLocationService from "@services/UserLocationService";
 import PlaceDao from "@daos/PlaceDao";
-import PathGuideService from "@services/PathGuideService";
-import { CustomError } from "@models/customError";
+import PathGenerator from "@modules/PathGenerator";
+import { math } from "@tensorflow/tfjs-node";
+import PathRecommendService from "@services/PathRecommendService";
+import { userInfo } from "os";
+import { Districts } from "@models/Districts";
 
 // describe("DB세팅", () => {
 //   beforeAll(() => {
@@ -100,43 +102,93 @@ import { CustomError } from "@models/customError";
 //   },2000000);
 // });
 
-// describe("Tensorflow",()=>{
-//   beforeAll(()=>{
+// describe("DB Setting 2", () => {
+//   beforeAll(() => {
 //     sequelize;
 //     tf;
 //   });
-//   it("tesorTuto",async ()=>{
-//     const pathRecommendService = new PathRecommendService();
-//     await pathRecommendService.makeAncientModel();
-//     await pathRecommendService.makeMedievalModel();
-//     await pathRecommendService.makeModernModel();
-//     await pathRecommendService.makePaintingModel();
-//     await pathRecommendService.makeDonationModel();
-//     await pathRecommendService.makeWorldModel();
-//     await pathRecommendService.makeCraftModel();
-//     await pathRecommendService.makeScienceModel();
-//     await pathRecommendService.makeSpaceModel();
-//     await pathRecommendService.makeHumanModel();
-//     await pathRecommendService.makeNaturalModel();
-//     await pathRecommendService.makeFutureModel();
+//   it("DB", async () => {
+//     const memberDao = new MemberDao();
+//     const pathDao = new PathsDao();
+//     const placeDao = new PlaceDao();
+//     const userInfoDao = new UserInfoDao();
+//     const pathGenerator = new PathGenerator();
+//     for (let j = 0; j < 20000; j++) {
+//       const member = await memberDao.saveMember(Math.floor(Math.random() * 90));
+//       const path = pathGenerator.getPath();
+//       for (let i = 0; i < path.length; i++) {
+//         const requestPath: RequestPath = {
+//           sequence: i,
+//           placeId: path[i].place,
+//           stayTime: path[i].stayTime,
+//         };
+//         await pathDao.createPaths(member,requestPath);
+//       }
+//       await userInfoDao.createUserInfo(member.userSeq);
+//       const pathData = new UserInfo();
 
-
-//     //tf.tensor([1,2]).print();
-//   },2000000);
-// })
+//       for (let i = 0; i < path.length; i++) {
+//         if (path[i].place === Districts.ANCIENT)
+//           pathData.ancient = path[i].stayTime;
+//         if (path[i].place === Districts.MEDIEVAL)
+//           pathData.medieval = path[i].stayTime;
+//         if (path[i].place === Districts.MODERN)
+//           pathData.modern = path[i].stayTime;
+//         if (path[i].place === Districts.DONATION)
+//           pathData.donation = path[i].stayTime;
+//         if (path[i].place === Districts.PAINTING)
+//           pathData.painting = path[i].stayTime;
+//         if (path[i].place === Districts.WORLD)
+//           pathData.world = path[i].stayTime;
+//         if (path[i].place === Districts.CRAFT)
+//           pathData.craft = path[i].stayTime;
+//         if (path[i].place === Districts.SCIENCE)
+//           pathData.science = path[i].stayTime;
+//         if (path[i].place === Districts.SPACE)
+//           pathData.space = path[i].stayTime;
+//         if (path[i].place === Districts.HUMAN)
+//           pathData.human = path[i].stayTime;
+//         if (path[i].place === Districts.NATURAL)
+//           pathData.natural = path[i].stayTime;
+//         if (path[i].place === Districts.FUTURE)
+//           pathData.future = path[i].stayTime;
+//       }
+//       await userInfoDao.setUserInfo(member.userSeq, pathData);
+//     }
+//   }, 2000000);
+// });
 
 describe("Tensorflow",()=>{
   beforeAll(()=>{
     sequelize;
     tf;
   });
-  it("lstm",async ()=>{
+  it("tesorTuto",async ()=>{
     const pathRecommendService = new PathRecommendService();
-    await pathRecommendService.makeRecommendModel();
-
-    //tf.tensor([1,2]).print();
+    // const data = await pathRecommendService.getTrainSet();
+    const testData = await pathRecommendService.getTestSet();
+    // console.log(testData[0].length,testData[1].length);
+    // await pathRecommendService.makeRecommendModel();
+    const predictData = testData[0][3];
+    const data = reshape(predictData,[1,12,2]);
+    data.print();
+    const predict=await pathRecommendService.predictPaths(data);
+    console.log(predict);
   },2000000);
 })
+
+// describe("Tensorflow",()=>{
+//   beforeAll(()=>{
+//     sequelize;
+//     tf;
+//   });
+//   it("lstm",async ()=>{
+//     const pathRecommendService = new PathRecommendService();
+//     await pathRecommendService.makeRecommendModel();
+
+//     //tf.tensor([1,2]).print();
+//   },2000000);
+// })
 
 // describe("Tensorflow", () => {
 //   beforeAll(() => {
