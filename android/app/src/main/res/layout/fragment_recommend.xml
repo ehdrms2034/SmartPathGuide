@@ -140,7 +140,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/path_recycler_view"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,6 +151,8 @@
             android:id="@+id/get_recommend_button"
             android:layout_width="112dp"
             android:layout_height="56dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:onClick="@{() -> viewModel.getRecommend(currentPlace.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

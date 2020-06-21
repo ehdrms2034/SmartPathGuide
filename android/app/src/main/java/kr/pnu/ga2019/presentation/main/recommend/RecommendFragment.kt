@@ -5,14 +5,16 @@ package kr.pnu.ga2019.presentation.main.recommend
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.orhanobut.logger.Logger
-import com.shopgun.android.zoomlayout.ZoomLayout
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kr.pnu.ga2019.R
 import kr.pnu.ga2019.databinding.FragmentRecommendBinding
 import kr.pnu.ga2019.databinding.LayoutPlacePinBinding
@@ -20,6 +22,7 @@ import kr.pnu.ga2019.databinding.LayoutUserPointBinding
 import kr.pnu.ga2019.domain.entity.Place
 import kr.pnu.ga2019.presentation.base.BaseFragment
 import kr.pnu.ga2019.utility.Const
+import kr.pnu.ga2019.utility.dpToPixel
 import org.jetbrains.anko.support.v4.toast
 import kotlin.random.Random
 
@@ -51,6 +54,13 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
     private var isSelectMoved: Boolean = false
 
     override val viewModel: RecommendViewModel by viewModels()
+    private val visitedPlaceAdapter: VisitedPlaceAdapter by lazy {
+        VisitedPlaceAdapter {
+            binding.pathRecyclerView.scrollToPosition(
+                binding.pathRecyclerView.adapter?.itemCount!! - 1
+            )
+        }
+    }
 
     override fun bindViewModel() {
         binding.viewModel = viewModel
@@ -59,19 +69,31 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
     override fun start() {
         binding.firstEnterMessage.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.shake))
         viewModel.getAllPlace()
+    }
 
-        binding.pinchZoomLayout.addOnZoomListener(object: ZoomLayout.OnZoomListener {
-            override fun onZoomBegin(view: ZoomLayout?, scale: Float) {
-            }
-
-            override fun onZoom(view: ZoomLayout?, scale: Float) {
-                // Default : 1.0f, Max : 3.0f
-                Logger.d("zoom scale: $scale")
-            }
-
-            override fun onZoomEnd(view: ZoomLayout?, scale: Float) {
-            }
-        })
+    override fun setRecyclerView() {
+        binding.pathRecyclerView.run {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false).apply { stackFromEnd = true }
+            adapter = visitedPlaceAdapter
+            itemAnimator = DefaultItemAnimator()
+            addItemDecoration(object: RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    val position = parent.getChildAdapterPosition(view)
+                    if(position != 0) {
+                        outRect.left = 4.dpToPixel()
+                        outRect.right = 4.dpToPixel()
+                    }
+                    if(position == state.itemCount - 1) {
+                        outRect.right = 8.dpToPixel()
+                    }
+                }
+            })
+        }
     }
 
     override fun observeLiveData() {
@@ -120,6 +142,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
                         animatorSet.playTogether(moveX, moveY)
                         animatorSet.duration = MOVE_ANIMATION_DURATION
                         animatorSet.start()
+                        visitedPlaceAdapter.update(currentPlace)
                     }
 
             }
@@ -147,6 +170,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
     }
 
     private fun showExitDialog() {
+        viewModel.stopTimer()
         ExitDialog(requireActivity()) {
             activity?.onBackPressed()
         }.show()
@@ -170,6 +194,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
                 isSelectMoved = true
                 binding.currentPlace = cachedPlaces[0]
+                visitedPlaceAdapter.update(cachedPlaces[0])
                 viewModel.startTimer()
                 binding.currentState.visibility = View.VISIBLE
             }
@@ -190,7 +215,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
                 isSelectMoved = true
                 binding.currentPlace = cachedPlaces[7]
-
+                visitedPlaceAdapter.update(cachedPlaces[7])
                 viewModel.startTimer()
                 binding.currentState.visibility = View.VISIBLE
             }

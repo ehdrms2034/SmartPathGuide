@@ -30,6 +30,8 @@ object Const {
 
     val POINT_IMAGES: List<Int> = MUSEUM_POINTS.map { it.resId }
 
+    fun randomPointImage() = POINT_IMAGES.random()
+
     val PAGE_IMAGES: List<Int> = listOf(
         R.drawable.img_pager_1,
         R.drawable.img_pager_2,
