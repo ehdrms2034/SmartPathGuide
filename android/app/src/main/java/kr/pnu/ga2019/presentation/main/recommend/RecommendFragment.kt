@@ -4,7 +4,10 @@
 package kr.pnu.ga2019.presentation.main.recommend
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.orhanobut.logger.Logger
@@ -44,6 +47,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
     override val viewModel: RecommendViewModel by viewModels()
 
     override fun start() {
+        binding.firstEnterMessage.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.shake))
         viewModel.getAllPlace()
 
         binding.pinchZoomZoomLayout.addOnZoomListener(object: ZoomLayout.OnZoomListener {
