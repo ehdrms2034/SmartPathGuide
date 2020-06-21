@@ -64,6 +64,11 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
         })
     }
 
+    override fun setListener() {
+        binding.moveAncientButton.setOnClickListener { toast("고대전시관") }
+        binding.moveScienceButton.setOnClickListener { toast("과학전시관") }
+    }
+
     override fun observeLiveData() {
         super.observeLiveData()
         viewModel.places.observe(viewLifecycleOwner, Observer { places ->
