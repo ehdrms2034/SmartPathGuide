@@ -1,6 +1,7 @@
 <resources>
 
-    <string name="app_name">SmartPathGuide</string>
+    <string name="app_name">국립부산박물관</string>
+    <string name="app_sub_name">National Museum of Pusan</string>
 
     <!-- ImageView Description -->
     <string name="image_view_map_description">메인화면에서 보여줄 지도 이미지뷰</string>
@@ -16,7 +17,20 @@
     <string name="text_view_move_next_button">다음 지점으로 이동하기</string>
     <string name="text_view_set_preference_button">유저 성향 설정</string>
 
+    <!-- Toolbar Title -->
+    <string name="toolbar_main_activity">국립부산박물관</string>
+
     <!-- Toast Message -->
     <string name="toast_exit_success">퇴장처리 되었습니다</string>
+
+    <!-- String Format -->
+    <string name="format_current_place">현재위치: %s, 관람시간: %d분</string>
+
+    <!-- User Scenario -->
+    <string name="user_scenario_description">
+        1. 고대 전시관 또는 과학 전시관으로 입장한다고 가정\n\n
+        2. 사용자가 입장 하면, 현재 관람 중인 전시관의 위치와 관람시간을 측정\n\n
+        3. 경로 추천 받기를 통해 다음 이동해야할 전시관을 추천 받을 수 있음
+    </string>
 
 </resources>

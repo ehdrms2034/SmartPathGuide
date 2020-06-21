@@ -5,14 +5,16 @@ package kr.pnu.ga2019.data.network.api
 
 import io.reactivex.Single
 import kr.pnu.ga2019.data.network.Api
+import kr.pnu.ga2019.data.network.request.PathDataRequest
 import kr.pnu.ga2019.data.network.response.RecommendResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+import kr.pnu.ga2019.data.network.response.UserRecommendPathResponse
+import retrofit2.http.*
 
 interface RecommendApi : Api {
 
-    @GET("/api/recommend/{memberPk}")
+    @JvmSuppressWildcards
+    @POST("/api/recommend/")
     fun getRecommend(
-        @Path("memberPk") memberPk: Int
-    ): Single<RecommendResponse>
+        @Body pathData: PathDataRequest
+    ): Single<UserRecommendPathResponse>
 }

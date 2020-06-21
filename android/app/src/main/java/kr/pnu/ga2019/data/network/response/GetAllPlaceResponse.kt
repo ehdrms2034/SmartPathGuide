@@ -15,6 +15,9 @@ class GetAllPlaceResponse(
 
     data class PlaceResponse(
 
+        @SerializedName("id")
+        val id: Int,
+
         @SerializedName("name")
         val name: String,
 
@@ -39,6 +42,7 @@ class GetAllPlaceResponse(
 fun GetAllPlaceResponse.toEntity(): List<Place> =
     data.map { response ->
         Place(
+            id = response.id,
             name = response.name,
             maxPeople = response.maxPeople,
             locationX = response.locationX,
@@ -49,6 +53,7 @@ fun GetAllPlaceResponse.toEntity(): List<Place> =
 
 fun GetAllPlaceResponse.PlaceResponse.toEntity(): Place =
     Place(
+        id = id,
         name = name,
         maxPeople = maxPeople,
         locationX = locationX,
