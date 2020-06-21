@@ -28,9 +28,12 @@
                     android:layout_marginTop="16dp"
                     android:overScrollMode="never"
                     android:scrollbars="none"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:listitem="@layout/layout_intro_page_image"/>
 
                 <TextView
                     android:id="@+id/point_title_hint"
@@ -40,7 +43,7 @@
                     android:layout_marginStart="16dp"
                     android:drawableStart="@drawable/ic_house_black_24dp"
                     android:drawablePadding="2dp"
-                    android:text="상설 전시관"
+                    android:text="상설 전시관 목록"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
@@ -55,9 +58,12 @@
                     android:layout_marginTop="16dp"
                     android:overScrollMode="never"
                     android:scrollbars="none"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/point_title_hint"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:listitem="@layout/layout_intro_point_image"/>
 
                 <TextView
                     android:id="@+id/user_scenario_title_hint"
@@ -67,7 +73,7 @@
                     android:layout_marginStart="16dp"
                     android:drawablePadding="2dp"
                     android:drawableStart="@drawable/ic_update_black_24dp"
-                    android:text="사용자 시나리오"
+                    android:text="관람 방법"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="@color/colorBlack"
@@ -75,21 +81,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText,SpUsage" />
 
-                <TextView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/method_recycler_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/user_scenario_description"
-                    android:textAlignment="textStart"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorBlack"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
                     app:layout_constraintTop_toBottomOf="@id/user_scenario_title_hint"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="SpUsage" />
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
