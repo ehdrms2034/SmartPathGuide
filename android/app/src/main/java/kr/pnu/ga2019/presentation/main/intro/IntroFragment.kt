@@ -110,7 +110,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
 
         binding.methodRecyclerView.run {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            adapter = IntroWatchMethodAdapter(Const.METHOD_LIST)
+            adapter = IntroWatchMethodAdapter(Const.VISITOR_METHODS)
             itemAnimator = DefaultItemAnimator()
             addItemDecoration(object: RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
@@ -133,8 +133,8 @@ class IntroFragment : BaseFragment<FragmentIntroBinding, IntroViewModel>(
                                 right = 16.dpToPixel()
                             }
                             else -> {
-                                left = 4.dpToPixel()
-                                right = 4.dpToPixel()
+                                left = 8.dpToPixel()
+                                right = 8.dpToPixel()
                             }
                         }
                     }

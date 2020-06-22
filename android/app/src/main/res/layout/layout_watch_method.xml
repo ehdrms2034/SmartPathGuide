@@ -17,12 +17,20 @@
             app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/colorWhite">
 
+            <ImageView
+                android:id="@+id/method_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_visitor_1"
+                android:scaleType="centerCrop"
+                android:alpha="0.6"/>
+
             <TextView
                 android:id="@+id/method_description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:textSize="20dp"
+                android:textSize="24dp"
                 android:textAlignment="textStart"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
