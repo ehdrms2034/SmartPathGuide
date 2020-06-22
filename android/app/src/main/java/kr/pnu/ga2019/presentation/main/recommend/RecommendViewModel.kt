@@ -82,7 +82,6 @@ class RecommendViewModel(
                 return
             }
         }
-        stopTimer()
         updatePathList(pathIndex, currentPlaceId)
         recommendRepository.getRecommend(emptyRequestList)
             .subscribeOn(scheduler.io())
@@ -102,6 +101,7 @@ class RecommendViewModel(
             emptyRequestList[pathIndex][1] = placeId
             emptyRequestList[pathIndex][2] = stayTime.value!!
             pathIndex++
+            stopTimer()
         } else {
             // 최대 12개 까지의 전시관만 관람가능
             _finish.call()
