@@ -108,20 +108,10 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, RecommendViewMo
 
                 // x: -400 ~ +400
                 // y: +100 ~ +1600
-//                pin.root.x = place.locationX.toFloat()
-//                pin.root.y = place.locationY.toFloat()
-
-                // 임의로 위치를 넣어줌 ... 향후 서버에서 수정 필요함
-                val randomX: Int = Random.nextInt(-400, 400)
-                val randomY: Int = Random.nextInt(100, 1600)
-
-                pin.root.x = randomX.toFloat()
-                pin.root.y = randomY.toFloat()
-                place.locationX = randomX
-                place.locationY = randomY
-                cachedPlaces.add(place)
-
+                pin.root.x = place.locationX.toFloat()
+                pin.root.y = place.locationY.toFloat()
                 pinViews.add(pin.root)
+                cachedPlaces.add(place)
                 binding.pinchZoomLayout.addView(pin.root)
             }
         })
