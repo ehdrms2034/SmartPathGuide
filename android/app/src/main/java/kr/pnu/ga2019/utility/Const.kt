@@ -43,4 +43,15 @@ object Const {
         "새로운 전시관에 입장하였다면,\n관람시간을 측정하고 다음 추천 경로에 반영합니다",
         "이전에 관람했던 전시관과 관람시간을 기준으로 다음 전시관을 안내 받을 수 있습니다"
     )
+
+    val VISITOR_METHODS = listOf(
+        VisitorMethod(R.drawable.img_visitor_1, "현재 입구는 고대 전시관/과학 전시관 이므로 둘 중 하나를 선택하여 입장하세요"),
+        VisitorMethod(R.drawable.img_visitor_2, "새로운 전시관에 입장하였다면,\n관람시간을 측정하고 다음 추천 경로에 반영합니다"),
+        VisitorMethod(R.drawable.img_visitor_3, "이전에 관람했던 전시관과 관람시간을 기준으로 다음 전시관을 안내 받을 수 있습니다")
+    )
 }
+
+data class VisitorMethod(
+    val image: Int,
+    val description: String
+)
